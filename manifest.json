@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.7",
+  "release": "2026.09.17-remote.8",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -78,6 +78,15 @@
       "bytes": 5796
     },
     {
+      "id": "xtream-json-lognav",
+      "path": "system/injections/xtream-json-lognav-v08.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "d61f2fb2b877759a55bbea94eeef5bb39265eeed1afb05d2661ca6a3176b78b9",
+      "bytes": 5248
+    },
+    {
       "id": "hooks",
       "path": "system/hooks.js",
       "type": "js",
@@ -96,5 +105,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.7"
+  "version": "0.8"
 }

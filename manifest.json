@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.6",
+  "release": "2026.09.17-remote.7",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -69,6 +69,15 @@
       "bytes": 279
     },
     {
+      "id": "xtream-api-first",
+      "path": "system/injections/xtream-api-first-v07.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "a1f02fda5463397e6e092f7003fc19d36f4815dcf7a1ce6478263c36badb5c9a",
+      "bytes": 5796
+    },
+    {
       "id": "hooks",
       "path": "system/hooks.js",
       "type": "js",
@@ -87,5 +96,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.6"
+  "version": "0.7"
 }

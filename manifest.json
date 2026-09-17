@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.2",
+  "release": "2026.09.17-remote.3",
   "bootstrap_min": 2,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -43,12 +43,12 @@
     },
     {
       "id": "rawm3u",
-      "path": "apps/player1/rawm3u.js",
+      "path": "apps/player1/rawm3u.remote3.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "275bf83fd0508b80ddc089774907f1c47d63f7ba616689de20e3963a9f4795be",
-      "bytes": 14957
+      "sha256": "5b972fe73f0b34034e719bc0ee6a76a759856db243e7dfc0bd7e9c48d4c1dbf4",
+      "bytes": 16067
     },
     {
       "id": "app",

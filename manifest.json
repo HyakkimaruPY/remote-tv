@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.5",
+  "release": "2026.09.17-remote.6",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -47,8 +47,8 @@
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "61007c5a8af5cc0a62e3bd03dd3fc36f75fcb479079d67f5c8454c64d5199c0d",
-      "bytes": 25233
+      "sha256": "5670ddad50b223c8bdf3d28d129e2ecedebda6c44cbabe1bc117a5d9ac9bf146",
+      "bytes": 25232
     },
     {
       "id": "app",
@@ -87,5 +87,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.5"
+  "version": "0.6"
 }

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "release_channel": "stable",
+  "features": {
+    "player1": true,
+    "player2": false,
+    "youtube2": false
+  },
+  "bridge": {
+    "request_timeout_ms": 9000,
+    "module_timeout_ms": 9000,
+    "max_module_bytes": 524288,
+    "max_redirects": 8
+  },
+  "ui": {
+    "hide": [
+      "#y2"
+    ],
+    "disable": []
+  },
+  "network": {
+    "retry_count": 1,
+    "retry_delay_ms": 350
+  },
+  "notes": "Editable policy. Common UI/bridge-facing behavior can be changed here without reflashing."
+}

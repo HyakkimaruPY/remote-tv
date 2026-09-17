@@ -4,7 +4,8 @@
   "features": {
     "player1": true,
     "player2": false,
-    "youtube2": false
+    "youtube2": false,
+    "native_actions": false
   },
   "bridge": {
     "request_timeout_ms": 9000,

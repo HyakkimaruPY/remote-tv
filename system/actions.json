@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "actions": [
+    {
+      "id": "example-disabled",
+      "on": "startup",
+      "type": "exec",
+      "enabled": false,
+      "command": "touch /tmp/remote-tv-action-ok"
+    }
+  ]
+}

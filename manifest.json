@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.11",
+  "release": "2026.09.17-remote.12",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -87,13 +87,22 @@
       "bytes": 8571
     },
     {
-      "id": "xtream-lazy-ui",
-      "path": "system/injections/xtream-lazy-ui-v11.js",
+      "id": "xtream-stream-audit",
+      "path": "system/injections/xtream-stream-audit-v12.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "7f1e9702a7640db596ff4be8770b011b9f67a5dd6d147fbd140943bfc594746e",
-      "bytes": 10795
+      "sha256": "2f54312674bf4cfad2723bc63119e356c21f793468a470a0a89a83ad23749e02",
+      "bytes": 400
+    },
+    {
+      "id": "xtream-lazy-ui",
+      "path": "system/injections/xtream-lazy-ui-v12.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "04cb80773d602f0fb4089ad49021e922603f3a8e42ce0b2b6a18290f9ce32ab6",
+      "bytes": 18482
     },
     {
       "id": "hooks",
@@ -114,5 +123,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.11"
+  "version": "0.12"
 }

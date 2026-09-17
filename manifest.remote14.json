@@ -1,0 +1,217 @@
+{
+  "schema": 1,
+  "release": "2026.09.17-remote.14",
+  "bootstrap_min": 4,
+  "app": "player1",
+  "ready_timeout_ms": 2200,
+  "modules": [
+    {
+      "id": "policy",
+      "path": "system/policy.json",
+      "type": "json",
+      "phase": "pre",
+      "required": true,
+      "sha256": "61045e256831ceab2ec6ef82a52806dbeb6e654fdbd0674da9ff684faa92f54f",
+      "bytes": 539
+    },
+    {
+      "id": "runtime",
+      "path": "system/runtime.js",
+      "type": "js",
+      "phase": "pre",
+      "required": true,
+      "sha256": "5c370ebdd758b3459ef79f0dce22c1ac960059386fc7485296c55e921629c21a",
+      "bytes": 457
+    },
+    {
+      "id": "shell",
+      "path": "apps/player1/shell.html",
+      "type": "html",
+      "phase": "shell",
+      "required": true,
+      "sha256": "fa7221ace507f95118a79172bf24450a5d9cb921faec6c57bd346acdb991fc13",
+      "bytes": 809
+    },
+    {
+      "id": "style",
+      "path": "apps/player1/style.css",
+      "type": "css",
+      "phase": "shell",
+      "required": true,
+      "sha256": "1a7c9de61cfb359548dad82c40e37a1e67d7cba7c556a697a89c26b7baff62ce",
+      "bytes": 1918
+    },
+    {
+      "id": "rawm3u",
+      "path": "apps/player1/rawm3u.remote5.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "5670ddad50b223c8bdf3d28d129e2ecedebda6c44cbabe1bc117a5d9ac9bf146",
+      "bytes": 25232
+    },
+    {
+      "id": "app",
+      "path": "apps/player1/app.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "b31deb068dcb180f310d1155aa3537770725e1ffd61bb3863bf1e51ddc81807d",
+      "bytes": 13823
+    },
+    {
+      "id": "inject-base",
+      "path": "system/injections/base.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "4f74cb90e62d46b84c10197858a8561150fc61d5f652fb961b67da31ecfd13bf",
+      "bytes": 279
+    },
+    {
+      "id": "xtream-api-first",
+      "path": "system/injections/xtream-api-first-v07.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "a1f02fda5463397e6e092f7003fc19d36f4815dcf7a1ce6478263c36badb5c9a",
+      "bytes": 5796
+    },
+    {
+      "id": "xtream-lazy-core",
+      "path": "system/injections/xtream-lazy-core-v10.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "6f788dbffbaa15f17f756535f3098c620512a2f6dd0d7523d0c75e156283ae7f",
+      "bytes": 8571
+    },
+    {
+      "id": "xtream-stream-router",
+      "path": "system/injections/xtream-stream-router-v13.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "15d222de24056fd392c80a48eb1aa0cf72910350f73d737db8d3b3e846b9c156",
+      "bytes": 953
+    },
+    {
+      "id": "xtream-vod-player",
+      "path": "system/injections/xtream-vod-player-v14.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "dda3ad1a38dff5b73cdd932f069a1b65bd3c1184ae96e4668311b7112bea1e1a",
+      "bytes": 12073
+    },
+    {
+      "id": "xtream-ui-0",
+      "path": "system/injections/xtream-ui-v14-part0.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "1d778427f34afeb5b45fe31f77b08e62e6eb9218713ea5b292b50e40d020cad6",
+      "bytes": 4060
+    },
+    {
+      "id": "xtream-ui-1",
+      "path": "system/injections/xtream-ui-v14-part1.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "960ea1ab316e39527d72a27420f11962f813309000693665891d5363bd7833d1",
+      "bytes": 4042
+    },
+    {
+      "id": "xtream-ui-2",
+      "path": "system/injections/xtream-ui-v14-part2.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "16b20e9c777cbef162634fc9963a95099a8824ec06f83e3377a99e82defac8f3",
+      "bytes": 4193
+    },
+    {
+      "id": "xtream-ui-3",
+      "path": "system/injections/xtream-ui-v14-part3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "0720f742761e8416a03440001d0c3eccf1a0b8ce67705ec1921ce910217afc63",
+      "bytes": 4140
+    },
+    {
+      "id": "xtream-ui-4",
+      "path": "system/injections/xtream-ui-v14-part4.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "18179b002803107eba5cd8538d87a53566bf8d075a48cdf2a2d530dd4181d6c3",
+      "bytes": 4229
+    },
+    {
+      "id": "xtream-ui-5",
+      "path": "system/injections/xtream-ui-v14-part5.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "6b5170b4200faa4ca281403d16b5fdbe9c5459f3e391044b897a78c06dd20284",
+      "bytes": 4193
+    },
+    {
+      "id": "xtream-ui-6",
+      "path": "system/injections/xtream-ui-v14-part6.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "81a0de7e6df0897337fc2f657f01e56727a1adb886af384ec321d88657b865e9",
+      "bytes": 4134
+    },
+    {
+      "id": "xtream-ui-7",
+      "path": "system/injections/xtream-ui-v14-part7.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "b4be98a41b1faa37ef8cd90daf452aea6bb570a365f33c13902c4aa97415bf37",
+      "bytes": 3701
+    },
+    {
+      "id": "xtream-ui-loader",
+      "path": "system/injections/xtream-ui-v14-loader.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "5ca7b77899ab36708d997e9b82b47a9a206a9773c6a3672bb5bbab44ae600399",
+      "bytes": 86
+    },
+    {
+      "id": "hooks",
+      "path": "system/hooks.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c2f4cb20da2c13a2ef996e1cc3bf8d683cfe2d73ce44fd0b43bfdeeeec01a83a",
+      "bytes": 577
+    },
+    {
+      "id": "common-player-ui",
+      "path": "system/injections/common-player-ui-v14.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "b16e0979ea86ebabd9f128573d6890df451601b433a85d32c0803b14d526d36c",
+      "bytes": 13013
+    },
+    {
+      "id": "actions",
+      "path": "system/actions.json",
+      "type": "actions",
+      "phase": "post",
+      "required": false,
+      "sha256": "966d2e8d187da295a4c8ca40c9c1b29e310467b92b85866cc65bc22703cc57f7",
+      "bytes": 201
+    }
+  ],
+  "version": "0.14"
+}

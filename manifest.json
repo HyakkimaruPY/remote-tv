@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.1",
-  "bootstrap_min": 1,
+  "release": "2026.09.17-remote.2",
+  "bootstrap_min": 2,
   "app": "player1",
-  "ready_timeout_ms": 1800,
+  "ready_timeout_ms": 2200,
   "modules": [
     {
       "id": "policy",
@@ -11,8 +11,8 @@
       "type": "json",
       "phase": "pre",
       "required": true,
-      "sha256": "ee706bae686c2b041419a2b0c1146b0d2df85faa8312e5d368199c6e5f730e59",
-      "bytes": 510
+      "sha256": "61045e256831ceab2ec6ef82a52806dbeb6e654fdbd0674da9ff684faa92f54f",
+      "bytes": 539
     },
     {
       "id": "runtime",
@@ -76,6 +76,15 @@
       "required": true,
       "sha256": "c2f4cb20da2c13a2ef996e1cc3bf8d683cfe2d73ce44fd0b43bfdeeeec01a83a",
       "bytes": 577
+    },
+    {
+      "id": "actions",
+      "path": "system/actions.json",
+      "type": "actions",
+      "phase": "post",
+      "required": false,
+      "sha256": "966d2e8d187da295a4c8ca40c9c1b29e310467b92b85866cc65bc22703cc57f7",
+      "bytes": 201
     }
   ]
 }

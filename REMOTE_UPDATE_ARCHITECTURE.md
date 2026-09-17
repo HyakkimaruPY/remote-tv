@@ -30,7 +30,14 @@ Formatos reconhecidos incluem:
 - `/series/user/pass/...`
 - `http://user:pass@host:porta/...`
 
-Se não for possível extrair credenciais Xtream, o módulo mantém fallback para parsing M3U bruto para não eliminar listas não-Xtream.
+O endereço M3U serve somente como fonte de `DNS + username + password`. Depois da extração, `get.php` não é requisitado. Se as três credenciais não puderem ser extraídas, o módulo encerra com diagnóstico e **não baixa o M3U bruto**. A primeira chamada de IPTV é sempre `player_api.php` (GET info), seguida de validação de `auth`, `status` e `exp_date` contra o timestamp do servidor antes de carregar categorias.
 
 ## Limite nativo
 A lógica de rede é remota sempre que pode ser expressa sobre o endpoint genérico `/fetch` já presente no firmware. O helper MIPS fica como transporte mínimo/estável; alterar binário nativo, decoder, kernel ou ABI ainda exige firmware. Essa separação reduz o risco de boot e permite corrigir política de rede e player pelo GitHub.
+
+## Invariante API-first
+- `get.php` é proibido como transporte de catálogo.
+- O link fornecido pelo GitHub é analisado localmente apenas para extrair DNS/usuário/senha.
+- A primeira chamada ao provedor é `http://DNS/player_api.php?username=...&password=...`.
+- Catálogos são carregados por `get_live_categories`, `get_live_streams`, `get_vod_categories`, `get_vod_streams`, `get_series_categories`, `get_series` e `get_series_info`.
+- Credenciais permanecem reais internamente; `***` existe somente no sanitizador de logs.

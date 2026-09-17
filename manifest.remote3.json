@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "release": "2026.09.17-remote.3",
+  "bootstrap_min": 2,
+  "app": "player1",
+  "ready_timeout_ms": 2200,
+  "modules": [
+    {
+      "id": "policy",
+      "path": "system/policy.json",
+      "type": "json",
+      "phase": "pre",
+      "required": true,
+      "sha256": "61045e256831ceab2ec6ef82a52806dbeb6e654fdbd0674da9ff684faa92f54f",
+      "bytes": 539
+    },
+    {
+      "id": "runtime",
+      "path": "system/runtime.js",
+      "type": "js",
+      "phase": "pre",
+      "required": true,
+      "sha256": "5c370ebdd758b3459ef79f0dce22c1ac960059386fc7485296c55e921629c21a",
+      "bytes": 457
+    },
+    {
+      "id": "shell",
+      "path": "apps/player1/shell.html",
+      "type": "html",
+      "phase": "shell",
+      "required": true,
+      "sha256": "fa7221ace507f95118a79172bf24450a5d9cb921faec6c57bd346acdb991fc13",
+      "bytes": 809
+    },
+    {
+      "id": "style",
+      "path": "apps/player1/style.css",
+      "type": "css",
+      "phase": "shell",
+      "required": true,
+      "sha256": "1a7c9de61cfb359548dad82c40e37a1e67d7cba7c556a697a89c26b7baff62ce",
+      "bytes": 1918
+    },
+    {
+      "id": "rawm3u",
+      "path": "apps/player1/rawm3u.remote3.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "5b972fe73f0b34034e719bc0ee6a76a759856db243e7dfc0bd7e9c48d4c1dbf4",
+      "bytes": 16067
+    },
+    {
+      "id": "app",
+      "path": "apps/player1/app.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "b31deb068dcb180f310d1155aa3537770725e1ffd61bb3863bf1e51ddc81807d",
+      "bytes": 13823
+    },
+    {
+      "id": "inject-base",
+      "path": "system/injections/base.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "4f74cb90e62d46b84c10197858a8561150fc61d5f652fb961b67da31ecfd13bf",
+      "bytes": 279
+    },
+    {
+      "id": "hooks",
+      "path": "system/hooks.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c2f4cb20da2c13a2ef996e1cc3bf8d683cfe2d73ce44fd0b43bfdeeeec01a83a",
+      "bytes": 577
+    },
+    {
+      "id": "actions",
+      "path": "system/actions.json",
+      "type": "actions",
+      "phase": "post",
+      "required": false,
+      "sha256": "966d2e8d187da295a4c8ca40c9c1b29e310467b92b85866cc65bc22703cc57f7",
+      "bytes": 201
+    }
+  ]
+}

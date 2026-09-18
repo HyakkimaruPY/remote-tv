@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.18-remote.20",
+  "release": "2026.09.18-remote.21",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -79,12 +79,12 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/injections/xtream-lazy-core-v19.js",
+      "path": "system/injections/xtream-lazy-core-v21.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "46b0dd3ea36dfb7e580a213783283ded613f405d43bf58aafe92d03d194a5eee",
-      "bytes": 9410
+      "sha256": "f4cf9f4bca86c0f9e67473fedd84ca5765659c77acf8dec42f868ddaeef51831",
+      "bytes": 9764
     },
     {
       "id": "xtream-auth-guard",
@@ -114,6 +114,15 @@
       "bytes": 1055
     },
     {
+      "id": "autovod",
+      "path": "system/injections/autovod-v21.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "d911f8b658077742ba9bf4256a86ec06adfcbea431555e39b1c60ca2ebfc22ea",
+      "bytes": 2895
+    },
+    {
       "id": "hlsjs-loader",
       "path": "system/injections/hlsjs-loader-v20.js",
       "type": "js",
@@ -124,12 +133,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/injections/xtream-vod-player-v20.js",
+      "path": "system/injections/xtream-vod-player-v21.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "a2d895c52f72b76dcd7fc8c3371564076b27fee2273f9d3e304622e6a6010da1",
-      "bytes": 13694
+      "sha256": "d07a2f11a54b1f1e3295fd78d9c007e4e4814dd21481794797a577f4c775b517",
+      "bytes": 15801
     },
     {
       "id": "common-player-ui",
@@ -142,11 +151,11 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v20.js",
+      "path": "system/injections/xtream-ui-v21.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "7e2da749132d722664e3fef9d508fdba06c8809cb7ae88338df3f8ea8ecd5ecd",
+      "sha256": "a329454e92d1f9d79da5d259b6b7cb98b58b4730537b51d296fd56f6bd251ecf",
       "bytes": 41261
     },
     {
@@ -168,5 +177,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.20"
+  "version": "0.21"
 }

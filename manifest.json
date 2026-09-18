@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.18-remote.26",
+  "release": "2026.09.18-remote.27",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -88,12 +88,12 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/injections/xtream-lazy-core-v24.js",
+      "path": "system/injections/xtream-lazy-core-v27.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "cd9787c15084070d53575a17b6ad0248abfee3c345bb361afd554e7228e9a780",
-      "bytes": 11023
+      "sha256": "76a63d9ed6a1aa66419fbb9901f5d2107578047cb132dbc470a242ba3901f308",
+      "bytes": 11020
     },
     {
       "id": "xtream-auth-guard",
@@ -142,12 +142,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/injections/xtream-vod-player-v24.js",
+      "path": "system/injections/xtream-vod-player-v27.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "74566036aeb58688d741a36cc660b5ae08bb873f8a6090e09c38eb9fd6597eb7",
-      "bytes": 21035
+      "sha256": "d846299edaec492490653ddf54f58ad0653df2887efa1ec5cd3d7fd0df3d57df",
+      "bytes": 21093
     },
     {
       "id": "common-player-ui",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v24.js",
+      "path": "system/injections/xtream-ui-v27.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "9cc4ec3430cfbc13e2e9103b65a425226dc094de728d93a1c6fad7ea82f2d612",
-      "bytes": 43093
+      "sha256": "1c46a10e6c9c58978eddee267908215826d439ca4ce9b97fa7a8904518ce72a0",
+      "bytes": 45199
     },
     {
       "id": "live-log-overlay",
@@ -178,12 +178,12 @@
     },
     {
       "id": "graphos-skin",
-      "path": "system/injections/graphos-skin-v24.js",
+      "path": "system/injections/graphos-skin-v27.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "386cd9f2186b06288bc46bed44a8232b4ba51026ca8cc932f61f1e91642dcc16",
-      "bytes": 3576
+      "sha256": "8a39b79465319550856567919f345673616d1e2f6bd18d41462c75a509b904a1",
+      "bytes": 3605
     },
     {
       "id": "hooks",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.26"
+  "version": "0.27"
 }

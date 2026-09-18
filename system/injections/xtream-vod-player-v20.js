@@ -1,5 +1,5 @@
 (function(w,d){'use strict';
-try{if(w.XTVod19&&w.XTVod19.active&&w.XTVod19.active())w.XTVod19.stop()}catch(__e){}
+try{if(w.XTVod19&&w.XTVod19.active&&w.XTVod19.active())w.XTVod19.stop()}catch(__e){}var __old=d.getElementById('xv14'),__c1=d.getElementById('xv14css'),__c2=d.getElementById('xv20css');if(__old&&__old.parentNode)__old.parentNode.removeChild(__old);if(__c1&&__c1.parentNode)__c1.parentNode.removeChild(__c1);if(__c2&&__c2.parentNode)__c2.parentNode.removeChild(__c2);
 var X=w.XT10,C=w.YTCore,H=w.XTHls20,R=w.RemoteTV||(w.RemoteTV={}),PK='xtream.progress.v14',CK='xtream.continue.v14',
 P={on:0,engine:'',mp:null,id:-1,video:null,hls:null,item:null,list:null,index:-1,ctx:null,pos:0,dur:0,paused:0,nextShown:0,timer:0,token:0,resumeAt:0,resumeDone:0,lastSave:0};
 if(!X||!C)return;

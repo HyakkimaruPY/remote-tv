@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.18-remote.17",
+  "release": "2026.09.18-remote.18",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -106,12 +106,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/injections/xtream-vod-player-v14.js",
+      "path": "system/injections/xtream-vod-player-v18.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "dda3ad1a38dff5b73cdd932f069a1b65bd3c1184ae96e4668311b7112bea1e1a",
-      "bytes": 12073
+      "sha256": "50a16881f2b3f4580775d2303fd1483a82c3eff3464b884b02ffc183a4407473",
+      "bytes": 12908
     },
     {
       "id": "common-player-ui",
@@ -124,12 +124,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v17.js",
+      "path": "system/injections/xtream-ui-v18.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "24728d52c1ff95c74ded6664fea9407acae45f0d304033abcd1fcf831d562d8f",
-      "bytes": 32426
+      "sha256": "b318fcbdf601e81bc21cc17d63f98fc235e64147b24595034f8f7ce6f5e518cf",
+      "bytes": 34918
     },
     {
       "id": "hooks",
@@ -150,5 +150,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.17"
+  "version": "0.18"
 }

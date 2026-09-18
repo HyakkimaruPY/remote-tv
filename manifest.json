@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.14",
+  "release": "2026.09.17-remote.15",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -79,12 +79,12 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/injections/xtream-lazy-core-v10.js",
+      "path": "system/injections/xtream-lazy-core-v15.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "6f788dbffbaa15f17f756535f3098c620512a2f6dd0d7523d0c75e156283ae7f",
-      "bytes": 8571
+      "sha256": "32ff81dd0efba2fd0415e1d78b0859c852b6e8230dc3ba444a341a178af038d9",
+      "bytes": 9027
     },
     {
       "id": "xtream-stream-router",
@@ -105,85 +105,22 @@
       "bytes": 12073
     },
     {
-      "id": "xtream-ui-0",
-      "path": "system/injections/xtream-ui-v14-part0.js",
+      "id": "common-player-ui",
+      "path": "system/injections/common-player-ui-v15.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "1d778427f34afeb5b45fe31f77b08e62e6eb9218713ea5b292b50e40d020cad6",
-      "bytes": 4060
+      "sha256": "140df1d98a4269e566d27a6fdcc7af1561eb2e70c7285d3480991daccaf197f6",
+      "bytes": 13499
     },
     {
-      "id": "xtream-ui-1",
-      "path": "system/injections/xtream-ui-v14-part1.js",
+      "id": "xtream-ui",
+      "path": "system/injections/xtream-ui-v15.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "960ea1ab316e39527d72a27420f11962f813309000693665891d5363bd7833d1",
-      "bytes": 4042
-    },
-    {
-      "id": "xtream-ui-2",
-      "path": "system/injections/xtream-ui-v14-part2.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "16b20e9c777cbef162634fc9963a95099a8824ec06f83e3377a99e82defac8f3",
-      "bytes": 4193
-    },
-    {
-      "id": "xtream-ui-3",
-      "path": "system/injections/xtream-ui-v14-part3.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "0720f742761e8416a03440001d0c3eccf1a0b8ce67705ec1921ce910217afc63",
-      "bytes": 4140
-    },
-    {
-      "id": "xtream-ui-4",
-      "path": "system/injections/xtream-ui-v14-part4.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "18179b002803107eba5cd8538d87a53566bf8d075a48cdf2a2d530dd4181d6c3",
-      "bytes": 4229
-    },
-    {
-      "id": "xtream-ui-5",
-      "path": "system/injections/xtream-ui-v14-part5.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "6b5170b4200faa4ca281403d16b5fdbe9c5459f3e391044b897a78c06dd20284",
-      "bytes": 4193
-    },
-    {
-      "id": "xtream-ui-6",
-      "path": "system/injections/xtream-ui-v14-part6.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "81a0de7e6df0897337fc2f657f01e56727a1adb886af384ec321d88657b865e9",
-      "bytes": 4134
-    },
-    {
-      "id": "xtream-ui-7",
-      "path": "system/injections/xtream-ui-v14-part7.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "b4be98a41b1faa37ef8cd90daf452aea6bb570a365f33c13902c4aa97415bf37",
-      "bytes": 3701
-    },
-    {
-      "id": "xtream-ui-loader",
-      "path": "system/injections/xtream-ui-v14-loader.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "5ca7b77899ab36708d997e9b82b47a9a206a9773c6a3672bb5bbab44ae600399",
-      "bytes": 86
+      "sha256": "4452ffab56e8033c35003875d3d3c53555b099c3635afc725377328732a3ff34",
+      "bytes": 21901
     },
     {
       "id": "hooks",
@@ -195,15 +132,6 @@
       "bytes": 577
     },
     {
-      "id": "common-player-ui",
-      "path": "system/injections/common-player-ui-v14.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "b16e0979ea86ebabd9f128573d6890df451601b433a85d32c0803b14d526d36c",
-      "bytes": 13013
-    },
-    {
       "id": "actions",
       "path": "system/actions.json",
       "type": "actions",
@@ -213,5 +141,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.14"
+  "version": "0.15"
 }

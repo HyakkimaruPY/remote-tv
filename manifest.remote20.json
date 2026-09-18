@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "release": "2026.09.18-remote.20",
+  "bootstrap_min": 4,
+  "app": "player1",
+  "ready_timeout_ms": 2200,
+  "modules": [
+    {
+      "id": "policy",
+      "path": "system/policy.json",
+      "type": "json",
+      "phase": "pre",
+      "required": true,
+      "sha256": "61045e256831ceab2ec6ef82a52806dbeb6e654fdbd0674da9ff684faa92f54f",
+      "bytes": 539
+    },
+    {
+      "id": "runtime",
+      "path": "system/runtime.js",
+      "type": "js",
+      "phase": "pre",
+      "required": true,
+      "sha256": "5c370ebdd758b3459ef79f0dce22c1ac960059386fc7485296c55e921629c21a",
+      "bytes": 457
+    },
+    {
+      "id": "shell",
+      "path": "apps/player1/shell.html",
+      "type": "html",
+      "phase": "shell",
+      "required": true,
+      "sha256": "fa7221ace507f95118a79172bf24450a5d9cb921faec6c57bd346acdb991fc13",
+      "bytes": 809
+    },
+    {
+      "id": "style",
+      "path": "apps/player1/style.css",
+      "type": "css",
+      "phase": "shell",
+      "required": true,
+      "sha256": "1a7c9de61cfb359548dad82c40e37a1e67d7cba7c556a697a89c26b7baff62ce",
+      "bytes": 1918
+    },
+    {
+      "id": "rawm3u",
+      "path": "apps/player1/rawm3u.remote5.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "5670ddad50b223c8bdf3d28d129e2ecedebda6c44cbabe1bc117a5d9ac9bf146",
+      "bytes": 25232
+    },
+    {
+      "id": "app",
+      "path": "apps/player1/app.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "b31deb068dcb180f310d1155aa3537770725e1ffd61bb3863bf1e51ddc81807d",
+      "bytes": 13823
+    },
+    {
+      "id": "inject-base",
+      "path": "system/injections/base.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "4f74cb90e62d46b84c10197858a8561150fc61d5f652fb961b67da31ecfd13bf",
+      "bytes": 279
+    },
+    {
+      "id": "xtream-api-first",
+      "path": "system/injections/xtream-api-first-v07.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "a1f02fda5463397e6e092f7003fc19d36f4815dcf7a1ce6478263c36badb5c9a",
+      "bytes": 5796
+    },
+    {
+      "id": "xtream-lazy-core",
+      "path": "system/injections/xtream-lazy-core-v19.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "46b0dd3ea36dfb7e580a213783283ded613f405d43bf58aafe92d03d194a5eee",
+      "bytes": 9410
+    },
+    {
+      "id": "xtream-auth-guard",
+      "path": "system/injections/xtream-auth-guard-v17.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "60920c4b8b00ede9f2983411f0d3eeed2bc309195fd1094599227f361af99472",
+      "bytes": 1374
+    },
+    {
+      "id": "tmdb-metadata",
+      "path": "system/injections/tmdb-metadata-v19.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "46199c7db236b0ad930c6f705fcae79d5e7743885cb7840e5b8861ba2d4aac9f",
+      "bytes": 3677
+    },
+    {
+      "id": "xtream-stream-router",
+      "path": "system/injections/xtream-stream-router-v19.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "88cb743f232cda5c6d603e4166b05681c4ef185e8d5710851213d148de1aa931",
+      "bytes": 1055
+    },
+    {
+      "id": "hlsjs-loader",
+      "path": "system/injections/hlsjs-loader-v20.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "28a1274fb9f58c55ec7101ff3289378aac93d26365c43a3d4238851a3b1c9ab3",
+      "bytes": 2189
+    },
+    {
+      "id": "xtream-vod-player",
+      "path": "system/injections/xtream-vod-player-v20.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "a2d895c52f72b76dcd7fc8c3371564076b27fee2273f9d3e304622e6a6010da1",
+      "bytes": 13694
+    },
+    {
+      "id": "common-player-ui",
+      "path": "system/injections/common-player-ui-v17.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c397edbfd50ffcdf2ea878efcc5765bef6c0a4c8b5f7537089fc6ad2dd2c5ce4",
+      "bytes": 14574
+    },
+    {
+      "id": "xtream-ui",
+      "path": "system/injections/xtream-ui-v20.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "7e2da749132d722664e3fef9d508fdba06c8809cb7ae88338df3f8ea8ecd5ecd",
+      "bytes": 41261
+    },
+    {
+      "id": "hooks",
+      "path": "system/hooks.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c2f4cb20da2c13a2ef996e1cc3bf8d683cfe2d73ce44fd0b43bfdeeeec01a83a",
+      "bytes": 577
+    },
+    {
+      "id": "actions",
+      "path": "system/actions.json",
+      "type": "actions",
+      "phase": "post",
+      "required": false,
+      "sha256": "966d2e8d187da295a4c8ca40c9c1b29e310467b92b85866cc65bc22703cc57f7",
+      "bytes": 201
+    }
+  ],
+  "version": "0.20"
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.17-remote.15",
+  "release": "2026.09.18-remote.16",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -79,12 +79,21 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/injections/xtream-lazy-core-v15.js",
+      "path": "system/injections/xtream-lazy-core-v10.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "32ff81dd0efba2fd0415e1d78b0859c852b6e8230dc3ba444a341a178af038d9",
-      "bytes": 9027
+      "sha256": "6f788dbffbaa15f17f756535f3098c620512a2f6dd0d7523d0c75e156283ae7f",
+      "bytes": 8571
+    },
+    {
+      "id": "xtream-flow-debug",
+      "path": "system/injections/xtream-flow-debug-v16.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "1580a980800356a6a3c4b65c4d432d884962d496cc79c67eb6c1ac7ff8c31c84",
+      "bytes": 980
     },
     {
       "id": "xtream-stream-router",
@@ -106,21 +115,21 @@
     },
     {
       "id": "common-player-ui",
-      "path": "system/injections/common-player-ui-v15.js",
+      "path": "system/injections/common-player-ui-v16.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "140df1d98a4269e566d27a6fdcc7af1561eb2e70c7285d3480991daccaf197f6",
-      "bytes": 13499
+      "sha256": "194ca9f3fcca07362305e385a60dcd4751af396c81ae77a650e551de01a89407",
+      "bytes": 14391
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v15.js",
+      "path": "system/injections/xtream-ui-v16.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "4452ffab56e8033c35003875d3d3c53555b099c3635afc725377328732a3ff34",
-      "bytes": 21901
+      "sha256": "15a9b23131369cab8d715a1a10f883f59d991557f564522ed81700d5c480d43b",
+      "bytes": 32146
     },
     {
       "id": "hooks",
@@ -141,5 +150,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.15"
+  "version": "0.16"
 }

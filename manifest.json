@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.19-remote.31",
+  "release": "2026.09.19-remote.32",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -142,12 +142,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/injections/xtream-vod-player-v31.js",
+      "path": "system/injections/xtream-vod-player-v32.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "89459f0857880085e509ec16c1c16b732afd10b3e9471272d4f955decdc59128",
-      "bytes": 25810
+      "sha256": "71dddbb4df95001cb7504172115ea5bf33db914b36cc3b8fe065422c56ae1845",
+      "bytes": 31031
     },
     {
       "id": "common-player-ui",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v31.js",
+      "path": "system/injections/xtream-ui-v32.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "9bac900edac38a8878c2a843c6f324936abd066489a7635a3c6e141f32d287c2",
-      "bytes": 52375
+      "sha256": "c12e12ab030b2ddfa2a66009a9c457f59a2bd0ee531cdb6f7e18fa105688dbad",
+      "bytes": 53531
     },
     {
       "id": "live-log-overlay",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.31"
+  "version": "0.32"
 }

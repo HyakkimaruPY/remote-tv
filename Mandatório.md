@@ -67,3 +67,14 @@ Leia este arquivo antes de qualquer tarefa neste repositório. Atualize apenas d
 - Validação desta sessão: sintaxe dos dois módulos PASS; harness VOD PASS para fluxo ↑→↑, cursor de 1 s, prévia separada, confirmação/cancelamento e media keys; corrida de metadata tardia PASS; harness UI 7→8 confirmou repintura parcial sem rebuild completo. Hash SHA-256 foi conferido contra os artefatos v31 já publicados antes de gerar os hashes v32.
 - Regressions `tests/remote32.test.cjs` e `tests/remote32.browser.cjs` usam o `app.remote31.js` ativo. O teste determinístico ganhou casos específicos de seek e repintura parcial; ambos os arquivos passaram parsing sintático, mas jsdom/Playwright completos não foram executados nesta sessão. Não houve acesso físico à TV/decoder nem validação de stream real; a prévia simultânea em segundo `video` precisa ser observada na Philco.
 - Manifesto arquivado: `manifest.remote32.json`. Relatório: `REMOTE_32_VALIDATION.md`. Manifesto ativo publicado no commit `ecc651d0`; `version` foi ativado em `1888e2d`. Após a ativação 0.32, somente testes/documentação foram corrigidos; módulos ativos e manifesto permaneceram inalterados.
+
+
+## Checkpoint remote.33
+- Follow-up mínimo da remote.32 para cobrir o caminho físico `irkeypress`. Módulo novo: `xtream-ui-v33.js`; VOD/seek permanece em `xtream-vod-player-v32.js`. Nenhum layout, decoder, firmware/flash, YouTube, Player 2 ou fei-config foi alterado.
+- Causa confirmada: a captura da UI reencaminhava `irkeypress` apenas para setas/OK/Voltar. Teclas de transporte já entendidas pelo VOD poderiam ser ignoradas quando o controle as emitisse somente como IR.
+- Correção: captura inclui 19/169/176/177/227/228/412/413/415/417; `irkeypress` é consumido e sintetiza um único `document.onkeydown`. Debounce de mídia: 300 ms. `navImgs27()` continua exclusivo das setas para que Play/Pause/Rewind/Fast-forward não perturbem a fila de imagens.
+- Validação: parsing PASS; varredura de construções modernas nas mudanças de produção PASS; harness isolado roteou 417 exatamente uma vez ao `XTVod29.key`. Regressions reproduzíveis em `tests/remote33.test.cjs` e `tests/remote33.browser.cjs`.
+- Artefato UI: 53621 bytes; SHA-256 `64909f2a48bb10dbbacaa41e3cfe7505ab041f7cd39f18969a8ada5718e4043d`.
+- Commits: módulo `674d181`; regressions `9102491` / `3a2f2d2`; relatório `a653dd5`; manifesto arquivado `e00d709`; manifesto ativo `a12bf58`.
+- Limites: jsdom/Playwright completos e TV física não foram executados. Confirmar no aparelho quais códigos o controle emite e a prévia simultânea do seek.
+- Publicação: `manifest.remote33.json` preservado; `manifest.json` aponta para remote.33. O arquivo `version` deve permanecer 0.32 até a checagem final e ser alterado para 0.33 como último marcador de ativação.

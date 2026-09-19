@@ -1,0 +1,19 @@
+name: remote37-validation
+on:
+  push:
+    branches:
+      - remote37-stream-recovery
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install test dependencies
+        run: npm install --no-save --no-package-lock jsdom@26 acorn@8
+      - name: Run Remote 37 regression suite
+        run: NODE_PATH="$PWD/node_modules" node tests/remote37.test.cjs

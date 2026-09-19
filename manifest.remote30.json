@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "release": "2026.09.19-remote.30",
+  "bootstrap_min": 4,
+  "app": "player1",
+  "ready_timeout_ms": 2200,
+  "modules": [
+    {
+      "id": "policy",
+      "path": "system/policy.json",
+      "type": "json",
+      "phase": "pre",
+      "required": true,
+      "sha256": "61045e256831ceab2ec6ef82a52806dbeb6e654fdbd0674da9ff684faa92f54f",
+      "bytes": 539
+    },
+    {
+      "id": "runtime",
+      "path": "system/runtime.js",
+      "type": "js",
+      "phase": "pre",
+      "required": true,
+      "sha256": "5c370ebdd758b3459ef79f0dce22c1ac960059386fc7485296c55e921629c21a",
+      "bytes": 457
+    },
+    {
+      "id": "shell",
+      "path": "apps/player1/shell.html",
+      "type": "html",
+      "phase": "shell",
+      "required": true,
+      "sha256": "79ac84908a801ae33afc9142e96d69970663b354a52f7f20af65fe4c6ad8e787",
+      "bytes": 1143
+    },
+    {
+      "id": "style",
+      "path": "apps/player1/style.css",
+      "type": "css",
+      "phase": "shell",
+      "required": true,
+      "sha256": "5bf86aa7e733f09d4551156dffc249d7dd3141bff434fa3340b74feae22dd616",
+      "bytes": 2336
+    },
+    {
+      "id": "rawm3u",
+      "path": "apps/player1/rawm3u.remote5.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "5670ddad50b223c8bdf3d28d129e2ecedebda6c44cbabe1bc117a5d9ac9bf146",
+      "bytes": 25232
+    },
+    {
+      "id": "app",
+      "path": "apps/player1/app.remote24.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "ef68b290dd1a44e248a5f211c8593210852ba84df793e9541f6daebe0578ae92",
+      "bytes": 14254
+    },
+    {
+      "id": "youtube3-probe",
+      "path": "apps/youtube3/probe-v28.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "cb88a12c0c415af4e911234cc9dd21b2ce4256eec5ad3e99674abcf12018672d",
+      "bytes": 6959
+    },
+    {
+      "id": "inject-base",
+      "path": "system/injections/base.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "4f74cb90e62d46b84c10197858a8561150fc61d5f652fb961b67da31ecfd13bf",
+      "bytes": 279
+    },
+    {
+      "id": "xtream-api-first",
+      "path": "system/injections/xtream-api-first-v07.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "a1f02fda5463397e6e092f7003fc19d36f4815dcf7a1ce6478263c36badb5c9a",
+      "bytes": 5796
+    },
+    {
+      "id": "xtream-lazy-core",
+      "path": "system/injections/xtream-lazy-core-v30.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "16dc9b986dc26ce9202e8fb35171c0c6fc761b984bbea7b53cdf2e3ca904da0f",
+      "bytes": 11319
+    },
+    {
+      "id": "xtream-auth-guard",
+      "path": "system/injections/xtream-auth-guard-v30.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "dd4f898d3ab63a83c4b5ea9eab654268775e902e4a8f42ec85f14c614ebe3507",
+      "bytes": 1800
+    },
+    {
+      "id": "tmdb-metadata",
+      "path": "system/injections/tmdb-metadata-v24.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "4cfba9b90452a769c122f4231dfcc3606a2fd900fe4b44e0ea91ddad1a992fbe",
+      "bytes": 5907
+    },
+    {
+      "id": "xtream-stream-router",
+      "path": "system/injections/xtream-stream-router-v22.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "d5196e857aa7dde49e3b6b4b6151f4b194c581d7ea67f2a9506b6cbaa531033b",
+      "bytes": 1150
+    },
+    {
+      "id": "autovod",
+      "path": "system/injections/autovod-v22.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "412271d62e4111573cd3b41044b1a3426b2060aecd29ec952a31c385ebdd9674",
+      "bytes": 4101
+    },
+    {
+      "id": "hlsjs-loader",
+      "path": "system/injections/hlsjs-loader-v20.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "28a1274fb9f58c55ec7101ff3289378aac93d26365c43a3d4238851a3b1c9ab3",
+      "bytes": 2189
+    },
+    {
+      "id": "xtream-vod-player",
+      "path": "system/injections/xtream-vod-player-v29.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "ec26810972d24bb7ae93f03d7279df62683807d79c703d531fec9751183cee6b",
+      "bytes": 24823
+    },
+    {
+      "id": "common-player-ui",
+      "path": "system/injections/common-player-ui-v17.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c397edbfd50ffcdf2ea878efcc5765bef6c0a4c8b5f7537089fc6ad2dd2c5ce4",
+      "bytes": 14574
+    },
+    {
+      "id": "xtream-ui",
+      "path": "system/injections/xtream-ui-v30.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "84b2bea3516e2911b9d902a22ada64b6335bb1e1cf4398f243d040062bf8dfe7",
+      "bytes": 47019
+    },
+    {
+      "id": "live-log-overlay",
+      "path": "system/injections/live-log-overlay-v29.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "634fe263e4364b0fc54cc549800e53c238506754a5a6de876c17e7ddd5b81d66",
+      "bytes": 3054
+    },
+    {
+      "id": "graphos-skin",
+      "path": "system/injections/graphos-skin-v27.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "8a39b79465319550856567919f345673616d1e2f6bd18d41462c75a509b904a1",
+      "bytes": 3605
+    },
+    {
+      "id": "hooks",
+      "path": "system/hooks.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c2f4cb20da2c13a2ef996e1cc3bf8d683cfe2d73ce44fd0b43bfdeeeec01a83a",
+      "bytes": 577
+    },
+    {
+      "id": "actions",
+      "path": "system/actions.json",
+      "type": "actions",
+      "phase": "post",
+      "required": false,
+      "sha256": "966d2e8d187da295a4c8ca40c9c1b29e310467b92b85866cc65bc22703cc57f7",
+      "bytes": 201
+    }
+  ],
+  "version": "0.30"
+}

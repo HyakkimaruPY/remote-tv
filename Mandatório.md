@@ -56,3 +56,14 @@ Leia este arquivo antes de qualquer tarefa neste repositório. Atualize apenas d
 - Autenticação cancelada limpa a fila/busy do guard, permitindo reabrir; guardas transitórias da 0.30 foram preservadas. JSON inválido não imprime trechos potencialmente sensíveis.
 - Verificação: 14 testes determinísticos passaram; teste Chromium integrou app/common/UI, saída nativa mock, geometria 3×2, logo, temporadas e filme sem erros de página. Imagens de teste são sintéticas. Não houve acesso à TV/decoder nem teste de streaming real.
 - Reproduzir testes: instalar `jsdom acorn` em diretório temporário e configurar NODE_PATH; executar `node tests/remote31.test.cjs`. Para visual, Playwright instalado e `RTV_CHROMIUM=/caminho/chromium node tests/remote31.browser.cjs`. Dependências nunca são enviadas para a TV.
+
+
+## Checkpoint remote.32
+- Publicação preparada sobre a remote.31 sem alterar firmware/flash, decoder, YouTube, Player 2 ou fei-config. Os módulos novos são `xtream-vod-player-v32.js` e `xtream-ui-v32.js`; interfaces públicas `XTVod29` e `RawM3U` permanecem.
+- Player: ↑ abre controles e ↑ novamente entra na barra de progresso; ←/→ move o cursor em passos de 1 s; OK confirma o salto; ↑/Voltar cancela sem alterar a posição principal. A prévia usa vídeo separado e aplica o último alvo mesmo se `loadedmetadata` chegar depois de movimentos rápidos.
+- Teclas físicas: Rewind/Fast-forward 412/417, com fallbacks 227/228 e 177/176, fazem ±30 s fora do modo de seleção; Play 415, Pause 19 e Stop 413/169 são tratados. O aviso de próximo episódio não rouba mais o primeiro ↑.
+- HUD passa a 4 s. Durante seek, watchdog/autoavanço não devem interpretar a pausa intencional como travamento.
+- Catálogo: troca de página de categorias e retorno de listagem fazem repintura parcial em vez de reconstruir `library()`; progresso dos cards usa cache curto para evitar reler/parsing do mesmo JSON por card.
+- Validação desta sessão: sintaxe dos dois módulos PASS; harness VOD PASS para fluxo ↑→↑, cursor de 1 s, prévia separada, confirmação/cancelamento e media keys; corrida de metadata tardia PASS; harness UI 7→8 confirmou repintura parcial sem rebuild completo. Hash SHA-256 foi conferido contra os artefatos v31 já publicados antes de gerar os hashes v32.
+- Regressions `tests/remote32.test.cjs` e `tests/remote32.browser.cjs` foram preservados e passaram verificação de sintaxe, mas jsdom/Playwright não foram executados nesta sessão. Não houve acesso físico à TV/decoder nem validação de stream real; a prévia simultânea em segundo `video` precisa ser observada na Philco.
+- Manifesto arquivado: `manifest.remote32.json`. Relatório: `REMOTE_32_VALIDATION.md`. Manifesto ativo publicado no commit `ecc651d0`; `version` deve continuar sendo o último marcador de ativação.

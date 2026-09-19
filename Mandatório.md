@@ -4,7 +4,7 @@ Guia de decisões e localização, não histórico de conversa. Leia **Entrada**
 
 ## Entrada: estabelecer a base certa
 
-**Snapshot verificado em 19/09/2026:** `HyakkimaruPY/remote-tv`, `main`, ativação `092d78851bb1c1afde3dd10c3507e11ba09a7b44`, `version=0.34`, release `2026.09.19-remote.34`, 22 módulos. Isso descreve a inspeção, não fixa a próxima versão: reconfirme a ponta remota antes de editar e publicar.
+**Snapshot da release 0.35 (19/09/2026):** `HyakkimaruPY/remote-tv`, preparada a partir de `584286a9c359e492ff406c702348d8f87b09c0cb`; `version=0.35`, release `2026.09.19-remote.35`, 22 módulos. Reconfirme a ponta remota e o marcador antes de editar/publicar; este guia não fixa a próxima versão.
 
 Ordem de evidência: instrução atual do usuário → estado publicado e código ativo → reprodução/logs sanitizados → testes e relatórios com base identificada → histórico como pista. “Publicado” não significa “recebido pela TV” ou “estável no decoder”. A antiga 0.30 foi referência de estabilidade informada; não substitui automaticamente a base atual.
 
@@ -47,31 +47,33 @@ Se `version` e manifesto divergirem, investigue publicação em andamento/checko
 
 ## Mapa de leitura por sintoma
 
-Caminhos abaixo foram confirmados na 0.34. `manifest.json` sempre decide o que está ativo; preservar ordem/fases e aliases públicos mesmo com novo sufixo de arquivo. `system/injections/` é o prefixo dos nomes abreviados nesta tabela.
+Caminhos abaixo foram confirmados na 0.35. `manifest.json` sempre decide o que está ativo; preservar ordem/fases e aliases públicos mesmo com novo sufixo de arquivo. `system/injections/` é o prefixo dos nomes abreviados nesta tabela.
 
 | Assunto | Arquivo ativo / ponto de entrada |
 |---|---|
 | Atualização não chega | `version`, `manifest.json`; [arquitetura do updater](REMOTE_UPDATE_ARCHITECTURE.md), logs/cache do bootstrap |
-| Menu base, live nativo, saída Playroom | `apps/player1/app.remote31.js`: `RawPlayer`, `Q`, handlers do documento |
+| Menu base, live nativo, saída Playroom | `apps/player1/app.remote35.js`: `RawPlayer`, `Q`, handlers do documento |
+| Lista e controle do player comum | `common-player-ui-v35.js`: `CommonPlayer14`, `moveCat`, `moveCh`, `commitCategory35`, renderização parcial e fila de imagens; `app.remote35.js`: `pumpControl35`, cancel/start assíncronos em sequência |
 | Catálogo/rede/autenticação | `xtream-lazy-core-v31.js`: `XT10`, `bridge`, `jreq`, `cancel`; `xtream-auth-guard-v31.js`: `ensureAuth` |
-| Foco, categorias, Favoritos/Continuar | `xtream-ui-v34.js`: `RawM3U`, `input31`, `key`, `headMove`, `focusSpecialTab34`, `moveSpecialCard34` |
+| Foco, categorias, Favoritos/Continuar | `xtream-ui-v35.js`: `RawM3U`, `input31`, `key`, `headMove`, `focusSpecialTab34`, `moveSpecialCard34` |
 | Carregamento/retorno visual | UI: `specialReq34`, `pauseImgs34`, `resumeImgs34`, `restorePlaybackScreen34`; `xtream.art.urls.v34` guarda até 30 registros de URLs |
 | Confirmação de retomada | UI: `promptResume34`, `specialOpen`, `playMovie`, `playEpisode` |
 | Seek, retomada, buffer, próximo episódio | `xtream-vod-player-v34.js`: alias `XTVod29`, `applyResume34`, `seekTo`, `writeState`, `enterSeek32`, `leaveSeek32`, `release` |
 | URL/container/fallback | `autovod-v22.js`: `XTAutoVod22`; `xtream-stream-router-v22.js`; `hlsjs-loader-v20.js` |
 | TMDB/logo/background | `tmdb-metadata-v31.js`: `XTMeta24`; UI faz pré-carregamento e cache de URLs |
-| Eventos/camadas adicionais | `common-player-ui-v17.js` envolve `document.onkeydown`; `live-log-overlay-v31.js` usa captura |
+| Eventos/camadas adicionais | `common-player-ui-v35.js` envolve `document.onkeydown`; `live-log-overlay-v31.js` usa captura |
 | CSS/visibilidade/política | `apps/player1/style.css`, estilos da UI/VOD, `graphos-skin-v27.js` com `!important`, `system/policy.json`, `system/hooks.js` |
 
 Use `rg -n 'nomeDaFuncao|identificador' arquivo` e leia a região encontrada com `sed`. Em arquivo minificado, evite imprimir repetidamente a linha inteira; extraia trechos ou formate uma cópia temporária, sem reformatar a produção por acidente. Leia chamador, estado e eventual sobrescrita posterior antes de editar.
 
-### Comportamentos de referência da 0.34
+### Comportamentos de referência preservados
 
-- Cabeçalho ↓ retorna à categoria/aba ativa; topo do conteúdo ↑ chega ao cabeçalho. Favoritos/Continuar têm movimento explícito; aba Séries não deve voltar sozinha para Filmes.
+- Cabeçalho ↓ retorna à categoria/aba ativa ou aos canais no live recolhido; topo do conteúdo ↑ chega ao cabeçalho. Favoritos/Continuar têm movimento explícito; aba Séries não deve voltar sozinha para Filmes.
 - Continuar abre a posição salva automaticamente e resolve `episode_id` para séries. Fora dessa tela, progresso ≥5 s oferece Sim/Não; Não inicia em zero.
 - Playback oculta a tela de detalhe e depois reexibe seu DOM/foco, preservando arte carregada.
 - Séries: seis episódios em 3×2. Filmes mantêm os botões existentes e arte/metadata.
 - VOD: ↑ abre botões, ↑ entra no progresso; ←/→ ajustam 1 s; OK confirma; ↑/Voltar cancela. HUD configurado para 4 s. Conferir implementações e exceções ao alterar overlays.
+- Na 0.35, `input31` filtra eventos dos dois players; IR passa pela mesma captura do keydown, inclusive Log. Player comum move foco sem recriar canais na mesma página; categorias agrupam trabalho após 160 ms. Não reintroduzir XHR síncrono em cancel/start: respeitar fila, token e saída após cancelamento. Direcionais completos e evidências: [validação 0.35](REMOTE_35_VALIDATION.md).
 - Transporte: rewind 412/227/177, forward 417/228/176, play 415, pause 19, stop 413/169. São códigos tratados pelo software, não medição do controle físico. O caminho IR também precisa chegar ao VOD uma única vez.
 
 ## Diagnóstico e uso eficiente de ferramentas
@@ -97,13 +99,13 @@ Adapte a granularidade à confiança e às ferramentas disponíveis, não ao nom
 
 **Documentação apenas:** validar nomes de arquivos/símbolos, exemplos executáveis de leitura, links, coerência com manifesto e diff restrito. Não simular uma nova release do app.
 
-**Runtime:** verificar sintaxe e ES5 dos módulos alterados; executar teste do cenário e regressões adjacentes. A suíte existente é `tests/remote34.test.cjs` (jsdom/acorn), e o visual é `tests/remote34.browser.cjs` (Playwright/browser). Ler imports/configuração antes de executar; os caminhos das suítes são fixos, portanto testar uma nova versão exige apontá-las aos novos módulos. PASS da versão anterior não valida a nova.
+**Runtime:** verificar sintaxe e ES5 dos módulos alterados; executar teste do cenário e regressões adjacentes. A suíte existente é `tests/remote35.test.cjs` (jsdom/acorn), e o visual é `tests/remote35.browser.cjs` (Playwright/browser). Ler imports/configuração antes de executar; os caminhos das suítes são fixos, portanto testar uma nova versão exige apontá-las aos novos módulos. PASS da versão anterior não valida a nova.
 
 Exemplos, apenas se as dependências/caminhos existirem:
 
 ```sh
-NODE_PATH=/tmp/remote-tv-test/node_modules node tests/remote34.test.cjs
-RTV_CHROMIUM=/caminho/real/do/chromium node tests/remote34.browser.cjs
+NODE_PATH=/tmp/remote-tv-test/node_modules node tests/remote35.test.cjs
+RTV_CHROMIUM=/caminho/real/do/chromium node tests/remote35.browser.cjs
 git diff --check
 ```
 
@@ -154,4 +156,4 @@ O guia mantém mapa/contratos atuais; relatórios por release guardam detalhes e
 
 Formato de passagem: **base remota; objetivo; arquivos/funções; feito; evidência; pendência/bloqueio; próximo comando útil; publicação/ativação**. Diferenciar fato, hipótese e teste pendente. Ao mudar de sessão/modelo, ler esse checkpoint e reconferir o remoto antes de continuar.
 
-**Checkpoint desta revisão:** base 0.34 / `092d788`; os 22 módulos conferem em bytes/SHA-256 e marcador/manifesto coincidem. Pedido ativo: melhorar somente estes dois guias. O rascunho local de outra 0.32 foi cancelado e não integra esta revisão. Fonte da arquitetura: código ativo, manifesto e relatórios do próprio repo. Não foram executadas suites de runtime nem teste físico para esta edição documental.
+**Checkpoint atual:** release 0.35 sobre `584286a`; alterações em app, UI comum e UI Xtream, sem troca de engine/decoder. 37 cenários jsdom/ES5 passaram e 8 verificações no Chromium passaram; os 22 módulos conferem em bytes/SHA-256. Publicação em duas etapas, marcador por último. Evidência e limites em `REMOTE_35_VALIDATION.md`; controle físico, helper nativo e streaming real ainda exigem confirmação na TV. Próxima sessão: reconferir `main`, `version` e manifesto antes de decidir qualquer correção.

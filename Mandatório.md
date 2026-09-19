@@ -44,3 +44,15 @@ Leia este arquivo antes de qualquer tarefa neste repositório. Atualize apenas d
 ## Checkpoint inicial
 - Estudo concluído sobre `0.30` / `40a146d`.
 - Confirmados: cabeçalho chama `back` interno; grade usa 9; fila de imagens não aborta ativa nem tem timeout; `hideBroken` sobrescreve seu onerror; reconexão VOD não verifica token da sessão; retry de API agendado pode executar após cancelamento; tratamento de JSON inválido referencia `kind`/`snip` ausentes nesse módulo.
+
+
+## Checkpoint remote.31
+- Guia inicial publicado no commit `f1c7dc9`. A publicação desta sessão usa o conector GitHub para escrita: clone por git funcionou, push por HTTPS não tinha credencial. Evite repetir tentativas de push nessa condição.
+- Módulos alterados agora terminam em `31`: app, core lazy, auth guard, TMDB, UI, VOD e overlay de log live. O manifesto continua sendo o mapa autoritativo. Interfaces públicas `XT10`, `XTMeta24`, `XTVod29` e `RawM3U` foram preservadas.
+- Entrada: filtro em captura no window, debounce de 120 ms, início de repetição em 340 ms, intervalos de 170 ms (260 ms temporadas); eventos keyup/keypress não executam Voltar novamente. Imagens esperam 500 ms de ociosidade; respostas da API aguardam 450 ms antes de parse/callback.
+- Cabeçalho Voltar limpa sessão visual e chama `RawPlayer.exit`, que expõe a saída nativa Q já existente. Voltar dos detalhes continua retornando ao catálogo.
+- Grade: seis episódios, 246×138 px, três colunas, duas linhas, coordenadas de início (472,391); temporadas em (40,526). Foco de temporadas rola apenas o contêiner, com retângulos relativos; offsetTop sem compensação causava salto para as últimas temporadas.
+- Streaming: callbacks usam token/sessão, reconexão preserva URL assinada e pausa, timers são liberados, três falhas consecutivas encerram retry automático. HTML5 startup conclui apenas uma vez.
+- Autenticação cancelada limpa a fila/busy do guard, permitindo reabrir; guardas transitórias da 0.30 foram preservadas. JSON inválido não imprime trechos potencialmente sensíveis.
+- Verificação: 14 testes determinísticos passaram; teste Chromium integrou app/common/UI, saída nativa mock, geometria 3×2, logo, temporadas e filme sem erros de página. Imagens de teste são sintéticas. Não houve acesso à TV/decoder nem teste de streaming real.
+- Reproduzir testes: instalar `jsdom acorn` em diretório temporário e configurar NODE_PATH; executar `node tests/remote31.test.cjs`. Para visual, Playwright instalado e `RTV_CHROMIUM=/caminho/chromium node tests/remote31.browser.cjs`. Dependências nunca são enviadas para a TV.

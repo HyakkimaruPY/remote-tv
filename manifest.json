@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.18-remote.29",
+  "release": "2026.09.19-remote.30",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -88,21 +88,21 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/injections/xtream-lazy-core-v29.js",
+      "path": "system/injections/xtream-lazy-core-v30.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "c5f4b4bca57ecca0595c221eef6554d492ac29777db0eba1b78da6e70a1a2a50",
-      "bytes": 11303
+      "sha256": "16dc9b986dc26ce9202e8fb35171c0c6fc761b984bbea7b53cdf2e3ca904da0f",
+      "bytes": 11319
     },
     {
       "id": "xtream-auth-guard",
-      "path": "system/injections/xtream-auth-guard-v24.js",
+      "path": "system/injections/xtream-auth-guard-v30.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "2b2ae9c12608cd674c3e5fe7c18df149f382165b237a45852f2db498cb470f81",
-      "bytes": 1500
+      "sha256": "dd4f898d3ab63a83c4b5ea9eab654268775e902e4a8f42ec85f14c614ebe3507",
+      "bytes": 1800
     },
     {
       "id": "tmdb-metadata",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v29.js",
+      "path": "system/injections/xtream-ui-v30.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "ba0af03098bb3bb3cb1162bf997c1d747ca69f08d8400ba443e12d717a43ffa0",
-      "bytes": 46424
+      "sha256": "84b2bea3516e2911b9d902a22ada64b6335bb1e1cf4398f243d040062bf8dfe7",
+      "bytes": 47019
     },
     {
       "id": "live-log-overlay",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.29"
+  "version": "0.30"
 }

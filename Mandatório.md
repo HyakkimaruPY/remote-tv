@@ -77,4 +77,17 @@ Leia este arquivo antes de qualquer tarefa neste repositório. Atualize apenas d
 - Artefato UI: 53621 bytes; SHA-256 `64909f2a48bb10dbbacaa41e3cfe7505ab041f7cd39f18969a8ada5718e4043d`.
 - Commits: módulo `674d181`; regressions `9102491` / `3a2f2d2`; relatório `a653dd5`; manifesto arquivado `e00d709`; manifesto ativo `a12bf58`.
 - Limites: jsdom/Playwright completos e TV física não foram executados. Confirmar no aparelho quais códigos o controle emite e a prévia simultânea do seek.
-- Publicação: `manifest.remote33.json` preservado; `manifest.json` aponta para remote.33. O arquivo `version` deve permanecer 0.32 até a checagem final e ser alterado para 0.33 como último marcador de ativação.
+- Publicação: `manifest.remote33.json` preservado; `manifest.json` aponta para remote.33. `version` foi ativado como 0.33 no commit `e62ce6e`, depois do manifesto/checkpoint.
+
+
+## Checkpoint remote.34
+- Escopo: navegação por direcionais, retomada real de progresso e retorno visual de filme/série. Módulos novos: `xtream-ui-v34.js` e `xtream-vod-player-v34.js`; engines, firmware, decoder, YouTube, Player 2 e fei-config não foram alterados.
+- Navegação: Continuar/Favoritos não tinham rota de ↓ a partir do cabeçalho; cards especiais dependiam da heurística espacial do WebKit; redraw de Séries/Canais focava sempre Filmes. Agora o grafo é explícito: primeira categoria/topo do conteúdo ↑ -> cabeçalho; cabeçalho ↓ -> categoria/aba ativa; categoria/aba → -> conteúdo. Live, biblioteca e telas especiais seguem a mesma regra.
+- Callbacks de carregamento de série em Continuar/Favoritos usam `specialReq34`; resposta atrasada é descartada se a tela mudou/fechou.
+- Continuar: filme usa `resumeAt=pos`; série resolve `episode_id` salvo e usa `resumeAt=pos`, sem confirmação. Fora de Continuar, filme/episódio com progresso >=5 s mostra Sim/Não; Sim retoma, Não inicia em 0.
+- VOD: resume só conclui quando a posição observada chega ao alvo. Seek recusado é repetido; `playByTime=-1` não conta como sucesso. Enquanto resume está pendente/falhou, progresso antigo não é sobrescrito por reprodução temporária a partir do início. Seek manual assume prioridade.
+- Retorno visual: filme/episódio apenas ocultam a UI existente durante playback; ao sair, o mesmo DOM reaparece. Fila de imagens pausa/recomeça sem reconstruir cards. URLs de background/logo/poster têm cache leve `xtream.art.urls.v34`, limitado a 30 registros de strings.
+- Verificação executada: parsing/ES5 PASS; harness de foco PASS; VOD resume imediato PASS; duas tentativas ignoradas + terceira aceita PASS; progresso antigo preservado durante resume não confirmado PASS. `tests/remote34.test.cjs` cobre também Sim/Não, `episode_id` salvo e DOM preservado.
+- Limite: clone local sem DNS; jsdom/acorn/Playwright ausentes, logo suites completas não foram executadas. TV/decoder físico não testados.
+- Artefatos: UI 61041 bytes / SHA-256 `109c3ee08520e9246c07af0dd622cc0892fa0976a2dd8ebb3406be91d6f069b8`; VOD 32526 bytes / SHA-256 `ce99a8073e7eda2c278ce8508291b769569e4f8c9dad5747a488f5fe395e9868`.
+- Relatório: `REMOTE_34_VALIDATION.md`. Publicar `manifest.remote34.json` + `manifest.json`; `version` deve ser 0.34 somente no último commit de ativação.

@@ -68,12 +68,12 @@ function live38(){
 {
  const e=live38(),p1=e.start();e.settle(p1);p1.time=30;e.tick(6000);e.tick(6000);e.tick(1800);
  assert.equal(e.players.length,2,'confirmed frozen clock restarts current native profile');
- assert.match(e.logs.join('\n'),/P live recover 1/);
+ assert.ok(e.req.some(r=>decodeURIComponent(r.url||'').includes('P live recover 1')),'debug mark records first live recovery');
  assert.equal(e.native[0],e.native[1],'first recovery retries same live profile');
  const p2=e.players[1];e.settle(p2);p2.time=40;e.tick(6000);e.tick(6000);e.tick(1800);
  assert.equal(e.players.length,3,'second nearby freeze advances to another decoder profile');
  assert.notEqual(e.native[2],e.native[1],'repeated freeze does not loop forever on same profile');
- assert.match(e.logs.join('\n'),/P live profile fallback/);
+ assert.ok(e.req.some(r=>decodeURIComponent(r.url||'').includes('P live profile fallback')),'debug mark records profile fallback');
  ok('38 confirmed live clock stalls recover and repeated stalls rotate profile');e.dom.window.close();
 }
 

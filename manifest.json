@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.19-remote.32",
+  "release": "2026.09.19-remote.33",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v32.js",
+      "path": "system/injections/xtream-ui-v33.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "c12e12ab030b2ddfa2a66009a9c457f59a2bd0ee531cdb6f7e18fa105688dbad",
-      "bytes": 53531
+      "sha256": "64909f2a48bb10dbbacaa41e3cfe7505ab041f7cd39f18969a8ada5718e4043d",
+      "bytes": 53621
     },
     {
       "id": "live-log-overlay",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.32"
+  "version": "0.33"
 }

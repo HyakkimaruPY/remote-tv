@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.20-remote.42",
+  "release": "2026.09.20-remote.43",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.remote41.js",
+      "path": "apps/player1/app.remote43.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "ed10483cc6b955e367ff078b0aecd37fab1f91d68ea1212b29298b324b40a6d3",
-      "bytes": 15899
+      "sha256": "78d9ff13bfe25681875b3eb40ab1b12918de29acfdeefabddd91f6cf56bfdd73",
+      "bytes": 16040
     },
     {
       "id": "inject-base",
@@ -151,21 +151,21 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v42.js",
+      "path": "system/injections/xtream-ui-v43.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "ea0c39e2b910eb9cdd92f0113f9b032dd381581c1baece3571d12015d9a79438",
-      "bytes": 64652
+      "sha256": "ae4b9ea76502c983207985643a07ee4a0f48b447773b7ce3154a6702d5128d02",
+      "bytes": 64885
     },
     {
       "id": "live-log-overlay",
-      "path": "system/injections/live-log-overlay-v31.js",
+      "path": "system/injections/live-log-overlay-v43.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "7595e96090315bd5be2f7a939e96606be310c259a1396d7914f20168d8f6a0c1",
-      "bytes": 3313
+      "sha256": "1bad886cfcaeb68287feb3ef876e6f9f965728aa62b83f3cdf0830778f8563bf",
+      "bytes": 3690
     },
     {
       "id": "graphos-skin",
@@ -195,5 +195,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.42"
+  "version": "0.43"
 }

@@ -18,6 +18,8 @@ Bootstrap v3 uses three persistent slots in the TV WebKit storage: `remote-tv.ac
 
 Release 0.41 keeps optional code out of that critical path: the obsolete `rawm3u.remote5.js` implementation is covered directly by tests but is no longer booted before the active Xtream UI, and YouTube 3 is integrity-checked and injected only after its menu button is selected. The active M3U catalog requests one `category_id` at a time and normalizes only the visible page.
 
+Release 0.42 preserves the M3U channel-list container while changing pages, keeps an in-flight logo request alive during navigation and retains a bounded set of 128 completed logo URLs for immediate redraw. VOD seek is transactional for movies and episodes: arrows and transport keys update only the pending target, OK commits, and Up/Back cancels without moving the main player.
+
 If GitHub or the network is unavailable, the verified active cache remains usable. If the active copy is invalid, the bootstrap tries the previous verified release; if neither cache is valid, it falls back to the Player embedded in the firmware. This keeps an interrupted download or a power loss from replacing the known-good active release with a partial update.
 
 ## Layout

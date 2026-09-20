@@ -1,0 +1,8 @@
+#player.hp50{display:block!important;position:fixed;left:326px;top:84px;width:954px;height:486px;background:transparent;z-index:2}
+#player.hp50 #side,#player.hp50 #pt,#player.hp50 #ps,#player.hp50 #ctrl{display:none}
+#player.hp50 #stage{left:0;width:954px}
+#player.hp50 video{display:block;width:954px;height:486px;border:0;border-radius:0}
+#player.hf50{display:block!important;position:fixed;left:0;top:0;width:1280px;height:720px;background:transparent;z-index:99}
+#player.hf50 #side,#player.hf50 #pt,#player.hf50 #ps,#player.hf50 #ctrl{display:none}
+#player.hf50 #stage{left:0;width:1280px}
+#player.hf50 video{display:block;width:1280px;height:720px;border:0;border-radius:0}

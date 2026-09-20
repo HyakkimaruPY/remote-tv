@@ -1,0 +1,15 @@
+const fs=require('fs'),assert=require('node:assert/strict');
+const app=fs.readFileSync('apps/player1/app.remote43.js','utf8');
+const ui=fs.readFileSync('system/injections/xtream-ui-v43.js','utf8');
+const log=fs.readFileSync('system/injections/live-log-overlay-v43.js','utf8');
+new Function(app);new Function(ui);new Function(log);
+assert.match(app,/buffering tolerante/);
+assert.doesNotMatch(app,/P terminal recover/);
+assert.match(app,/signalFail43\('routes-exhausted'\)/);
+assert.match(ui,/RawPlayer\.play\(o\.n,u,false,false,function\(reason\)/);
+assert.doesNotMatch(ui,/12500/);
+assert.match(ui,/closeLiveLog43\(\)/);
+assert.match(log,/xhr\.abort\(\)/);
+assert.match(log,/token!=gen/);
+assert.match(log,/close:close/);
+console.log('remote43 focused regression: PASS');

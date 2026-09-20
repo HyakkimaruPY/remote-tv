@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.20-remote.43",
+  "release": "2026.09.20-remote.45",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.remote43.js",
+      "path": "apps/player1/app.remote45.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "78d9ff13bfe25681875b3eb40ab1b12918de29acfdeefabddd91f6cf56bfdd73",
-      "bytes": 16040
+      "sha256": "f901c2174f655ed050517814832476017c0a2292751f7ecc046d18d9e9090b56",
+      "bytes": 14476
     },
     {
       "id": "inject-base",
@@ -96,15 +96,6 @@
       "bytes": 1927
     },
     {
-      "id": "tmdb-metadata",
-      "path": "system/injections/tmdb-metadata-v31.js",
-      "type": "js",
-      "phase": "post",
-      "required": true,
-      "sha256": "e38663c982b9912deb4605672d87fdf81ac94277674277abd992aa6da161d4f3",
-      "bytes": 6181
-    },
-    {
       "id": "xtream-stream-router",
       "path": "system/injections/xtream-stream-router-v22.js",
       "type": "js",
@@ -133,12 +124,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/injections/xtream-vod-player-v42.js",
+      "path": "system/injections/xtream-vod-player-v45.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "4f2db68a11e484e9e0d10ffa87d217ecceea0b2e4f777ed3fad3dc017ce30c3b",
-      "bytes": 35125
+      "sha256": "3d89338a700f5a43d229f76b31dbfcc89e5d6d2518a2d526ffcf40160258b19e",
+      "bytes": 35731
     },
     {
       "id": "common-player-ui",
@@ -151,12 +142,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v43.js",
+      "path": "system/injections/xtream-ui-v45.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "ae4b9ea76502c983207985643a07ee4a0f48b447773b7ce3154a6702d5128d02",
-      "bytes": 64885
+      "sha256": "ca98d81c8e090ffdaff6c575dc53965729ae825485d194c1f18df498a18ae0c3",
+      "bytes": 65555
     },
     {
       "id": "live-log-overlay",

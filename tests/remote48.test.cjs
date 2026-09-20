@@ -1,0 +1,18 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),{JSDOM}=require('jsdom'),acorn=require('acorn');
+const app=fs.readFileSync('apps/player1/app.remote48.js','utf8');
+acorn.parse(app,{ecmaVersion:5});
+assert.doesNotMatch(app,/setTimeout\(A,11000\)/,'HTML live route must not be destroyed by a fixed 11 s timer');
+assert.match(app,/H play accepted · sticky v48/);
+const html='<!doctype html><body><section id="menu"><button id="tv"></button><button id="y2"></button><button id="rawLaunch"></button><button id="rawIn"></button></section><section id="new" class="h"><form id="sf"><input id="q"></form><div id="results"></div></section><section id="tvlist" class="h"><button id="tvback"></button><div id="cats"></div></section><section id="player" class="h"><div id="side"><div id="channels"></div></div><div id="stage"><span id="gt"></span><span id="pt"></span><span id="ps"></span><video id="v"></video><div id="ctrl"><button id="pb"></button><button id="pf"></button><button id="pl"></button></div></div></section><section id="logp" class="h"><pre id="logb"></pre></section></body>';
+const dom=new JSDOM(html,{url:'http://tv.test/',runScripts:'outside-only'}),w=dom.window,requests=[],players=[];
+w.HTMLMediaElement.prototype.play=function(){this.plays=(this.plays||0)+1;return undefined};
+w.HTMLMediaElement.prototype.pause=function(){};w.HTMLMediaElement.prototype.load=function(){};
+w.XMLHttpRequest=function(){this.open=(m,u)=>this.url=u;this.send=()=>{requests.push(this);if(/\/control\//.test(this.url)){this.status=200;this.responseText='1';this.readyState=4;this.onreadystatechange()}};this.abort=()=>{}};
+w.YTCore={channels:[],compat:u=>[u],media:(u,p)=>u,normal:()=>false};
+w.RawM3U={open(){},back:()=>false,key:()=>false};
+w.QjyMediaPlayer=function(){players.push(this);this.getNativePlayerInstanceID=()=>1;this.initMediaPlayer=()=>0;this.setMuteFlag=()=>{};this.setNativeUIFlag=()=>{};this.setVideoDisplayMode=()=>{};this.setVideoDisplayArea=()=>{};this.refreshVideoDisplay=()=>{};this.setVideoAlpha=()=>{};this.setSingleMedia=()=>0;this.playFromStart=()=>-1;this.releaseMediaPlayer=()=>{}};
+w.RemoteTV={ready(){}};vm.runInContext(app,dom.getInternalVMContext());
+w.RawPlayer.play('Live','http://127.0.0.1:8765/hls?u=x',false,false,null,true);
+const video=w.document.getElementById('v');
+assert.equal(video.plays,1);assert.equal(players.length,4,'native profiles may fail before HTML fallback');
+w.setTimeout(()=>{assert.equal(video.plays,1);assert.match(w.document.getElementById('ps').textContent,/AO VIVO/);console.log('PASS remote48 sticky HTML fallback without onplaying');dom.window.close()},12000);

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.20-remote.45",
+  "release": "2026.09.20-remote.46",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.remote45.js",
+      "path": "apps/player1/app.remote46.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "f901c2174f655ed050517814832476017c0a2292751f7ecc046d18d9e9090b56",
-      "bytes": 14476
+      "sha256": "4ad32acd88e1898f9c5baa162abc70c544c3bfb7273835bd13a209877ab89b4f",
+      "bytes": 14816
     },
     {
       "id": "inject-base",
@@ -133,21 +133,21 @@
     },
     {
       "id": "common-player-ui",
-      "path": "system/injections/common-player-ui-v35.js",
+      "path": "system/injections/common-player-ui-v46.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "63ea50adf1b7f132c092e7a8eadad66c447f774b419b097289d05af6a564583e",
-      "bytes": 18402
+      "sha256": "168d05a1ad77534173d752c98a2d2b9a789fe653aa0c4250f770a3f2136e4899",
+      "bytes": 18417
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v45.js",
+      "path": "system/injections/xtream-ui-v46.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "ca98d81c8e090ffdaff6c575dc53965729ae825485d194c1f18df498a18ae0c3",
-      "bytes": 65555
+      "sha256": "389032095dd859ab6108da553c11fd4659fbf4818bc8574e41c5fd91f6a00262",
+      "bytes": 65387
     },
     {
       "id": "live-log-overlay",

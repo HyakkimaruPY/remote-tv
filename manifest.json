@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.20-remote.46",
+  "release": "2026.09.20-remote.47",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -186,5 +186,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.43"
+  "version": "0.47"
 }

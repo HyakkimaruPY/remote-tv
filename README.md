@@ -16,6 +16,8 @@ Bootstrap v3 uses three persistent slots in the TV WebKit storage: `remote-tv.ac
 6. The former active release is retained as `previous` for rollback.
 7. After a successful promotion the Player reloads once and starts from the new local copy.
 
+Release 0.41 keeps optional code out of that critical path: the obsolete `rawm3u.remote5.js` implementation is covered directly by tests but is no longer booted before the active Xtream UI, and YouTube 3 is integrity-checked and injected only after its menu button is selected. The active M3U catalog requests one `category_id` at a time and normalizes only the visible page.
+
 If GitHub or the network is unavailable, the verified active cache remains usable. If the active copy is invalid, the bootstrap tries the previous verified release; if neither cache is valid, it falls back to the Player embedded in the firmware. This keeps an interrupted download or a power loss from replacing the known-good active release with a partial update.
 
 ## Layout

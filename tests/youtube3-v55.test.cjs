@@ -1,0 +1,24 @@
+const fs=require('fs'),assert=require('node:assert/strict'),crypto=require('crypto');
+const probe=fs.readFileSync('apps/youtube3/probe-v55.js','utf8');
+const loader=fs.readFileSync('system/feature-loader-v55.js','utf8');
+const m=JSON.parse(fs.readFileSync('manifest.remote55.json','utf8')),by=Object.fromEntries(m.modules.map(x=>[x.id,x]));
+new Function(probe);new Function(loader);
+assert.doesNotMatch(probe+loader,/\b(?:let|const)\b|=>/);
+assert.match(loader,/apps\/youtube3\/probe-v55\.js/);
+assert.match(loader,/remote-tv\.feature\.youtube3\.v55/);
+assert.match(loader,/b3610b49346f2644ff747891a4033fb8676751176397d3cc2af5b5aa1373199d/);
+assert.match(probe,/api\.invidious\.io\/instances\.json\?sort_by=health/);
+assert.match(probe,/\/api\/v1\/search\?q=/);
+assert.match(probe,/\/api\/v1\/videos\//);
+assert.match(probe,/googlevideo\\\.com/);
+assert.match(probe,/QjyMediaPlayer\|\|w\.MediaPlayer/);
+assert.match(probe,/C\.media\(z\.url,pr\)/);
+assert.match(probe,/metadata bridge, mídia direta/);
+assert.match(probe,/Fallback local: analisando página do YouTube/);
+assert.match(probe,/Último fallback: embed oficial/);
+assert.equal(by['feature-loader'].path,'system/feature-loader-v55.js');
+assert.equal(by.app.path,'apps/player1/app.remote49.js');
+assert.equal(by['xtream-ui'].path,'system/injections/xtream-ui-v49.js');
+assert.equal(by['xtream-vod-player'].path,'system/injections/xtream-vod-player-v53.js');
+for(const x of m.modules){const b=fs.readFileSync(x.path);assert.equal(b.length,x.bytes,x.path+' bytes');assert.equal(crypto.createHash('sha256').update(b).digest('hex'),x.sha256,x.path+' sha256')}
+console.log('youtube3 v55 bridge regressions PASS');

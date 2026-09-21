@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.21-remote.53",
+  "release": "2026.09.21-remote.54",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -43,12 +43,12 @@
     },
     {
       "id": "feature-loader",
-      "path": "system/feature-loader-v41.js",
+      "path": "system/feature-loader-v54.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "a4f0e65fc8dc623d1063a5d3bcbcd546fb206d5e2ff0721610514c24c7a34bdf",
-      "bytes": 1951
+      "sha256": "1b1afcc5548cc969c219a5f30f724bc25fc3b4363cdad8335e981e1915c92b4c",
+      "bytes": 1988
     },
     {
       "id": "app",
@@ -195,5 +195,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.53"
+  "version": "0.54"
 }

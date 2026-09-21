@@ -1,6 +1,6 @@
 (function(w,d){'use strict';
 var R=w.RemoteTV,BASE='https://raw.githubusercontent.com/HyakkimaruPY/remote-tv/main/',busy={},wait={};
-var SPECS={yt3:{id:'youtube3',path:'apps/youtube3/probe-v55.js',sha:'b3610b49346f2644ff747891a4033fb8676751176397d3cc2af5b5aa1373199d',key:'remote-tv.feature.youtube3.v55'}};
+var SPECS={yt3:{id:'youtube3',path:'apps/youtube3/probe-v55.js',sha:'44e627d74a3c86484f6c56a19b707bb509b4e109c2582b8638a1540bb288e798',key:'remote-tv.feature.youtube3.v55'}};
 function get(k){try{return localStorage.getItem(k)||''}catch(e){return''}}
 function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function del(k){try{localStorage.removeItem(k)}catch(e){}}

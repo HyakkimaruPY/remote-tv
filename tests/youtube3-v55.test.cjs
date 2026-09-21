@@ -6,7 +6,7 @@ new Function(probe);new Function(loader);
 assert.doesNotMatch(probe+loader,/\b(?:let|const)\b|=>/);
 assert.match(loader,/apps\/youtube3\/probe-v55\.js/);
 assert.match(loader,/remote-tv\.feature\.youtube3\.v55/);
-assert.match(loader,/b3610b49346f2644ff747891a4033fb8676751176397d3cc2af5b5aa1373199d/);
+assert.match(loader,/44e627d74a3c86484f6c56a19b707bb509b4e109c2582b8638a1540bb288e798/);
 assert.match(probe,/api\.invidious\.io\/instances\.json\?sort_by=health/);
 assert.match(probe,/\/api\/v1\/search\?q=/);
 assert.match(probe,/\/api\/v1\/videos\//);

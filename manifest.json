@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.09.20-remote.52",
+  "release": "2026.09.21-remote.53",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.html",
+      "path": "apps/player1/shell.remote53.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "79ac84908a801ae33afc9142e96d69970663b354a52f7f20af65fe4c6ad8e787",
-      "bytes": 1143
+      "sha256": "19a7966a42de757ce6e547f82468d9457b5b8d0c48c1563bad56c78078de4c47",
+      "bytes": 1184
     },
     {
       "id": "style",
@@ -40,15 +40,6 @@
       "required": true,
       "sha256": "5bf86aa7e733f09d4551156dffc249d7dd3141bff434fa3340b74feae22dd616",
       "bytes": 2336
-    },
-    {
-      "id": "headless-player-style",
-      "path": "apps/player1/headless-preview-v50.css",
-      "type": "css",
-      "phase": "shell",
-      "required": true,
-      "sha256": "eb3126a83b7fdfce93fa93738577acfa92ac798729edaad81aced7f09c0d78c1",
-      "bytes": 679
     },
     {
       "id": "feature-loader",
@@ -61,12 +52,21 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.remote51.js",
+      "path": "apps/player1/app.remote49.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "f6a9e5c5274773158e61e6c441af534d6f839f6d330214a923e491c7828a4680",
-      "bytes": 16433
+      "sha256": "1a180eb219393286eb545279b9b851a11d2d775021c2624e84e48f60e37c694b",
+      "bytes": 15752
+    },
+    {
+      "id": "force-update",
+      "path": "system/injections/force-update-v53.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "21c51d91fe16414de8fed84ed03a47d6775b092eea953cbf70d2a48f6d7163d6",
+      "bytes": 1044
     },
     {
       "id": "inject-base",
@@ -106,12 +106,12 @@
     },
     {
       "id": "xtream-stream-router",
-      "path": "system/injections/xtream-stream-router-v24.js",
+      "path": "system/injections/xtream-stream-router-v22.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "0555e6926c41e21800c19790e6b499c904bf7bbea291606024416ff0a677c719",
-      "bytes": 1130
+      "sha256": "d5196e857aa7dde49e3b6b4b6151f4b194c581d7ea67f2a9506b6cbaa531033b",
+      "bytes": 1150
     },
     {
       "id": "autovod",
@@ -133,12 +133,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/injections/xtream-vod-player-v49.js",
+      "path": "system/injections/xtream-vod-player-v53.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "4e259c7a7150d950a5fb567d2b7718e0bcc9748ce9747363466f0fd1bba2760e",
-      "bytes": 36791
+      "sha256": "63f88a4b7e3c7b4988d858213e24d23bc7a1113d6063855b6934456b878fd317",
+      "bytes": 37252
     },
     {
       "id": "common-player-ui",
@@ -151,12 +151,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/injections/xtream-ui-v52.js",
+      "path": "system/injections/xtream-ui-v49.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "d9e9ab8074cbddec76347c9996431e238faa0a6eca03a384703e5360c29aa8ce",
-      "bytes": 67302
+      "sha256": "63255a0aa3a92f0fb2a374c3f61a5e917e7d07e877f21c3e5457f73a10cb1294",
+      "bytes": 67288
     },
     {
       "id": "live-log-overlay",
@@ -195,5 +195,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.52"
+  "version": "0.53"
 }

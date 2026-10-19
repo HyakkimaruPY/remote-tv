@@ -124,17 +124,31 @@ class Handler(SimpleHTTPRequestHandler):
                 if target.path.endswith('credenciais.temp'):
                     return self.output('M3U="http://tv.fixture/get.php?username=demo&password=demo"')
                 return self.output('fixture unavailable', status=404)
+            if '/Images/' in target.path:
+                backdrop = '/Backdrop' in target.path
+                if backdrop:
+                    time.sleep(3.0)
+                else:
+                    time.sleep(.35)
+                query = parse_qs(target.query)
+                sized = 'maxWidth' in query
+                padding = ' ' * (2000 if sized else 180000)
+                return self.output('<svg xmlns="http://www.w3.org/2000/svg" width="240" height="360"><rect width="240" height="360" fill="#242424"/><text x="20" y="150" fill="white">Fixture artwork</text>' + padding + '</svg>', 'image/svg+xml')
             if target.path.startswith('/logo/'):
                 number = target.path.split('/')[-1].split('.')[0]
                 return self.output(f'<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" rx="12" fill="#243743"/><text x="40" y="50" text-anchor="middle" fill="white" font-size="30">{number}</text></svg>', 'image/svg+xml')
             if target.path.endswith('player_api.php'):
                 aq = parse_qs(target.query)
                 action = aq.get('action', [''])[0]
-                if action == 'get_live_categories':
+                if action in ('get_live_categories', 'get_vod_categories', 'get_series_categories'):
                     data = [{'category_id':str(i), 'category_name':f'Categoria {i}'} for i in range(1,9)]
                 elif action == 'get_live_streams':
                     cat = int(aq.get('category_id', ['1'])[0])
                     data = [{'stream_id':i, 'name':f'Canal de teste {i:02}', 'stream_icon':f'http://tv.fixture/logo/{i}.svg', 'category_id':str(cat)} for i in range((cat-1)*12+1, cat*12+1)]
+                elif action == 'get_vod_streams':
+                    data = [{'stream_id': i, 'name': f'Film fixture {i}', 'stream_icon': f'http://tv.fixture/Items/film{i}/Images/Primary', 'container_extension': 'mp4'} for i in range(1, 21)]
+                elif action == 'get_vod_info':
+                    data = {'info': {'plot': 'Provider information ready before artwork.', 'movie_image': 'http://tv.fixture/Items/film1/Images/Primary', 'backdrop_path': ['http://tv.fixture/Items/film1/Images/Backdrop'], 'rating': '8', 'year': '2020'}, 'movie_data': {'stream_id': 1, 'container_extension': 'mp4', 'direct_source': 'http://tv.fixture/media/vod.webm'}}
                 else:
                     data = {'user_info':{'auth':1,'status':'Active','exp_date':'0'},'server_info':{'timestamp_now':int(time.time())}}
                 return self.output(json.dumps(data), 'application/json')
@@ -148,6 +162,8 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.output('#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:6\n#EXT-X-MEDIA-SEQUENCE:0\n#EXTINF:6,\n/media/segment.ts\n', 'application/vnd.apple.mpegurl')
             if target.path.endswith('.ts'):
                 return self.output((LAB/'media/segment.ts').read_bytes(), 'video/mp2t')
+            if target.path.endswith('vod.webm'):
+                return self.output((LAB/'media/vod.webm').read_bytes(), 'video/webm')
             if target.path.endswith('.webm'):
                 return self.output((LAB/'media/channel.webm').read_bytes(), 'video/webm')
             return self.output('fixture missing', status=404)

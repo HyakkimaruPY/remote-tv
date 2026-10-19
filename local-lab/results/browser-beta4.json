@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "version": "0.56-beta.4",
+  "bridge": "Python contract",
+  "base": "a08940daca534feb16565f1d596478b5f7fe8639",
+  "viewport": "1280x720",
+  "checks": [
+    "real manifest boot and initial remote focus",
+    "beta 2 pure black panels, 4px corners and aligned 44px controls",
+    "real host video decode through simulated native ABI and HTTP fixture bridge",
+    "fullscreen 16:9 and native display rectangle",
+    "Back restores preview",
+    "35 directional actions advance focus across pages without unwanted stream restart",
+    "exit during delayed transport removes video and invalidates late completion",
+    "Xtream authentication, category API and 720p-first route integrated",
+    "short outage stays within recovery grace period"
+  ],
+  "preview": {
+    "x": 326,
+    "y": 72,
+    "w": 926,
+    "h": 500,
+    "decoded": 640,
+    "transparent": "rgba(0, 0, 0, 0)",
+    "plays": 1
+  },
+  "timings": {
+    "firstFrames": [
+      287.3999999994412
+    ],
+    "nativeErrors": [
+      "Error: HTTP 503"
+    ],
+    "calls": 15
+  },
+  "pageErrors": [],
+  "limits": [
+    "Chromium is not Philco WebKit",
+    "QJY/MStar ABI is simulated",
+    "Python bridge adapter; use PHILCO_REAL_BRIDGE=1 to exercise recovered Go helper",
+    "Synthetic media and credentials only"
+  ]
+}

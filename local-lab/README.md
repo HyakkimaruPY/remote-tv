@@ -43,3 +43,14 @@ node local-lab/test-youtube.cjs
 ```
 
 O último comando usa metadados e HLS de fixture para testar o código YouTube, não o serviço real. O servidor executa sempre o app especificado pelo manifesto atual, sem override. `ARCHITECTURE_BETA3.md` documenta as classes e o limite de resolução externa.
+
+## Rodada beta 4: orçamento de imagens e VOD
+
+```sh
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-4.artwork.cjs
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-4.vod.cjs
+node local-lab/test-vod-budget.cjs
+node local-lab/test-browser.cjs
+```
+
+`make-media.sh` também gera `media/vod.webm` com vídeo e áudio sintéticos. O cenário VOD usa capas HTTP com corpo menor quando há parâmetros de tamanho e backdrop atrasado em 3 s. Verifica prontidão dos controles, foco sem reconstruir a grade, geometria estável ao focar, cancelamento de arte no play e decodificação de áudio no Chromium. Saída em `results/vod-budget-beta4.json`. Não simula timestamps/codecs do arquivo do usuário nem o decoder da Philco; detalhes em `REMOTE_BETA56_4_VALIDATION.md`.

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.19-beta.56.4",
+  "release": "2026.10.19-beta.56.5",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,11 +25,11 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-4.html",
+      "path": "apps/player1/shell.beta56-5.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "d1645aff3a93103c96d0f45430917ef176c88adf5ceec46c3345454bacde0332",
+      "sha256": "400062f1a3cb19d44b3576600134a91a0fb065b09c6f0c1774e992fcdaea610a",
       "bytes": 1199
     },
     {
@@ -133,12 +133,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/readable/xtream-vod-player.beta56-4.js",
+      "path": "system/readable/xtream-vod-player.beta56-5.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "0a491105186a074fc3724e95ee589ece5d597112859646b1f3b9dc54393e7bae",
-      "bytes": 75512
+      "sha256": "2d33520ad269b6851b24336066dfed6fd4f87ef5e6ec4bd3bb69598472ee8631",
+      "bytes": 76506
     },
     {
       "id": "common-player-ui",
@@ -151,21 +151,21 @@
     },
     {
       "id": "tmdb-metadata",
-      "path": "system/readable/tmdb-metadata.beta56-4.js",
+      "path": "system/readable/tmdb-metadata.beta56-5.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "bytes": 10989,
-      "sha256": "9e676354aaf3cebc808a2b20e8fcb0dd4cd02020c644fefb8b12db21b854f997"
+      "bytes": 11198,
+      "sha256": "6e6a4c12e836b6549632b2412d55e36ccb530905601f3977d144e775b08165fa"
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-4.js",
+      "path": "system/readable/xtream-ui.beta56-5.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "096a3435922720c2564e8a0137ead039e259234d334a78e1cf7b693aad658ce9",
-      "bytes": 117902
+      "sha256": "b6cef7c101ecc529930e9ec39b1859aa0babc2c4ac20d635fecf82b45fc76eec",
+      "bytes": 124066
     },
     {
       "id": "live-log-overlay",
@@ -178,12 +178,12 @@
     },
     {
       "id": "graphos-skin",
-      "path": "system/injections/graphos-skin-beta56-4.js",
+      "path": "system/injections/graphos-skin-beta56-5.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "78fae810695c8dab2b66a5a783ae9d7f6f12504cf918eae15d0e384e5527e518",
-      "bytes": 8092
+      "sha256": "b4ee0009fcc0fb87d024b52919d473a5742d47155c779088c6eb9c664ad154d1",
+      "bytes": 9551
     },
     {
       "id": "hooks",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.56-beta.4"
+  "version": "0.56-beta.5"
 }

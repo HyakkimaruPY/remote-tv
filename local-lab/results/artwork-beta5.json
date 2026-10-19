@@ -1,0 +1,145 @@
+{
+  "status": "PASS",
+  "version": "0.56-beta.5",
+  "viewport": "1280x720",
+  "posters": [
+    {
+      "x": 292,
+      "y": 162,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 1"
+    },
+    {
+      "x": 476,
+      "y": 162,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 2"
+    },
+    {
+      "x": 660,
+      "y": 162,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 3"
+    },
+    {
+      "x": 844,
+      "y": 162,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 4"
+    },
+    {
+      "x": 1028,
+      "y": 162,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 5"
+    },
+    {
+      "x": 292,
+      "y": 416,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 6"
+    },
+    {
+      "x": 476,
+      "y": 416,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 7"
+    },
+    {
+      "x": 660,
+      "y": 416,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 8"
+    },
+    {
+      "x": 844,
+      "y": 416,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 9"
+    },
+    {
+      "x": 1028,
+      "y": 416,
+      "width": 170,
+      "height": 238,
+      "title": "Film fixture 10"
+    }
+  ],
+  "focus": {
+    "color": "rgb(255, 255, 255)",
+    "width": "1px",
+    "radius": "4px"
+  },
+  "sidebar": {
+    "x": 0,
+    "y": 84,
+    "width": 270,
+    "height": 636
+  },
+  "detailReadyMs": 64,
+  "maximumParallelCovers": 3,
+  "episodes": [
+    {
+      "x": 472,
+      "y": 391,
+      "width": 246,
+      "height": 138,
+      "border": "rgb(255, 255, 255)",
+      "borderWidth": "1px"
+    },
+    {
+      "x": 730,
+      "y": 391,
+      "width": 246,
+      "height": 138,
+      "border": "rgb(64, 64, 64)",
+      "borderWidth": "1px"
+    },
+    {
+      "x": 988,
+      "y": 391,
+      "width": 246,
+      "height": 138,
+      "border": "rgb(64, 64, 64)",
+      "borderWidth": "1px"
+    },
+    {
+      "x": 472,
+      "y": 539,
+      "width": 246,
+      "height": 138,
+      "border": "rgb(64, 64, 64)",
+      "borderWidth": "1px"
+    },
+    {
+      "x": 730,
+      "y": 539,
+      "width": 246,
+      "height": 138,
+      "border": "rgb(64, 64, 64)",
+      "borderWidth": "1px"
+    },
+    {
+      "x": 988,
+      "y": 539,
+      "width": 246,
+      "height": 138,
+      "border": "rgb(64, 64, 64)",
+      "borderWidth": "1px"
+    }
+  ],
+  "pageErrors": [],
+  "limits": [
+    "Synthetic provider artwork/logo and catalog",
+    "Chromium, not the Philco GPU/WebKit or real TMDB"
+  ]
+}

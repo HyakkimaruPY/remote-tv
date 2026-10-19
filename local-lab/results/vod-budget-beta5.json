@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "version": "0.56-beta.5",
+  "viewport": "1280x720",
+  "detailReadyMs": 829,
+  "navigationHandlerMs": [
+    1.3999999994412065,
+    0.09999999962747097,
+    0.39999999944120646,
+    0.40000000037252903
+  ],
+  "focusStable": {
+    "sameGrid": true,
+    "sameCard": true,
+    "borderBefore": "1px",
+    "borderAfter": "1px",
+    "widthBefore": 170,
+    "widthAfter": 170,
+    "heightBefore": 238,
+    "heightAfter": 238
+  },
+  "images": [
+    {
+      "direct": true,
+      "afterPlay": false,
+      "role": "cover",
+      "resized": true
+    },
+    {
+      "direct": true,
+      "afterPlay": false,
+      "role": "cover",
+      "resized": true
+    },
+    {
+      "direct": true,
+      "afterPlay": false,
+      "role": "cover",
+      "resized": true
+    },
+    {
+      "direct": true,
+      "afterPlay": false,
+      "role": "cover",
+      "resized": true
+    },
+    {
+      "direct": true,
+      "afterPlay": false,
+      "role": "cover",
+      "resized": true
+    },
+    {
+      "direct": true,
+      "afterPlay": false,
+      "role": "cover",
+      "resized": true
+    },
+    {
+      "direct": true,
+      "afterPlay": false,
+      "role": "backdrop",
+      "resized": true
+    }
+  ],
+  "playback": {
+    "clock": 2.321073,
+    "muted": false,
+    "volume": 1,
+    "ready": 4,
+    "audioBytes": 5056,
+    "videoBytes": 126579,
+    "url": "http://tv.fixture/media/vod.webm"
+  },
+  "pageErrors": [],
+  "limits": [
+    "HTTP fixtures with a 3s backdrop and sized cover bodies",
+    "WebM/Vorbis synthetic A/V decoded by Chromium",
+    "Not H264/AAC playback on Philco; not a measurement of the user provider"
+  ]
+}

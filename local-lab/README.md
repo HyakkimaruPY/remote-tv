@@ -54,3 +54,16 @@ node local-lab/test-browser.cjs
 ```
 
 `make-media.sh` também gera `media/vod.webm` com vídeo e áudio sintéticos. O cenário VOD usa capas HTTP com corpo menor quando há parâmetros de tamanho e backdrop atrasado em 3 s. Verifica prontidão dos controles, foco sem reconstruir a grade, geometria estável ao focar, cancelamento de arte no play e decodificação de áudio no Chromium. Saída em `results/vod-budget-beta4.json`. Não simula timestamps/codecs do arquivo do usuário nem o decoder da Philco; detalhes em `REMOTE_BETA56_4_VALIDATION.md`.
+
+## Rodada beta 5: lotes, logos e foco
+
+```sh
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-5.artwork.cjs
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-5.vod.cjs
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-5.live.cjs
+node local-lab/test-vod-budget-beta5.cjs
+node local-lab/test-artwork-beta5.cjs
+node local-lab/test-browser.cjs
+```
+
+As fixtures agora incluem séries, temporadas, seis episódios e logos transparentes. O teste visual verifica 5:7 nos posters, seis miniaturas horizontais, seletor branco de 1 px, divisória/rodapé visíveis e três downloads simultâneos. Resultados beta5 em `results/`, sem substituir métricas beta4. Limites físicos e diagnóstico de startup em `REMOTE_BETA56_5_VALIDATION.md`.

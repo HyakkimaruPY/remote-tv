@@ -124,6 +124,9 @@ class Handler(SimpleHTTPRequestHandler):
                 if target.path.endswith('credenciais.temp'):
                     return self.output('M3U="http://tv.fixture/get.php?username=demo&password=demo"')
                 return self.output('fixture unavailable', status=404)
+            if '/Images/Logo' in target.path:
+                time.sleep(.2)
+                return self.output('<svg xmlns="http://www.w3.org/2000/svg" width="500" height="100"><text x="4" y="78" fill="white" font-family="Arial" font-size="70">CLEAN LOGO</text></svg>', 'image/svg+xml')
             if '/Images/' in target.path:
                 backdrop = '/Backdrop' in target.path
                 if backdrop:
@@ -147,6 +150,10 @@ class Handler(SimpleHTTPRequestHandler):
                     data = [{'stream_id':i, 'name':f'Canal de teste {i:02}', 'stream_icon':f'http://tv.fixture/logo/{i}.svg', 'category_id':str(cat)} for i in range((cat-1)*12+1, cat*12+1)]
                 elif action == 'get_vod_streams':
                     data = [{'stream_id': i, 'name': f'Film fixture {i}', 'stream_icon': f'http://tv.fixture/Items/film{i}/Images/Primary', 'container_extension': 'mp4'} for i in range(1, 21)]
+                elif action == 'get_series':
+                    data = [{'series_id': i, 'name': f'Series fixture {i}', 'cover': f'http://tv.fixture/Items/series{i}/Images/Primary'} for i in range(1, 21)]
+                elif action == 'get_series_info':
+                    data = {'info': {'plot': 'Series provider synopsis.', 'cover': 'http://tv.fixture/Items/series1/Images/Primary', 'backdrop_path': ['http://tv.fixture/Items/series1/Images/Backdrop']}, 'episodes': {str(sn): [{'id': 100+sn*10+i, 'title': f'Episode {i}', 'season': sn, 'episode_num': i, 'container_extension': 'mp4', 'direct_source': 'http://tv.fixture/media/vod.webm', 'info': {'movie_image': f'http://tv.fixture/Items/episode{sn}-{i}/Images/Primary'}} for i in range(1, 7)] for sn in (1, 2)}}
                 elif action == 'get_vod_info':
                     data = {'info': {'plot': 'Provider information ready before artwork.', 'movie_image': 'http://tv.fixture/Items/film1/Images/Primary', 'backdrop_path': ['http://tv.fixture/Items/film1/Images/Backdrop'], 'rating': '8', 'year': '2020'}, 'movie_data': {'stream_id': 1, 'container_extension': 'mp4', 'direct_source': 'http://tv.fixture/media/vod.webm'}}
                 else:

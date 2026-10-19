@@ -56,7 +56,7 @@ class Handler(SimpleHTTPRequestHandler):
                 self._upstream = False
                 self.path = original
         if path == '/':
-            m = json.loads((ROOT/'manifest.beta56.json').read_text())
+            m = json.loads((ROOT/'manifest.json').read_text())
             candidate = q.get('candidate', ['0'])[0] == '1'
             head = '<!doctype html><html><head><meta charset="utf-8"><title>Philco Local Lab</title></head><body>'
             out = [head, '<script src="/local-lab/adapter.js"></script>']

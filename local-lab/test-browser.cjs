@@ -4,6 +4,7 @@ const {chromium}=require(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES?path.joi
 const root=path.resolve(__dirname,'..'),base='http://127.0.0.1:18765';
 const server=spawn('python3',['local-lab/server.py'],{cwd:root,stdio:['ignore','pipe','pipe']});
 const helper=process.env.PHILCO_REAL_BRIDGE==='1'?spawn(process.env.PHILCO_HELPER||'/tmp/philco-helper-host',['--bridge'],{stdio:['ignore','pipe','pipe']}):null;
+const manifest=JSON.parse(fs.readFileSync(path.join(root,'manifest.json'),'utf8'));
 const checks=[],errors=[];
 (async()=>{
  await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);server.once('exit',code=>reject(Error('server exit '+code)))});
@@ -24,6 +25,10 @@ const checks=[],errors=[];
  await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');
  await page.waitForFunction(()=>{const v=document.querySelector('[data-native-sim]');return v&&v.currentTime>.2});
  const preview=await page.evaluate(()=>{let v=document.querySelector('[data-native-sim]'),r=v.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,decoded:v.videoWidth,transparent:getComputedStyle(document.getElementById('c14body')).backgroundColor,plays:TVLab.calls.filter(c=>c.name==='play').length}});
+ if(manifest.version==='0.56-beta.2'){
+ const theme=await page.evaluate(()=>{let ch=document.querySelector('#c14chlist button'),panel=document.getElementById('c14chs'),button=document.getElementById('c14full'),ctrl=button.parentNode;return{panel:getComputedStyle(panel).backgroundColor,radius:getComputedStyle(ch).borderRadius,buttonRadius:getComputedStyle(button).borderRadius,padding:getComputedStyle(ctrl).paddingLeft,buttonHeight:button.getBoundingClientRect().height}});
+ assert.deepEqual(theme,{panel:'rgb(0, 0, 0)',radius:'4px',buttonRadius:'4px',padding:'22px',buttonHeight:44});checks.push('beta 2 pure black panels, 4px corners and aligned 44px controls');
+ }
  assert.equal(preview.decoded,640);assert.equal(preview.transparent,'rgba(0, 0, 0, 0)');assert.equal(preview.plays,1);checks.push('real host video decode through simulated native ABI and HTTP fixture bridge');
  await page.screenshot({path:path.join(__dirname,'results/preview.png')});
  await page.keyboard.press('Enter');await page.waitForFunction(()=>CommonPlayer14.state.full===1);
@@ -56,8 +61,8 @@ const checks=[],errors=[];
  await context.request.get(base+'/lab/scenario?id=healthy');
  assert.deepEqual(errors,[]);
  const timings=await page.evaluate(()=>({firstFrames:TVLab.firstFrames,nativeErrors:TVLab.errors,calls:TVLab.calls.length}));
- const result={status:'PASS',bridge:process.env.PHILCO_REAL_BRIDGE==='1'?'Go v7.2':'Python contract',base:'864bb8604452b00043f7c67025802fe0d92e6731',viewport:'1280x720',checks,preview,timings,pageErrors:errors,limits:['Chromium is not Philco WebKit','QJY/MStar ABI is simulated',process.env.PHILCO_REAL_BRIDGE==='1'?'Recovered v7.2 Go helper executed; newer incomplete patches modeled by adapter':'Python bridge adapter; use PHILCO_REAL_BRIDGE=1 to exercise recovered Go helper','Synthetic media and credentials only']};
- fs.writeFileSync(path.join(__dirname,process.env.PHILCO_REAL_BRIDGE==='1'?'results/browser-go.json':'results/browser.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+ const result={status:'PASS',version:manifest.version,bridge:process.env.PHILCO_REAL_BRIDGE==='1'?'Go v7.2':'Python contract',base:require('node:child_process').execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),viewport:'1280x720',checks,preview,timings,pageErrors:errors,limits:['Chromium is not Philco WebKit','QJY/MStar ABI is simulated',process.env.PHILCO_REAL_BRIDGE==='1'?'Recovered v7.2 Go helper executed; newer incomplete patches modeled by adapter':'Python bridge adapter; use PHILCO_REAL_BRIDGE=1 to exercise recovered Go helper','Synthetic media and credentials only']};
+ fs.writeFileSync(path.join(__dirname,manifest.version==='0.56-beta.2'?'results/browser-beta2.json':(process.env.PHILCO_REAL_BRIDGE==='1'?'results/browser-go.json':'results/browser.json')),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
  await context.close();
  }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1}).finally(()=>{server.kill();if(helper)helper.kill()});

@@ -57,13 +57,10 @@ class Handler(SimpleHTTPRequestHandler):
                 self.path = original
         if path == '/':
             m = json.loads((ROOT/'manifest.json').read_text())
-            candidate = q.get('candidate', ['0'])[0] == '1'
             head = '<!doctype html><html><head><meta charset="utf-8"><title>Philco Local Lab</title></head><body>'
             out = [head, '<script src="/local-lab/adapter.js"></script>']
             for mod in m['modules']:
                 p = mod['path']
-                if candidate and mod['id'] == 'app':
-                    p = 'apps/player1/app.beta56.js'
                 if mod['type'] == 'html':
                     out.append((ROOT/p).read_text())
                 elif mod['type'] == 'css':
@@ -113,9 +110,17 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.output('\n'.join(STATE['logs']))
         if path in ('/fetch', '/hls'):
             target = urlparse(q.get('u', [''])[0])
-            if target.hostname not in ('tv.fixture', 'raw.githubusercontent.com'):
+            if target.hostname not in ('tv.fixture', 'raw.githubusercontent.com', 'api.invidious.io', 'api.fixture', 'media.fixture', 'www.youtube.com'):
                 return self.output('fixture-only bridge', status=403)
+            if target.hostname == 'api.invidious.io':
+                return self.output(json.dumps([['api.fixture', {'api': True, 'type': 'https'}]]), 'application/json')
+            if target.hostname == 'api.fixture':
+                return self.output(json.dumps({'title': 'YouTube transport fixture', 'hlsUrl': 'https://media.fixture/youtube.m3u8'}), 'application/json')
+            if target.hostname == 'www.youtube.com':
+                return self.output('<html>Controlled metadata fixture, not live YouTube</html>', 'text/html')
             if target.hostname == 'raw.githubusercontent.com':
+                if target.path.endswith('apps/youtube3/player-beta56-3.js'):
+                    return self.output((ROOT/'apps/youtube3/player-beta56-3.js').read_text(), 'application/javascript')
                 if target.path.endswith('credenciais.temp'):
                     return self.output('M3U="http://tv.fixture/get.php?username=demo&password=demo"')
                 return self.output('fixture unavailable', status=404)

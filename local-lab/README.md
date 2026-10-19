@@ -31,3 +31,15 @@ A fonte completa encontrada é v7.2. Os arquivos posteriores do kit incluem patc
 A fila de logos mantém um download ativo. Os testes verificam que teclas repetidas não o cancelam. A navegação de browser usa intervalos reais de 180 ms; Voltar usa 450 ms para respeitar a proteção contra duplicação do controle.
 
 Os arquivos de mídia são gerados, não enviados ao repositório. Os fontes privados do kit também não são copiados para este repositório público.
+
+## Rodada beta 3
+
+```sh
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-3.live.cjs
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-3.vod.cjs
+NODE_PATH=/tmp/philco-lab-deps/node_modules node tests/beta56-3.youtube.cjs
+node local-lab/test-browser.cjs
+node local-lab/test-youtube.cjs
+```
+
+O último comando usa metadados e HLS de fixture para testar o código YouTube, não o serviço real. O servidor executa sempre o app especificado pelo manifesto atual, sem override. `ARCHITECTURE_BETA3.md` documenta as classes e o limite de resolução externa.

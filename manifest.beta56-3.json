@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "release": "2026.10.19-beta.56.3",
+  "bootstrap_min": 4,
+  "app": "player1",
+  "ready_timeout_ms": 2200,
+  "modules": [
+    {
+      "id": "policy",
+      "path": "system/policy.json",
+      "type": "json",
+      "phase": "pre",
+      "required": true,
+      "sha256": "61045e256831ceab2ec6ef82a52806dbeb6e654fdbd0674da9ff684faa92f54f",
+      "bytes": 539
+    },
+    {
+      "id": "runtime",
+      "path": "system/runtime-beta56-3.js",
+      "type": "js",
+      "phase": "pre",
+      "required": true,
+      "sha256": "4c6f4e1020bab1c7bfbe183ccc09367088f05f6783658308294ee19a26c8afb4",
+      "bytes": 3664
+    },
+    {
+      "id": "shell",
+      "path": "apps/player1/shell.beta56-3.html",
+      "type": "html",
+      "phase": "shell",
+      "required": true,
+      "sha256": "e008f8d360f454347826041726f9649749b08113baffb8db8971d2e579eb67e4",
+      "bytes": 1199
+    },
+    {
+      "id": "style",
+      "path": "apps/player1/style.css",
+      "type": "css",
+      "phase": "shell",
+      "required": true,
+      "sha256": "5bf86aa7e733f09d4551156dffc249d7dd3141bff434fa3340b74feae22dd616",
+      "bytes": 2336
+    },
+    {
+      "id": "feature-loader",
+      "path": "system/feature-loader-beta56-3.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "fa72c37930e981715e591fb01e84a598d4a149b04a71e921a9881a93b978c5a8",
+      "bytes": 4373
+    },
+    {
+      "id": "app",
+      "path": "apps/player1/app.beta56-3.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "9c2eef831338df7a6df31f16a5a8904db28597d73914d7a39d2346a8f7adbd40",
+      "bytes": 40728
+    },
+    {
+      "id": "force-update",
+      "path": "system/readable/force-update.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "aafbdafee763abf0f8fd585dafb89c44338fc7cbe1f16387b28319396ffa8be4",
+      "bytes": 1730
+    },
+    {
+      "id": "inject-base",
+      "path": "system/readable/inject-base.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "2bf3e595f4bd55b42ffce61a88c6ee099be50e0d242ae329b7818ed73de7a8ee",
+      "bytes": 211
+    },
+    {
+      "id": "xtream-api-first",
+      "path": "system/readable/xtream-api-first.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c995a58d78b968d1e024eb66c8d8bd579a54ffa4a7215256352f9e759a3e572b",
+      "bytes": 9817
+    },
+    {
+      "id": "xtream-lazy-core",
+      "path": "system/readable/xtream-lazy-core.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "0d298441a06bc6e9043147f81fbdfae69510153c0c5a80d269ae9b5be9585e90",
+      "bytes": 21806
+    },
+    {
+      "id": "xtream-auth-guard",
+      "path": "system/readable/xtream-auth-guard.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "03548d37e17b60e531429bf760f2eedca446b9a8e4d13371ace9b44f10ac6239",
+      "bytes": 3711
+    },
+    {
+      "id": "xtream-stream-router",
+      "path": "system/readable/xtream-stream-router.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "abe12c724fdb0840b07dab7c52e994cee9a1d9339b02c513e728f9059ab6b932",
+      "bytes": 2012
+    },
+    {
+      "id": "autovod",
+      "path": "system/readable/autovod.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "7afcef93ad9d6c1f302eeb3e1741646cfc6cb0c37af062f5bb9602f25439e3c7",
+      "bytes": 9284
+    },
+    {
+      "id": "hlsjs-loader",
+      "path": "system/readable/hlsjs-loader.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "fd8a5b9bc5c5fbcec6546dfa3a371abb0c5780f618177db0a351af481dcca542",
+      "bytes": 6720
+    },
+    {
+      "id": "xtream-vod-player",
+      "path": "system/readable/xtream-vod-player.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "64dafdfeb9f74a7ce6d546020085ffa042e2889e17cd0dbaa26f8174e2fbe9bc",
+      "bytes": 75775
+    },
+    {
+      "id": "common-player-ui",
+      "path": "system/readable/common-player-ui.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "9552394b7c6382e0be3bf50028b8c1064d3bb612a4be3eb962ed2dfcba089b4f",
+      "bytes": 31889
+    },
+    {
+      "id": "xtream-ui",
+      "path": "system/readable/xtream-ui.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "909d13c3c1af986e9a0de20e1f99fc7b8688ab222efe619889224e93fa5acf0b",
+      "bytes": 116150
+    },
+    {
+      "id": "live-log-overlay",
+      "path": "system/readable/live-log-overlay.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "f79548eabfc63d53cba28c718a77cd13eabc672c0243c02d82af7736c909b110",
+      "bytes": 6443
+    },
+    {
+      "id": "graphos-skin",
+      "path": "system/injections/graphos-skin-beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "8ffb410087b8ddda0630cca25934a55189d14d68cbaac21c3a5acc4bf18af7e9",
+      "bytes": 7266
+    },
+    {
+      "id": "hooks",
+      "path": "system/readable/hooks.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "5f03c8948aa379509b2bc962212f1377dd3aa2f25efefd324d353040a542b8a5",
+      "bytes": 958
+    },
+    {
+      "id": "actions",
+      "path": "system/actions.json",
+      "type": "actions",
+      "phase": "post",
+      "required": false,
+      "sha256": "966d2e8d187da295a4c8ca40c9c1b29e310467b92b85866cc65bc22703cc57f7",
+      "bytes": 201
+    }
+  ],
+  "version": "0.56-beta.3"
+}

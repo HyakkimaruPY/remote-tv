@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "version": "0.56-beta.3",
+  "viewport": "1280x720",
+  "checks": [
+    "lazy loader fetch+integrity+one injection",
+    "metadata discovery and relay HLS through local bridge",
+    "host synthetic video decoded; QJY NormalPlay confirms",
+    "Back stops native video, Back returns to menu",
+    "reopen uses same installed module"
+  ],
+  "state": {
+    "player": {
+      "open": 1,
+      "mode": "play",
+      "playing": 1,
+      "native": true,
+      "resolver": "api.fixture",
+      "results": 0
+    },
+    "decoded": 640,
+    "local": true,
+    "frame": "about:blank"
+  },
+  "pageErrors": [],
+  "limitation": "Synthetic API/media fixtures; does NOT prove actual YouTube playback or Philco decoding"
+}

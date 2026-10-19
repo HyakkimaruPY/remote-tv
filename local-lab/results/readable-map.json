@@ -1,0 +1,107 @@
+[
+  {
+    "id": "app",
+    "from": "apps/player1/app.beta56.js",
+    "to": "apps/player1/app.beta56-3.js",
+    "originalBytes": 17503,
+    "readableBytes": 41426
+  },
+  {
+    "id": "force-update",
+    "from": "system/injections/force-update-v53.js",
+    "to": "system/readable/force-update.beta56-3.js",
+    "originalBytes": 1044,
+    "readableBytes": 1732
+  },
+  {
+    "id": "inject-base",
+    "from": "system/injections/base.js",
+    "to": "system/readable/inject-base.beta56-3.js",
+    "originalBytes": 279,
+    "readableBytes": 212
+  },
+  {
+    "id": "xtream-api-first",
+    "from": "system/injections/xtream-api-first-v07.js",
+    "to": "system/readable/xtream-api-first.beta56-3.js",
+    "originalBytes": 5796,
+    "readableBytes": 9823
+  },
+  {
+    "id": "xtream-lazy-core",
+    "from": "system/injections/xtream-lazy-core-v31.js",
+    "to": "system/readable/xtream-lazy-core.beta56-3.js",
+    "originalBytes": 11724,
+    "readableBytes": 21812
+  },
+  {
+    "id": "xtream-auth-guard",
+    "from": "system/injections/xtream-auth-guard-v31.js",
+    "to": "system/readable/xtream-auth-guard.beta56-3.js",
+    "originalBytes": 1927,
+    "readableBytes": 3718
+  },
+  {
+    "id": "xtream-stream-router",
+    "from": "system/injections/xtream-stream-router-v22.js",
+    "to": "system/readable/xtream-stream-router.beta56-3.js",
+    "originalBytes": 1150,
+    "readableBytes": 2022
+  },
+  {
+    "id": "autovod",
+    "from": "system/injections/autovod-v23.js",
+    "to": "system/readable/autovod.beta56-3.js",
+    "originalBytes": 4362,
+    "readableBytes": 9281
+  },
+  {
+    "id": "hlsjs-loader",
+    "from": "system/injections/hlsjs-loader-beta56.js",
+    "to": "system/readable/hlsjs-loader.beta56-3.js",
+    "originalBytes": 2916,
+    "readableBytes": 6722
+  },
+  {
+    "id": "xtream-vod-player",
+    "from": "system/injections/xtream-vod-player-beta56.js",
+    "to": "system/readable/xtream-vod-player.beta56-3.js",
+    "originalBytes": 38734,
+    "readableBytes": 76310
+  },
+  {
+    "id": "common-player-ui",
+    "from": "system/injections/common-player-ui-beta56.js",
+    "to": "system/readable/common-player-ui.beta56-3.js",
+    "originalBytes": 18219,
+    "readableBytes": 32353
+  },
+  {
+    "id": "xtream-ui",
+    "from": "system/injections/xtream-ui-v49.js",
+    "to": "system/readable/xtream-ui.beta56-3.js",
+    "originalBytes": 67288,
+    "readableBytes": 115489
+  },
+  {
+    "id": "live-log-overlay",
+    "from": "system/injections/live-log-overlay-v43.js",
+    "to": "system/readable/live-log-overlay.beta56-3.js",
+    "originalBytes": 3690,
+    "readableBytes": 6429
+  },
+  {
+    "id": "graphos-skin",
+    "from": "system/injections/graphos-skin-beta56-2.js",
+    "to": "system/injections/graphos-skin-beta56-3.js",
+    "originalBytes": 7008,
+    "readableBytes": 7268
+  },
+  {
+    "id": "hooks",
+    "from": "system/hooks.js",
+    "to": "system/readable/hooks.beta56-3.js",
+    "originalBytes": 577,
+    "readableBytes": 953
+  }
+]

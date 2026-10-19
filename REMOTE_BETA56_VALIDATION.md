@@ -4,7 +4,7 @@ Base: `864bb8604452b00043f7c67025802fe0d92e6731` (main, versão 0.55). Data: 19/
 
 ## Resultado
 
-Beta preparada e validada localmente em 1280×720. Arquivos da 0.55 preservados; `manifest.stable55.json` e `version.stable55` identificam a versão anterior. Módulos novos recebem nomes `beta56`; a beta é identificada no menu e nos diagnósticos. Publicação e ativação são commits separados, com `version` como último marcador.
+Beta publicada e validada localmente em 1280×720. Arquivos da 0.55 preservados; `manifest.stable55.json` e `version.stable55` identificam a versão anterior. Módulos novos recebem nomes `beta56`; a beta é identificada no menu e nos diagnósticos. Publicação e ativação são commits separados, com `version` como último marcador.
 
 ## Correções
 
@@ -50,3 +50,7 @@ A versão 0.55 continua integral nos módulos antigos e no manifesto `manifest.s
 Para rollback remoto deliberado, publicar uma cópia de `manifest.stable55.json` com um novo identificador, por exemplo `0.56-rollback.55`, nos campos version/release apropriados, conferir hashes e árvore remota, e somente depois publicar esse mesmo identificador em `version`. Nenhum código precisa ser recompilado nem firmware reflasheado. O histórico anterior e o manifesto estável permitem reconstrução independente do cache da TV.
 
 Reprodução do laboratório: `local-lab/README.md`. Publicação não comprova recebimento por CDN/cache ou aplicação na TV.
+
+## Conferência de publicação
+
+Preparação publicada no commit `8cccd257ebc4422088267b6e95bfe796c09b60fe`. Os blobs remotos de todos os arquivos novos/alterados e dos 21 módulos foram comparados com o material validado localmente; manifesto beta, arquivo estável e marcador anterior 0.55 foram relidos pelo conector GitHub antes da ativação. Este commit de ativação altera o marcador para `0.56-beta.1` e registra a conferência, sem modificar módulos.

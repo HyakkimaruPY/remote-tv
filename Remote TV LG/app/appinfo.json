@@ -1,0 +1,15 @@
+{
+  "id": "com.srhell.aura.lg",
+  "title": "Aura",
+  "type": "web",
+  "main": "index.html",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "version": "1.0.0",
+  "vendor": "Sr. Hell",
+  "appDescription": "Aura Player \u00b7 Remote TV LG",
+  "bgColor": "#080808",
+  "iconColor": "#080808",
+  "disableBackHistoryAPI": true,
+  "requiredACG": []
+}

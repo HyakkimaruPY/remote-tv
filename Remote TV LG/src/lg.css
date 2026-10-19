@@ -1,0 +1,161 @@
+/* Responsive webOS port. The beta hierarchy is preserved; viewport defines the scale. */
+.h {
+  display: none !important;
+}
+#r14 {
+  width: 100% !important;
+  height: 100% !important;
+}
+#r14h {
+  height: 4.2rem !important;
+}
+#r14body {
+  width: 100% !important;
+  top: 4.2rem !important;
+  height: auto !important;
+  bottom: 0 !important;
+}
+#r14.detail27 #r14body,
+#r14.prepare27 #r14body {
+  top: 0 !important;
+  height: 100% !important;
+}
+.livecat14,
+.catcol14,
+.livech14,
+.content14 {
+  height: 100% !important;
+}
+.catcol14,
+.livecat14 {
+  width: 19.2% !important;
+}
+.cat14,
+.tab14 {
+  width: 100% !important;
+}
+.content14 {
+  left: 19.2% !important;
+}
+.livech14 {
+  left: 19.2% !important;
+  width: 25.5% !important;
+}
+.ch14 {
+  width: 100% !important;
+}
+.ch14 span {
+  width: 75% !important;
+}
+.pv14 {
+  left: 44.7% !important;
+  height: 76.4% !important;
+}
+.pc14 {
+  left: 44.7% !important;
+  top: 76.4% !important;
+  bottom: 0;
+  height: auto !important;
+}
+.collapsed14 .livech14 {
+  left: 0 !important;
+}
+.collapsed14 .pv14,
+.collapsed14 .pc14 {
+  left: 25.5% !important;
+}
+.pvl14 {
+  left: 46.4% !important;
+}
+.collapsed14 .pvl14 {
+  left: 27.2% !important;
+}
+.catlist14,
+.chlist14 {
+  height: 82% !important;
+}
+.content14 #libgrid14 {
+  height: 87%;
+  overflow: hidden;
+}
+.card14 {
+  width: 18% !important;
+  margin-right: 1.5% !important;
+}
+.card14 img {
+  width: 100% !important;
+}
+.seriesLeft19 {
+  left: 3% !important;
+  width: 31% !important;
+  top: 33% !important;
+  bottom: 3% !important;
+}
+.seriesRight19 {
+  left: 37% !important;
+  right: 2% !important;
+  bottom: 3% !important;
+  height: 47% !important;
+}
+.ep14 {
+  width: 31.5% !important;
+  margin-right: 1.4% !important;
+}
+.ep14 img {
+  width: 100% !important;
+}
+.movieInfo19 {
+  left: 4% !important;
+  bottom: 7% !important;
+  width: 60% !important;
+}
+#resume34,
+#busy34 {
+  width: 100% !important;
+  height: 100% !important;
+}
+#resume34box {
+  left: 28% !important;
+  top: 32% !important;
+  width: 44% !important;
+}
+.movieLogo19 {
+  object-fit: contain;
+}
+.card14 img,
+.ep14 img {
+  object-fit: cover;
+}
+#r14h b {
+  font-size: 1.25rem !important;
+}
+#r14h b span {
+  font-size: 0.65rem !important;
+}
+#r14h button {
+  font-size: 0.8rem !important;
+  padding: 0.5rem 0.6rem !important;
+}
+.movie19,
+.series19 {
+  background-color: #080808 !important;
+}
+#playback {
+  z-index: 700;
+}
+#hud button {
+  font-size: 0.8rem;
+}
+#hud {
+  pointer-events: auto;
+}
+body {
+  background: #080808;
+  color: #eee;
+}
+#screen {
+  overflow: auto;
+}
+.welcome h1 {
+  font-size: 2.7rem;
+}

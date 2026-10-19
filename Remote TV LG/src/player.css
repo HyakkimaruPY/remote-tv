@@ -1,0 +1,369 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #080a0c;
+  color: #edf0f2;
+  font:
+    normal 20px Arial,
+    sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+button,
+input,
+textarea,
+select {
+  border: 2px solid #333a40;
+  background: #171c21;
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.8rem;
+}
+button {
+  cursor: pointer;
+}
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid #e8edf2;
+  outline-offset: 1px;
+  background: #30373e;
+}
+.selected {
+  background: #2c333a;
+  border-color: #a4adb7;
+}
+.hidden {
+  display: none !important;
+}
+header {
+  height: 4.5rem;
+  padding: 1rem 2%;
+  border-bottom: 1px solid #242b30;
+  white-space: nowrap;
+}
+header b {
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+#vlabel {
+  font-size: 0.65rem;
+  color: #98a3ad;
+  margin-left: 0.6rem;
+}
+nav {
+  display: inline-block;
+  margin-left: 2%;
+  vertical-align: middle;
+}
+nav button {
+  padding: 0.55rem 0.7rem;
+  margin-right: 0.4rem;
+  font-size: 0.85rem;
+}
+#screen {
+  position: absolute;
+  top: 4.5rem;
+  bottom: 2.3rem;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+.welcome {
+  max-width: 58rem;
+  margin: 4% auto;
+  padding: 0 3%;
+}
+.welcome h1 {
+  font-size: 2.7rem;
+  font-weight: normal;
+  margin: 0.4em 0;
+}
+.muted {
+  color: #99a3ad;
+  line-height: 1.5;
+}
+.choices button {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  width: 30%;
+  margin: 1%;
+  height: 8rem;
+}
+.choices strong {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+.choices span {
+  color: #9ba6af;
+  font-size: 0.8rem;
+}
+.form {
+  max-width: 36rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.form label {
+  display: block;
+  margin: 0.7rem 0;
+  font-size: 0.85rem;
+  color: #a9b2ba;
+}
+.form input:not([type="checkbox"]),
+textarea {
+  display: block;
+  width: 100%;
+  margin: 0.4rem 0 1rem;
+}
+textarea {
+  height: 9rem;
+  resize: vertical;
+}
+button.small {
+  font-size: 0.8rem;
+  margin: 0.3rem;
+}
+#notice {
+  position: absolute;
+  bottom: 0;
+  left: 2%;
+  right: 2%;
+  font-size: 0.8rem;
+  color: #b0bac3;
+  height: 1.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  padding: 1rem;
+  overflow: auto;
+  background: #0d1115;
+  border-right: 1px solid #252b30;
+}
+.sidebar button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.library {
+  position: absolute;
+  left: 22%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem 2%;
+  overflow: auto;
+}
+.toolbar input {
+  width: 65%;
+  font-size: 0.85rem;
+}
+.toolbar button {
+  margin-left: 0.4rem;
+}
+.cards {
+  margin-top: 1rem;
+}
+.card {
+  display: inline-block;
+  vertical-align: top;
+  width: 15%;
+  height: 13rem;
+  margin: 0 1.4% 1rem 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  position: relative;
+}
+.card img {
+  display: block;
+  width: 100%;
+  height: 9.8rem;
+  background: #10161b;
+}
+.card span {
+  display: block;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.1rem;
+  height: 2.7rem;
+  overflow: hidden;
+}
+.card.live {
+  width: 31%;
+  height: 5.8rem;
+}
+.card.live img {
+  float: left;
+  width: 25%;
+  height: 4rem;
+  margin: 0.6rem;
+}
+.card.live span {
+  padding: 0.8rem 0.4rem;
+  font-size: 0.85rem;
+  height: 5rem;
+}
+.card.episode {
+  width: 31%;
+  height: 10rem;
+}
+.card.episode img {
+  height: 6.7rem;
+}
+.pager {
+  clear: both;
+  margin: 0.5rem 0;
+}
+.pager button {
+  margin-right: 0.7rem;
+  font-size: 0.85rem;
+}
+.pager span {
+  font-size: 0.8rem;
+  color: #9ba6af;
+}
+.detail {
+  padding: 2rem 4%;
+  height: 100%;
+  overflow: auto;
+}
+.poster {
+  float: left;
+  width: 23%;
+  max-height: 85%;
+  margin-right: 3%;
+  border-radius: 0.6rem;
+}
+.detail .info {
+  overflow: hidden;
+}
+.detail h1 {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+.detail p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #b6bfc6;
+  max-width: 55rem;
+}
+.detail button,
+.detail select {
+  margin: 0.4rem 0.5rem 0.4rem 0;
+}
+.detail .cards {
+  clear: both;
+}
+.detail .episodes {
+  clear: both;
+  padding-top: 1rem;
+}
+#playback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 10;
+}
+video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+#hud {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem 4%;
+  background: rgba(8, 10, 12, 0.9);
+}
+#hud h2 {
+  font-size: 1.2rem;
+}
+#transport button {
+  font-size: 0.85rem;
+  margin: 0 0.5rem 0.4rem 0;
+}
+#clock,
+#pstatus {
+  font-size: 0.85rem;
+  color: #bdc6cd;
+}
+@media (max-width: 900px) {
+  header {
+    padding-left: 1%;
+  }
+  nav button {
+    padding: 0.55rem 0.4rem;
+  }
+  .card {
+    width: 23%;
+    height: 13rem;
+  }
+  .sidebar {
+    width: 25%;
+  }
+  .library {
+    left: 25%;
+  }
+}
+@media (max-width: 600px) {
+  #vlabel {
+    display: none;
+  }
+  header b {
+    font-size: 1.2rem;
+  }
+  nav {
+    margin-left: 1%;
+  }
+  nav button {
+    font-size: 0.72rem;
+    padding: 0.5rem 0.25rem;
+  }
+  .choices button {
+    width: 96%;
+    height: 5.5rem;
+  }
+  .card {
+    width: 31%;
+  }
+  .card.live {
+    width: 47%;
+  }
+  .card.episode {
+    width: 47%;
+  }
+  .poster {
+    width: 30%;
+  }
+}

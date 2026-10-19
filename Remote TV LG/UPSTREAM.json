@@ -1,0 +1,43 @@
+{
+  "repository": "HyakkimaruPY/remote-tv",
+  "commit": "d39ea99d9dcc6dfcde9e6358a7dd8daa7f2b241a",
+  "version": "0.56-beta.5",
+  "modules": [
+    {
+      "id": "xtream-lazy-core",
+      "path": "system/readable/xtream-lazy-core.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "0d298441a06bc6e9043147f81fbdfae69510153c0c5a80d269ae9b5be9585e90",
+      "bytes": 21806
+    },
+    {
+      "id": "tmdb-metadata",
+      "path": "system/readable/tmdb-metadata.beta56-5.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 11198,
+      "sha256": "6e6a4c12e836b6549632b2412d55e36ccb530905601f3977d144e775b08165fa"
+    },
+    {
+      "id": "xtream-ui",
+      "path": "system/readable/xtream-ui.beta56-5.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "b6cef7c101ecc529930e9ec39b1859aa0babc2c4ac20d635fecf82b45fc76eec",
+      "bytes": 124066
+    },
+    {
+      "id": "graphos-skin",
+      "path": "system/injections/graphos-skin-beta56-5.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "b4ee0009fcc0fb87d024b52919d473a5742d47155c779088c6eb9c664ad154d1",
+      "bytes": 9551
+    }
+  ]
+}

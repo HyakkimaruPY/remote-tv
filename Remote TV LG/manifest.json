@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "version": "1.0.0",
+  "base": "remote-tv 0.56-beta.5",
+  "path": "releases/1.0.0/player.html",
+  "bytes": 203332,
+  "sha256": "190d9e99f5951412554f63c11f099739258fad007f83a7da139610081252a31a"
+}

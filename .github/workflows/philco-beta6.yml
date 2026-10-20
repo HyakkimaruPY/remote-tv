@@ -1,0 +1,69 @@
+name: Validate Philco Beta 6
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/philco-beta6.yml'
+      - 'system/readable/xtream-ui.beta56-6.js'
+      - 'tests/beta56-6.live.cjs'
+      - 'manifest.json'
+      - 'manifest.beta56-6.json'
+      - 'version'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: philco-beta6
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Live reconnect and regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout Philco source
+        uses: actions/checkout@v4
+
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install test-only parsers and DOM emulator
+        run: npm install --no-save --no-package-lock acorn@8 jsdom@24
+
+      - name: Verify full Philco runtime integrity and staging marker
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          m=json.loads(Path('manifest.json').read_text())
+          frozen=json.loads(Path('manifest.beta56-6.json').read_text())
+          assert m==frozen, 'Beta6 archive mismatches active manifest'
+          assert m['version']=='0.56-beta.6'
+          assert m['release']=='2026.10.20-beta.56.6'
+          assert len(set(x['id'] for x in m['modules']))==len(m['modules'])
+          for x in m['modules']:
+              b=Path(x['path']).read_bytes()
+              assert len(b)==x['bytes'], x['path']
+              assert hashlib.sha256(b).hexdigest()==x['sha256'], x['path']
+          marker=Path('version').read_text().strip()
+          assert marker in ('0.56-beta.5', '0.56-beta.6'), marker
+          print('All',len(m['modules']),'Philco modules checked; gate:',marker)
+          PY
+
+      - name: Run focused live-recovery tests and ES5 parse
+        run: |
+          node --check system/readable/xtream-ui.beta56-6.js
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
+
+      - name: Check VOD, artwork and previous live path for regressions
+        run: |
+          node tests/beta56-5.vod.cjs
+          node tests/beta56-5.artwork.cjs

@@ -51,8 +51,21 @@ def adapt(name):
     if name.startswith('tmdb-metadata'):
         code=code.replace("BR + encodeURIComponent(u)","u")
     if name.startswith('xtream-ui'):
-        code=replace_function(code,'asset', '''    function asset(url) {
-        try { return windowRef.Aura.url(String(url||''), windowRef.Aura.baseURL()); } catch(e) { return ''; }
+        code=replace_function(code,'asset', '''    function asset(url, role) {
+        url = String(url || '');
+        var backdrop = role === 'backdrop', width = backdrop ? 780 : role === 'logo' ? 500 : 185;
+        if (!/[?&](?:sig|signature|x-amz-signature|hdnea|hdnts)=/i.test(url)) {
+            if (/^https?:\/\/image\.tmdb\.org\/t\/p\//i.test(url) && !/\.svg(?:[?#]|$)/i.test(url)) {
+                url = url.replace(/(\/t\/p\/)(?:original|w[0-9]+|h[0-9]+)(\/)/i, '$1w' + width + '$2');
+            } else if (/\/items\/[^/?]+\/images\/(?:primary|backdrop|logo)(?:[/?]|$)/i.test(url)) {
+                var hashAt = url.indexOf('#'), fragment = hashAt < 0 ? '' : url.slice(hashAt);
+                if (hashAt >= 0)
+                    url = url.slice(0, hashAt);
+                url = url.replace(/([?&])(?:maxWidth|maxHeight|quality)=[^&#]*/ig, '$1').replace(/\?&+/, '?').replace(/&&+/g, '&').replace(/[?&]$/, '');
+                url += (url.indexOf('?') < 0 ? '?' : '&') + 'maxWidth=' + (backdrop ? 960 : role === 'logo' ? 500 : 240) + '&quality=70' + fragment;
+            }
+        }
+        try { return windowRef.Aura.url(url, windowRef.Aura.baseURL()); } catch(e) { return ''; }
     }''')
         code=code.replace("BR = 'http://127.0.0.1:8765/fetch?u='", "BR = ''")
         # Source screen is owned by the LG shell, not the Philco firmware menu.

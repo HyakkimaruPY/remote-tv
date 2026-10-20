@@ -860,9 +860,7 @@
                     startLive(o, idx + 1);
                     return;
                 }
-                ps = element('ps');
-                if (ps)
-                    ps.textContent = 'Falha. Abra Log.';
+                startLive(o, a.length);
             }, true);
         if (viewState.full && windowRef.RawPlayer && windowRef.RawPlayer.fullscreen)
             try {

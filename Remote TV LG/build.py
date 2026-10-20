@@ -3,7 +3,7 @@
 from pathlib import Path
 import json, hashlib, re, argparse
 ROOT=Path(__file__).resolve().parent
-VERSION='1.0.1'
+VERSION='1.0.2'
 parser=argparse.ArgumentParser()
 parser.add_argument('--update-embedded', action='store_true', help='Explicitly regenerate the packaged fallback; remote publication does not require a new IPK.')
 args=parser.parse_args()
@@ -73,6 +73,7 @@ def adapt(name):
     if name.startswith('xtream-ui'):
         code=code.replace('LG '+VERSION,'LG __AURA_VERSION__')
         code=apply_source_patch(code,src/'patches/xtream-ui.patch')
+        code=apply_source_patch(code,src/'patches/artwork-102.patch')
         code=code.replace('__AURA_VERSION__',VERSION)
     return code
 mods=['xtream-lazy-core.beta56-3.js','tmdb-metadata.beta56-5.js','xtream-ui.beta56-5.js','graphos-skin-beta56-5.js']

@@ -10,6 +10,7 @@
     attempt = 0,
     current = null,
     failed = {},
+    LAUNCHER_VERSION = "1.0.2",
     xhr = null;
   function $(id) {
     return d.getElementById(id);
@@ -41,17 +42,21 @@
       return false;
     }
   }
+  function versionNum(v) {
+    var a = String(v || "0.0.0").split("."), i, n = 0;
+    for (i = 0; i < 3; i++) n = n * 10000 + (+a[i] || 0);
+    return n;
+  }
   function best() {
-    var a = read("active"),
-      p = read("previous");
-    return valid(a) ? a : valid(p) ? p : w.AuraFallback;
+    var a = read("active"), p = read("previous"), f = w.AuraFallback, b = valid(f) ? f : null;
+    if (valid(p) && (!b || versionNum(p.version) > versionNum(b.version))) b = p;
+    if (valid(a) && (!b || versionNum(a.version) >= versionNum(b.version))) b = a;
+    return b;
   }
   function label() {
-    var a = best();
-    $("version").textContent =
-      "Aura · Launcher 1.0.0 · Player " +
-      a.version +
-      (staging ? " · disponível " + staging.version : "");
+    var a = best(), b = valid(staging) && versionNum(staging.version) >= versionNum(a.version) ? staging : null;
+    $("version").textContent = "Aura · Player " + a.version +
+      " · Base " + LAUNCHER_VERSION + (b && b.sha256 !== a.sha256 ? " · atualização " + b.version + " pronta" : "");
   }
   function get(path, cb) {
     var x = new XMLHttpRequest(),
@@ -92,7 +97,13 @@
     get("version", function (err, marker) {
       if (err) return end(err);
       marker = marker.replace(/^\s+|\s+$/g, "");
+      if (!/^\\d+\\.\\d+\\.\\d+$/.test(marker))
+        return end("Versão remota inválida. A versão local foi mantida.");
+      if (versionNum(marker) < versionNum(best().version))
+        return end("A versão local é mais recente; nenhuma regressão aplicada.");
       if (!force && marker === best().version) return end("Player atualizado.");
+      if (!force && valid(staging) && marker === staging.version)
+        return end("Versão " + marker + " já salva. Selecione Executar.");
       get("manifest.json", function (e, s) {
         var m;
         try {
@@ -141,7 +152,8 @@
     status(msg);
   }
   function launch(bundle) {
-    bundle = bundle || staging || best();
+    var local = best();
+    bundle = bundle || (valid(staging) && versionNum(staging.version) >= versionNum(local.version) ? staging : local);
     if (!valid(bundle)) {
       status("Versão local inválida.");
       return;

@@ -20,4 +20,14 @@
 
 O IPK é para TVs LG **webOS**. Nenhuma TV física está conectada ao runner GitHub; testes de decodificação real, WebKit/webOS antigo e controle remoto físico devem ser observados na TV. O launcher IPK já instalado não pode substituir o próprio binário via atualização HTML — a atualização remota é do player/experiência web, mantendo o fallback do pacote.
 
-**Evidência a preencher pelo workflow:** link da execução GitHub Actions, conclusão de testes, hash do IPK compilado, commit de ativação e confirmação do download remoto de 1.0.2.
+## Evidência executada (20/10/2026)
+
+- Workflow: https://github.com/HyakkimaruPY/remote-tv/actions/runs/39419024206 — **success**.
+- `python3 build.py --update-embedded`, `npm test` (Acorn ES5, SHA UTF-8, manifesto, M3U, autenticação) — **PASS**.
+- Chromium com H.264 MP4 sintético de 40 s: teste da futura 1.0.3 simulada, consulta/download automático sem clique, quinta capa sem bloqueio por primeira imagem lenta, botões com OK, filmes, séries, episódios, vídeo com busca, live em tela cheia/prévia, favoritos, continuar, log, cache sem rede — **PASS**.
+- Payload online 1.0.2: **210.786 bytes**; SHA-256 `2ba545364cacecee17516aa94af07cf6329fc67061d7b5b13d6607049df8efe7` (manifesto publicado confere).
+- IPK `com.srhell.aura.lg_1.0.2_all.ipk`: **54.626 bytes**; SHA-256 `234e660a325d770c97a4aac48449353a648a8c005b5242b317dc343bdef95167`. Arquivo disponível em `dist/` e como artefato do workflow.
+- Preparação: commit `3badbf8`. Ativação posterior: commit `22c46e877074fb9afb43db36c6460df3cf86770b`; marcador `version` lido após publicação: **1.0.2**, manifesto **1.0.2**, release existente com 210.786 bytes.
+- As duas execuções anteriores pararam sem publicar: falta de `ffmpeg` no runner e falha reproduzida do rótulo de versão quando o payload simulado era byte a byte idêntico. Ambas corrigidas antes da publicação final.
+
+Testes de navegador são simulação e **não substituem a validação em LG física**. A futura 1.0.3 foi simulada com manifesto válido e mesmo HTML da 1.0.2 para verificar o protocolo; nenhuma 1.0.3 real foi publicada.

@@ -1,0 +1,301 @@
+@@ LG artwork pipeline 1.0.2 @@
+-    var IQ27 = [], IT27 = 0, IA27 = null, navAt31 = 0;
+-    function publishImageBatch(batch) {
+-        if (IA27 !== batch)
+-            return;
+-        var i, entry;
+-        for (i = 0; i < batch.entries.length; i++) {
+-            entry = batch.entries[i];
+-            if (entry.done && entry.ok)
+-                entry.image.style.visibility = 'visible';
+-        }
+-        batch.published = true;
+-    }
+-    function abortImage(requeue) {
+-        var batch = IA27, i, entry;
+-        if (!batch)
+-            return;
+-        clearTimeout(batch.revealTimer);
+-        IA27 = null;
+-        for (i = batch.entries.length - 1; i >= 0; i--) {
+-            entry = batch.entries[i];
+-            clearTimeout(entry.timer);
+-            entry.image.onload = entry.image.onerror = null;
+-            if (entry.done && entry.ok) {
+-                entry.image.style.visibility = 'visible';
+-                continue;
+-            }
+-            entry.image.removeAttribute('src');
+-            if (requeue && !entry.done)
+-                IQ27.unshift(entry.image);
+-        }
+-    }
+-    function cancelImages() {
+-        clearTimeout(IT27);
+-        IT27 = 0;
+-        abortImage(false);
+-        IQ27 = [];
+-    }
+-    function pauseImages() {
+-        clearTimeout(IT27);
+-        IT27 = 0;
+-        abortImage(true);
+-    }
+-    function resumeImages() {
+-        if (!viewState.on || IA27 || !IQ27.length)
+-            return;
+-        clearTimeout(IT27);
+-        navAt31 = 0;
+-        IT27 = setTimeout(loadNextImage, 60);
+-    }
+-    function startBatchImage(batch, entry) {
+-        var im = entry.image, src = im.getAttribute('data-src') || '';
+-        function done(ok) {
+-            if (IA27 !== batch || entry.done)
+-                return;
+-            entry.done = true;
+-            entry.ok = ok;
+-            clearTimeout(entry.timer);
+-            im.onload = im.onerror = null;
+-            im.removeAttribute('data-src');
+-            if (ok && im.getAttribute('data-logo42'))
+-                rememberChannelLogo(src);
+-            if (!ok)
+-                im.removeAttribute('src');
+-            batch.remaining--;
+-            if (batch.published || !batch.remaining)
+-                publishImageBatch(batch);
+-            if (!batch.remaining) {
+-                clearTimeout(batch.revealTimer);
+-                IA27 = null;
+-                IT27 = setTimeout(loadNextImage, 70);
+-            }
+-        }
+-        im.style.visibility = 'hidden';
+-        im.onload = function () {
+-            done(true);
+-        };
+-        im.onerror = function () {
+-            done(false);
+-        };
+-        entry.timer = setTimeout(function () {
+-            done(false);
+-        }, 4500);
+-        if ('decoding' in im)
+-            im.decoding = 'async';
+-        im.src = src;
+-    }
+-    function loadNextImage() {
+-        var im, batch, limit = 3, i, delay = 220 - (new Date().getTime() - navAt31);
+-        if (delay > 0) {
+-            IT27 = setTimeout(loadNextImage, delay);
+-            return;
+-        }
+-        if (!viewState.on || IA27 || !IQ27.length)
+-            return;
+-        batch = {
+-            entries: [],
+-            remaining: 0,
+-            published: false,
+-            revealTimer: 0
+-        };
+-        while (IQ27.length && batch.entries.length < limit) {
+-            im = IQ27[0];
+-            if (!im || !im.parentNode || !im.getAttribute('data-src')) {
+-                IQ27.shift();
+-                continue;
+-            }
+-            if (im.getAttribute('data-logo42')) {
+-                if (batch.entries.length)
+-                    break;
+-                limit = 1;
+-            }
+-            IQ27.shift();
+-            batch.entries.push({
+-                image: im,
+-                done: false,
+-                ok: false,
+-                timer: 0
+-            });
+-        }
+-        if (!batch.entries.length)
+-            return;
+-        IA27 = batch;
+-        batch.remaining = batch.entries.length;
+-        batch.revealTimer = setTimeout(function () {
+-            publishImageBatch(batch);
+-        }, 1200);
+-        for (i = 0; i < batch.entries.length; i++)
+-            startBatchImage(batch, batch.entries[i]);
+-    }
+-    function enqueueVisibleImages(box) {
+-        var a = box ? box.querySelectorAll('img[data-src]') : [], keep = [], i, j, seen;
+-        for (i = 0; i < IQ27.length; i++)
+-            if (IQ27[i] && IQ27[i].parentNode)
+-                keep.push(IQ27[i]);
+-        IQ27 = keep;
+-        for (i = 0; i < a.length; i++) {
+-            seen = 0;
+-            if (IA27)
+-                for (j = 0; j < IA27.entries.length; j++)
+-                    if (IA27.entries[j].image === a[i])
+-                        seen = 1;
+-            for (j = 0; j < IQ27.length; j++)
+-                if (IQ27[j] === a[i]) {
+-                    seen = 1;
+-                    break;
+-                }
+-            if (!seen)
+-                IQ27.push(a[i]);
+-        }
+-        if (!IA27) {
+-            clearTimeout(IT27);
+-            IT27 = setTimeout(loadNextImage, 120);
+-        }
+-    }
+-    function loadVisibleImages(box) {
+-        cancelImages();
+-        enqueueVisibleImages(box);
+-    }
+-    function prioritizeImage(button) {
+-        var im = button && button.querySelector ? button.querySelector('img[data-src]') : null, i;
+-        if (!im)
+-            return;
+-        if (IA27)
+-            for (i = 0; i < IA27.entries.length; i++)
+-                if (IA27.entries[i].image === im)
+-                    return;
+-        for (i = 0; i < IQ27.length; i++)
+-            if (IQ27[i] === im) {
+-                IQ27.splice(i, 1);
+-                break;
+-            }
+-        IQ27.unshift(im);
+-        if (!IA27) {
+-            clearTimeout(IT27);
+-            IT27 = setTimeout(loadNextImage, 50);
+-        }
+-    }
+-    function handleImageNavigation() {
+-        navAt31 = new Date().getTime();
+-        if (!IA27) {
+-            clearTimeout(IT27);
+-            IT27 = setTimeout(loadNextImage, 220);
+-        }
+-    }
++    /* Artwork 1.0.2: independent requests. A slow poster/logo must not
++       serialize the next image or wait for the slowest batch member. */
++    var IQ27 = [], IT27 = 0, IA27 = [], navAt31 = 0, imageLimit102 = 4;
++    function abortImage(requeue) {
++        var entries = IA27.slice(0), i, entry;
++        IA27 = [];
++        for (i = entries.length - 1; i >= 0; i--) {
++            entry = entries[i];
++            entry.done = true;
++            clearTimeout(entry.timer);
++            entry.image.onload = entry.image.onerror = null;
++            entry.image.removeAttribute('src');
++            if (requeue && entry.image.parentNode && entry.image.getAttribute('data-src')) {
++                if (IQ27.indexOf(entry.image) < 0)
++                    IQ27.unshift(entry.image);
++            }
++        }
++    }
++    function cancelImages() {
++        clearTimeout(IT27);
++        IT27 = 0;
++        abortImage(false);
++        IQ27 = [];
++    }
++    function pauseImages() {
++        clearTimeout(IT27);
++        IT27 = 0;
++        abortImage(true);
++    }
++    function scheduleImages(delay) {
++        if (IT27 || !viewState.on) return;
++        IT27 = setTimeout(function () {
++            IT27 = 0;
++            loadNextImage();
++        }, delay);
++    }
++    function resumeImages() {
++        if (!viewState.on) return;
++        scheduleImages(0);
++    }
++    function startImage(im) {
++        var src = im.getAttribute('data-src') || '', entry = {
++            image: im, done: false, timer: 0
++        };
++        if (!src) {
++            im.removeAttribute('data-src');
++            return;
++        }
++        IA27.push(entry);
++        function finish(ok) {
++            var i;
++            if (entry.done) return;
++            entry.done = true;
++            clearTimeout(entry.timer);
++            im.onload = im.onerror = null;
++            im.removeAttribute('data-src');
++            if (ok) {
++                im.style.visibility = 'visible';
++                im._artLoaded56 = true;
++                if (im.getAttribute('data-logo42')) rememberChannelLogo(src);
++            } else {
++                im.removeAttribute('src');
++            }
++            for (i = IA27.length - 1; i >= 0; i--) {
++                if (IA27[i] === entry) { IA27.splice(i, 1); break; }
++            }
++            scheduleImages(0);
++        }
++        im.style.visibility = 'hidden';
++        im.onload = function () { finish(true); };
++        im.onerror = function () { finish(false); };
++        entry.timer = setTimeout(function () { finish(false); }, 6500);
++        if ('decoding' in im) im.decoding = 'async';
++        im.src = src;
++        if (im.complete && im.naturalWidth > 0) finish(true);
++    }
++    function loadNextImage() {
++        var im;
++        if (!viewState.on) return;
++        while (IQ27.length && IA27.length < imageLimit102) {
++            im = IQ27.shift();
++            if (!im || !im.parentNode || !im.getAttribute('data-src')) continue;
++            startImage(im);
++        }
++    }
++    function enqueueVisibleImages(box) {
++        var a = box ? box.querySelectorAll('img[data-src]') : [], keep = [], i, j, seen;
++        for (i = 0; i < IQ27.length; i++)
++            if (IQ27[i] && IQ27[i].parentNode) keep.push(IQ27[i]);
++        IQ27 = keep;
++        for (i = 0; i < a.length; i++) {
++            seen = IQ27.indexOf(a[i]) >= 0;
++            if (!seen) for (j = 0; j < IA27.length; j++)
++                if (IA27[j].image === a[i]) { seen = true; break; }
++            if (!seen) IQ27.push(a[i]);
++        }
++        scheduleImages(0);
++    }
++    function loadVisibleImages(box) {
++        cancelImages();
++        enqueueVisibleImages(box);
++    }
++    function prioritizeImage(button) {
++        var im = button && button.querySelector ? button.querySelector('img[data-src]') : null, i;
++        if (!im) return;
++        for (i = 0; i < IA27.length; i++)
++            if (IA27[i].image === im) return;
++        for (i = IQ27.length - 1; i >= 0; i--)
++            if (IQ27[i] === im) { IQ27.splice(i, 1); break; }
++        IQ27.unshift(im);
++        scheduleImages(0);
++    }
++    function handleImageNavigation() {
++        /* Navigation changes priority only; it must not defer the first cover. */
++        navAt31 = new Date().getTime();
++    }

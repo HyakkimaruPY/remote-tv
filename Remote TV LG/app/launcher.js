@@ -56,7 +56,7 @@
   function label() {
     var a = best(), b = valid(staging) && versionNum(staging.version) >= versionNum(a.version) ? staging : null;
     $("version").textContent = "Aura · Player " + a.version +
-      " · Base " + LAUNCHER_VERSION + (b && b.sha256 !== a.sha256 ? " · atualização " + b.version + " pronta" : "");
+      " · Base " + LAUNCHER_VERSION + (b && (b.sha256 !== a.sha256 || b.version !== a.version) ? " · atualização " + b.version + " pronta" : "");
   }
   function get(path, cb) {
     var x = new XMLHttpRequest(),

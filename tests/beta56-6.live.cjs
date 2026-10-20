@@ -2,7 +2,8 @@
 const fs = require('fs');
 const vm = require('vm');
 const assert = require('node:assert/strict');
-const src = fs.readFileSync('system/readable/xtream-ui.beta56-6.js', 'utf8');
+const activeUi = JSON.parse(fs.readFileSync('manifest.json', 'utf8')).modules.find(x=>x.id==='xtream-ui').path;
+const src = fs.readFileSync(activeUi, 'utf8');
 let count = 0;
 function pass(name) { count++; console.log('PASS', name); }
 function harness() {

@@ -1,9 +1,21 @@
-# Aura · Remote TV LG · atualização online 1.0.1
+# Aura · Remote TV LG · player online 1.0.2
 
 Porte para LG webOS da interface **Remote TV 0.56-beta.5**, conforme o manifesto da revisão `d39ea99d9dcc6dfcde9e6358a7dd8daa7f2b241a`. A aplicação Android anexada foi analisada como referência para autenticação e carregamento por categoria; seu código Java e o APK não rodam em webOS.
 
 
-## Atualização online 1.0.1 — sem reinstalar
+## Versão 1.0.2 — novo launcher IPK e player remoto
+
+A **versão do player online é 1.0.2** e o novo pacote instalável LG webOS usa a **base 1.0.2** (appinfo.json). É um **IPK para TV LG**, não um APK Android. O pacote fica em `dist/com.srhell.aura.lg_1.0.2_all.ipk` após a validação da build. O histórico 1.0.0 e o player 1.0.1 são preservados.
+
+No launcher 1.0.2, a tela inicial mostra **Player <versão em cache> · Base 1.0.2**; o valor do player é atualizado automaticamente conforme releases remotas válidas. A inicialização verifica `version`, `manifest.json`, tamanho e SHA-256, baixa o payload apenas se necessário e armazena em staging. Ao selecionar **Executar**, prioriza a atualização íntegra em cache; depois de `aura-ready`, ela substitui a cópia ativa, preservando a anterior para recuperação. O botão **Atualizar** continua consultando o servidor manualmente, inclusive com o mesmo número de versão. Se o download falhar, abre o melhor player local verificado, incluindo o embutido 1.0.2.
+
+Se o repositório publicar no futuro **1.0.3** com manifesto e `version` consistentes, o IPK **1.0.2** detectará, baixará e executará o novo player sem reinstalação. Atualizam-se online o HTML/CSS/JavaScript e a apresentação do próprio player. O código nativo do launcher embutido no IPK, incluindo o texto estático antes da atualização, só muda com outro IPK; o rótulo de versão do player e o conteúdo executado são dinâmicos. **Não** se tenta baixar e instalar IPKs silenciosamente pelo webOS.
+
+Correção das capas: carregamento de até quatro imagens independentes, sem aguardar a conclusão da imagem anterior; logos de canais não bloqueiam o restante da fila; novas imagens aparecem assim que terminam e não esperam o lote. Mantido o limite de concorrência, cancelamento por navegação, prioridade da imagem em foco e o ajuste de dimensões (TMDB, imagens de provedor compatível) que havia sido omitido na adaptação LG. Não são modificadas as APIs de reprodução.
+
+A publicação da 1.0.2 é transacional: o workflow `.github/workflows/lg-remote-102.yml` compila e testa, empacota IPK, publica payload/manifesto/backup e só então avança o marcador remoto `Remote TV LG/version`. Veja `RELEASE-1.0.2.md` para teste e limitações.
+
+## Atualização online 1.0.1 — histórico (sem reinstalar)
 
 A versão **1.0.1 é o player remoto**, entregue pelo manifesto e pelo marcador desta pasta. O launcher/IPK original **1.0.0 permanece inalterado**. Não é preciso enviar nem instalar outro pacote para receber estas correções.
 
@@ -17,10 +29,10 @@ Foram extraídas do arquivo `Aura-LG-1.1.1.ipk` enviado pelo usuário as altera�
 
 ## Instalação inicial (somente quem ainda não possui o app)
 
-O pacote de desenvolvimento está em `dist/com.srhell.aura.lg_1.0.0_all.ipk`, com ID `com.srhell.aura.lg` e nome visível **Aura**. Configure a TV no CLI oficial da LG e instale:
+O pacote atualizado fica em `dist/com.srhell.aura.lg_1.0.2_all.ipk` (a versão original 1.0.0 permanece arquivada), com ID `com.srhell.aura.lg` e nome visível **Aura**. Configure a TV no CLI oficial da LG e instale:
 
 ```sh
-ares-install --device minha-lg dist/com.srhell.aura.lg_1.0.0_all.ipk
+ares-install --device minha-lg dist/com.srhell.aura.lg_1.0.2_all.ipk
 ares-launch --device minha-lg com.srhell.aura.lg
 ```
 
@@ -87,7 +99,7 @@ src/lg-adapter.js     adaptação do catálogo e vídeo nativo LG
 src/lg.css            adaptação responsiva da interface beta
 src/init.js           teclado, escala e confirmação de boot
 src/patches/          correções de runtime extraídas do IPK recebido
-releases/1.0.0/       HTML remoto imutável por versão
+releases/1.0.0/       HTML remoto imutável por versão (junto de 1.0.1/ e 1.0.2/)
 manifest.json         tamanho e hash do HTML remoto
 version               marcador de ativação, publicar por último
 lista.m3u             fonte remota configurável pelo proprietário

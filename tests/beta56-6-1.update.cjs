@@ -11,7 +11,7 @@ function harness(opts={}){
   const tasks=new Map(),nodes={rtvVersionTitle:{textContent:''},forceUpdate:{}};
   const body={appendChild(el){nodes[el.id]=el;el.parentNode={removeChild(){delete nodes[el.id]}}}};
   const doc={body,getElementById(id){return nodes[id]||null},createElement(tag){return {tag,style:{},textContent:'',id:''}}};
-  const storage={map:new Map([['remote-tv.active.v2',JSON.stringify({manifest:{release:opts.oldRelease||'2026.10.19-beta.56.5'}})]]),
+  const storage={map:new Map([['remote-tv.active.v2',JSON.stringify({manifest:{release:opts.oldRelease||opts.release||'2026.10.20-beta.56.6.1'}})]]),
     getItem(k){return this.map.get(k)||null},setItem(k,v){this.map.set(k,v)},
     removeItem(k){deleted++;this.map.delete(k)}};
   const R={release:opts.release||'2026.10.20-beta.56.6.1',mode:'remote-cache-ready',lastError:'',

@@ -1,0 +1,97 @@
+name: Validate and publish Aura LG 1.0.2
+
+on:
+  push:
+    paths:
+      - 'Remote TV LG/RELEASE-REQUEST-1.0.2.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aura-lg-1.0.2
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 'Remote TV LG/package-lock.json'
+
+      - name: Install declared build dependencies
+        working-directory: Remote TV LG
+        run: npm ci
+
+      - name: Build remote release and embedded offline player
+        working-directory: Remote TV LG
+        run: |
+          python3 build.py --update-embedded
+          cp manifest.json manifest.1.0.2.json
+          test "$(cat version)" = "1.0.2"
+          test "$(node -p "require('./app/appinfo.json').version")" = "1.0.2"
+
+      - name: Validate ES5, manifests, asset hashes and Xtream core
+        working-directory: Remote TV LG
+        run: npm test
+
+      - name: Install Chromium for real-browser verification
+        working-directory: Remote TV LG
+        run: |
+          npx playwright install --with-deps chromium
+          command -v ffmpeg
+
+      - name: Generate synthetic local MP4
+        run: |
+          ffmpeg -hide_banner -loglevel error -f lavfi -i testsrc2=size=320x180:rate=15 -t 40 -c:v libx264 -pix_fmt yuv420p -movflags +faststart /tmp/aura-lg-test.mp4
+          test -s /tmp/aura-lg-test.mp4
+
+      - name: Verify cover queue, remote auto-update, playback and offline fallback
+        working-directory: Remote TV LG
+        run: |
+          AURA_CHROMIUM="$(node -e "console.log(require('playwright').chromium.executablePath())")" AURA_TEST_VIDEO=/tmp/aura-lg-test.mp4 npm run test:browser
+
+      - name: Package installable LG webOS IPK
+        working-directory: Remote TV LG
+        run: |
+          npm run package
+          test -s dist/com.srhell.aura.lg_1.0.2_all.ipk
+          sha256sum dist/com.srhell.aura.lg_1.0.2_all.ipk releases/1.0.2/player.html
+
+      - name: Upload verified IPK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Aura-Remote-TV-LG-1.0.2
+          path: Remote TV LG/dist/com.srhell.aura.lg_1.0.2_all.ipk
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Verify no concurrent changes, then publish activation marker last
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+            echo "::error::main moved during validation; refusing stale publication"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "Remote TV LG/app/fallback.js" "Remote TV LG/manifest.json" \
+            "Remote TV LG/manifest.1.0.2.json" "Remote TV LG/releases/1.0.2/player.html" \
+            "Remote TV LG/dist/com.srhell.aura.lg_1.0.2_all.ipk"
+          git commit -m "Prepare validated LG 1.0.2 player and launcher IPK [skip ci]"
+          git add "Remote TV LG/version"
+          git commit -m "Activate validated LG remote player 1.0.2 [skip ci]"
+          git push origin HEAD:main

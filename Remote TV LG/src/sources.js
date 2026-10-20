@@ -70,7 +70,7 @@
     screen(
       '<section class="form"><h1>' +
         (kind === "api" ? "Conectar sua conta" : "Abrir M3U") +
-        '</h1><div id="fields"></div><label><input id="remember" type="checkbox"> Lembrar acesso neste aparelho</label><p class="muted">O acesso lembrado fica no armazenamento local deste aparelho.</p><button id="connect">Conectar</button> <button id="back">Voltar</button></section>',
+        '</h1><div id="fields"></div><label class="remember"><input id="remember" type="checkbox"><span class="check" aria-hidden="true"></span><span>Lembrar acesso neste aparelho</span></label><p class="muted">O acesso lembrado fica no armazenamento local deste aparelho.</p><button id="connect">Conectar</button> <button id="back">Voltar</button></section>',
       "form"
     );
     var f = $("fields"),

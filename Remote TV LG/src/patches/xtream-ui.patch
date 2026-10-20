@@ -1,0 +1,217 @@
+--- xtream-ui-baseline.js
++++ xtream-ui-lg-friend.js
+@@ -587,7 +587,7 @@
+         return true;
+     }
+     function liveHub() {
+-        var st = viewState.page * 8, i, o, h = '<div class="livecat14"><div class="title14">Categorias</div><div id="lc14" class="catlist14">' + catButtons('cat14') + '</div><div class="foot14">' + (viewState.cats.length ? viewState.cp * 8 + 1 : 0) + '\u2013' + Math.min(viewState.cats.length, viewState.cp * 8 + 8) + ' / ' + viewState.cats.length + '</div></div><div class="livech14"><div class="title14">' + escapeHtml(categoryLabel(viewState.cat ? viewState.cat.n : 'Canais')) + '</div><div id="ch14" class="chlist14">' + renderLiveChannelButtons() + '</div><div class="foot14">' + (viewState.loading ? 'Carregando\u2026' : (viewState.items.length ? st + 1 : 0) + '\u2013' + Math.min(viewState.items.length, st + 8) + ' / ' + viewState.items.length) + '</div></div><div class="pv14">' + (!viewState.preview || !viewState.preview._playing ? '<div class="poster14">' + (viewState.preview && viewState.preview.p ? renderChannelLogo(viewState.preview.p) : '<div class="mono14 glass14">' + mono(viewState.preview ? viewState.preview.n : viewState.items[0] ? viewState.items[0].n : '?') + '</div>') + '<div>' + escapeHtml(viewState.preview ? viewState.preview.n : viewState.items[0] ? viewState.items[0].n : 'Selecione um canal') + '</div></div>' : '') + '</div><div class="pvl14">' + escapeHtml(viewState.preview ? viewState.preview.n : viewState.items[0] ? viewState.items[0].n : 'Selecione um canal') + '</div><button id="lfav14" class="lfav14 gb14">' + (viewState.preview && isFav('c', viewState.preview) ? '\u2605' : '\u2606') + '</button><div class="pc14"><button id="lb14" class="gb14">Voltar</button><button id="lf14" class="gb14">Tela cheia</button><button id="ll14" class="gb14">Log</button><div class="foot14">' + (viewState.collapsed ? '\u2190 volta às categorias \xB7 OK = preview; OK novamente = tela cheia' : '\u2192 entra nos canais \xB7 mover categoria atualiza a lista') + '</div></div>';
++        var st = viewState.page * 8, i, o, h = '<div class="livecat14"><div class="title14">Categorias</div><div id="lc14" class="catlist14">' + catButtons('cat14') + '</div><div class="foot14">' + (viewState.cats.length ? viewState.cp * 8 + 1 : 0) + '\u2013' + Math.min(viewState.cats.length, viewState.cp * 8 + 8) + ' / ' + viewState.cats.length + '</div></div><div class="livech14"><div class="title14">' + escapeHtml(categoryLabel(viewState.cat ? viewState.cat.n : 'Canais')) + '</div><div id="ch14" class="chlist14">' + renderLiveChannelButtons() + '</div><div class="foot14">' + (viewState.loading ? 'Carregando\u2026' : (viewState.items.length ? st + 1 : 0) + '\u2013' + Math.min(viewState.items.length, st + 8) + ' / ' + viewState.items.length) + '</div></div><div class="pv14">' + (!viewState.preview || !viewState.preview._playing ? '<div class="poster14">' + (viewState.preview && viewState.preview.p ? renderChannelLogo(viewState.preview.p) : '<div class="mono14 glass14">' + mono(viewState.preview ? viewState.preview.n : viewState.items[0] ? viewState.items[0].n : '?') + '</div>') + '<div>' + escapeHtml(viewState.preview ? viewState.preview.n : viewState.items[0] ? viewState.items[0].n : 'Selecione um canal') + '</div></div>' : '') + '</div><div class="pvl14">' + escapeHtml(viewState.preview ? viewState.preview.n : viewState.items[0] ? viewState.items[0].n : 'Selecione um canal') + '</div><button id="lfav14" class="lfav14 gb14">' + (viewState.preview && isFav('c', viewState.preview) ? '\u2605' : '\u2606') + '</button><div class="pc14"><button id="lb14" class="gb14">Voltar</button><button id="lf14" class="gb14">Tela cheia</button><button id="ll14" class="gb14">Log</button><div id="ps" style="font-size:0.7rem;color:#ffb4b4;min-height:0.9rem;margin-top:0.2rem"></div><div class="foot14">' + (viewState.collapsed ? '\u2190 volta às categorias \xB7 OK = preview; OK novamente = tela cheia' : '\u2192 entra nos canais \xB7 mover categoria atualiza a lista') + '</div></div>';
+         base(h, 'live ' + (viewState.collapsed ? 'collapsed14' : ''));
+         element('lb14').onclick = function () {
+             if (viewState.collapsed)
+@@ -627,6 +627,11 @@
+             else
+                 focusLiveCat();
+         }
++        if (viewState.preview && viewState.preview._playing && !viewState.full && windowRef.RawPlayer && windowRef.RawPlayer.fullscreen)
++            setTimeout(function () {
++                if (viewState.on && viewState.view == 'live' && viewState.preview && viewState.preview._playing && !viewState.full)
++                    windowRef.RawPlayer.fullscreen(0);
++            }, 0);
+     }
+     function focusChannelSafe() {
+         if (viewState.collapsed)
+@@ -744,6 +749,62 @@
+     function liveRoutes(o) {
+         return xtreamApi.routes ? xtreamApi.routes(o) : [xtreamApi.stream(o)];
+     }
++    var osdTimer56 = 0;
++    function liveOsd(s) {
++        var z = element('osd56');
++        if (!z) {
++            z = documentRef.createElement('div');
++            z.id = 'osd56';
++            z.style.cssText = 'position:fixed;z-index:800;left:2rem;top:2rem;max-width:58rem;padding:0.7rem 1rem;background:rgba(8,10,12,.92);border:0.05rem solid #8a949b;border-radius:0.4rem;color:#fff;font:1rem Arial;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
++            documentRef.body.appendChild(z);
++        }
++        z.textContent = s || '';
++        z.style.display = s ? 'block' : 'none';
++        clearTimeout(osdTimer56);
++        if (s)
++            osdTimer56 = setTimeout(function () {
++                z.style.display = 'none';
++            }, 2600);
++    }
++    function liveZap(dir) {
++        var a = viewState.items, n, o, page, old = viewState.preview, b;
++        if (!a || !a.length)
++            return true;
++        n = old && viewState.previewIndex >= 0 ? viewState.previewIndex : viewState.liveFocus35;
++        if (n == null || n < 0)
++            n = 0;
++        n += dir;
++        if (n < 0)
++            n = a.length - 1;
++        else if (n >= a.length)
++            n = 0;
++        o = a[n];
++        if (!o)
++            return true;
++        viewState.previewIndex = n;
++        viewState.liveFocus35 = n;
++        viewState.preview = o;
++        o._playing = 1;
++        if (old && old !== o)
++            old._playing = 0;
++        viewState.previewAt44 = new Date().getTime();
++        viewState.fullExitAt44 = 0;
++        page = Math.floor(n / 8);
++        if (page != viewState.page)
++            viewState.page = page;
++        startLive(o, 0);
++        liveOsd((n + 1) + ' \xB7 ' + o.n + (o.g ? ' \xB7 ' + o.g : ''));
++        if (viewState.full) {
++            hideFullscreenControls();
++            root().className = 'h';
++        } else {
++            liveHub();
++            b = element('ch14') && element('ch14').querySelector('.ch14[data-ii="' + n + '"]');
++            if (b)
++                b.focus();
++        }
++        return true;
++    }
+     function startLive(o, idx) {
+         var a = xtreamApi.liveRoutes ? xtreamApi.liveRoutes(o) : [xtreamApi.stream(o)], u, tok = ++viewState.liveToken, ps, focusAt31 = navAt31;
+         if (idx == null)
+@@ -753,6 +814,7 @@
+             ps = element('ps');
+             if (ps)
+                 ps.textContent = 'Falha. Abra Log.';
++            liveOsd('Falha ao abrir ' + o.n + ' \xB7 abra o Log');
+             return;
+         }
+         u = a[idx];
+@@ -778,6 +840,7 @@
+                 ps = element('ps');
+                 if (ps)
+                     ps.textContent = 'Falha. Abra Log.';
++                liveOsd('Falha ao abrir ' + o.n + ' \xB7 abra o Log');
+             }, true);
+         if (viewState.full && windowRef.RawPlayer && windowRef.RawPlayer.fullscreen)
+             try {
+@@ -840,14 +903,14 @@
+     }
+     function exitFullLive() {
+         hideFullscreenControls();
++        viewState.full = 0;
++        viewState.fullExitAt44 = new Date().getTime();
++        liveHub();
+         if (windowRef.RawPlayer && windowRef.RawPlayer.fullscreen)
+             try {
+                 windowRef.RawPlayer.fullscreen(0);
+             } catch (e) {
+             }
+-        viewState.full = 0;
+-        viewState.fullExitAt44 = new Date().getTime();
+-        liveHub();
+     }
+     function library() {
+         var h = '<div class="catcol14"><div class="title14">' + escapeHtml(contentTypeName(viewState.t)) + '</div><div id="libcats14" class="catlist14">' + catButtons('cat14') + '</div><div id="libcatfoot14" class="foot14">' + (viewState.cats.length ? viewState.cp * 8 + 1 : 0) + '\u2013' + Math.min(viewState.cats.length, viewState.cp * 8 + 8) + ' / ' + viewState.cats.length + '</div></div><div class="content14"><div class="title14">' + escapeHtml(categoryLabel(viewState.cat ? viewState.cat.n : contentTypeName(viewState.t))) + '</div><div class="hint14">' + (viewState.cat ? 'Conteúdo da categoria atual' : 'OK ou \u2192 carrega apenas a categoria selecionada') + '</div><div id="libgrid14">' + (!viewState.cat ? '<div class="contEmpty14">Nenhum catálogo pesado foi carregado.</div>' : '') + '</div></div>';
+@@ -1872,6 +1935,8 @@
+     }
+     function logs() {
+         var lb;
++        if (viewState.full)
++            exitFullLive();
+         viewState.lastView = viewState.view;
+         show();
+         viewState.view = 'log';
+@@ -2240,7 +2305,7 @@
+         if (!viewState.on)
+             return false;
+         var k = keyCode(e), o = documentRef.activeElement, b, l, i, ix, tm44 = new Date().getTime();
+-        if ((k == 8 || k == 27 || k == 461 || k == 462 || k == 528) && viewState.fullExitAt44 && tm44 - viewState.fullExitAt44 < 550) {
++        if ((k == 8 || k == 27 || k == 461 || k == 462 || k == 528) && viewState.view == 'live' && viewState.fullExitAt44 && tm44 - viewState.fullExitAt44 < 550) {
+             preventDefault(e);
+             return true;
+         }
+@@ -2268,6 +2333,31 @@
+                 preventDefault(e);
+                 return true;
+             }
++            preventDefault(e);
++            return true;
++        }
++        if (k == 33 || k == 34) {
++            preventDefault(e);
++            if (viewState.view == 'live')
++                return liveZap(k == 33 ? 1 : -1);
++            return true;
++        }
++        if (k == 457) {
++            preventDefault(e);
++            if (viewState.full)
++                showFullscreenControls('lfc49exit');
++            else if (viewState.view == 'live' && viewState.preview)
++                liveOsd((viewState.previewIndex + 1) + ' \xB7 ' + viewState.preview.n + (viewState.preview.g ? ' \xB7 ' + viewState.preview.g : ''));
++            else if (viewState.detail)
++                liveOsd(viewState.detail.n || '');
++            return true;
++        }
++        if (k == 1005) {
++            preventDefault(e);
++            if (windowRef.RawPlayer && windowRef.RawPlayer.ratio)
++                windowRef.RawPlayer.ratio();
++            liveOsd('Propor\u00e7\u00e3o da imagem alterada');
++            return true;
+         }
+         if (',4,158,166,464,1061,10009,'.indexOf(',' + k + ',') >= 0)
+             k = 27;
+@@ -2344,8 +2434,14 @@
+                 }
+             }
+         }
+-        if (o && o.parentNode == element('r14h') && (k == 37 || k == 39 || k == 40)) {
+-            if (headMove(o, k)) {
++        if (o && o.parentNode == element('r14h')) {
++            if (k == 13 || k == 41) {
++                preventDefault(e);
++                if (o.click)
++                    o.click();
++                return true;
++            }
++            if ((k == 37 || k == 39 || k == 40) && headMove(o, k)) {
+                 preventDefault(e);
+                 return true;
+             }
+@@ -2680,6 +2776,11 @@
+                 return true;
+             }
+         }
++        if ((k == 13 || k == 41) && o && String(o.tagName || '').toUpperCase() == 'BUTTON' && o.click) {
++            preventDefault(e);
++            o.click();
++            return true;
++        }
+         if (k >= 37 && k <= 40) {
+             preventDefault(e);
+             if (viewState.view == 'episodes' && o && /ep14/.test(o.className || '') && k == 38 && viewState.page == 0)
+@@ -2702,7 +2803,7 @@
+     function filterPhysicalInput(e) {
+         if (e._rtv35)
+             return;
+-        var k = keyCode(e), now = new Date().getTime(), common = windowRef.CommonPlayer14, cp = common && common.state && common.state.on, active = viewState.on || cp || vodPlayer && vodPlayer.active && vodPlayer.active(), nav = k >= 37 && k <= 40, ok = k == 13 || k == 41, bk = ',4,8,27,158,166,461,462,464,528,1061,10009,'.indexOf(',' + k + ',') >= 0, media = ',19,169,176,177,227,228,412,413,415,417,'.indexOf(',' + k + ',') >= 0, o = documentRef.activeElement, gap, ev, source = e.type == 'irkeypress' ? 'ir' : 'key';
++        var k = keyCode(e), now = new Date().getTime(), common = windowRef.CommonPlayer14, cp = common && common.state && common.state.on, active = viewState.on || cp || vodPlayer && vodPlayer.active && vodPlayer.active(), nav = k >= 37 && k <= 40, ok = k == 13 || k == 41, bk = ',4,8,27,158,166,461,462,464,528,1061,10009,'.indexOf(',' + k + ',') >= 0, media = ',19,33,34,169,176,177,227,228,412,413,415,417,457,1005,'.indexOf(',' + k + ',') >= 0, o = documentRef.activeElement, gap, ev, source = e.type == 'irkeypress' ? 'ir' : 'key';
+         if (!active && now > guardUntil31)
+             return;
+         if (!nav && !ok && !bk && !media)
+@@ -2721,7 +2822,7 @@
+             consumeInputEvent(e);
+             return;
+         }
+-        gap = nav ? o && /season19/.test(o.className || '') ? 260 : 170 : media ? 300 : 400;
++        gap = nav ? o && /season19/.test(o.className || '') ? 260 : 170 : media ? 400 : 400;
+         if (now - lastAt31 > 650)
+             held31 = 0;
+         if (k == lastKey31 && (now - lastAt31 < 100 || source != lastSource35 && now - lastAt31 < 180 || held31 && (now - firstAt31 < 340 || now - lastAt31 < gap) || !nav && now - lastAt31 < gap)) {

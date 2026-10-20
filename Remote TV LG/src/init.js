@@ -20,6 +20,12 @@
       var k = e.keyCode;
       if (
         k === 461 ||
+        k === 462 ||
+        k === 528 ||
+        k === 166 ||
+        k === 464 ||
+        k === 1061 ||
+        k === 10009 ||
         k === 27 ||
         (k === 8 && !/INPUT|TEXTAREA/.test(d.activeElement.tagName))
       ) {
@@ -31,6 +37,19 @@
           );
         else A.sourceHome();
         return;
+      }
+      if (k === 13 || k === 41) {
+        var cur = d.activeElement;
+        if (cur && cur.tagName === "INPUT" && cur.type === "checkbox") {
+          e.preventDefault();
+          cur.checked = !cur.checked;
+          return;
+        }
+        if (cur && cur.tagName === "BUTTON" && cur.click) {
+          e.preventDefault();
+          cur.click();
+          return;
+        }
       }
       if (
         (k === 38 || k === 40) &&

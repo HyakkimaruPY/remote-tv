@@ -1,12 +1,13 @@
 {
   "name": "aura-remote-tv-lg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "build": "python3 build.py",
     "test": "node tests/core.cjs",
-    "test:browser": "node tests/browser.cjs",
-    "package": "ares-package app -o dist"
+    "test:browser": "node tests/remote101.cjs",
+    "package": "ares-package app -o dist",
+    "test:browser:legacy": "node tests/browser.cjs"
   },
   "devDependencies": {
     "@webos-tools/cli": "3.2.6",

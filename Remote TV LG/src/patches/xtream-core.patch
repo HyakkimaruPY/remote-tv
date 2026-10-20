@@ -1,0 +1,24 @@
+--- xtream-core-baseline.js
++++ xtream-core-lg-friend.js
+@@ -96,9 +96,10 @@
+     function parseCredentials(u, t) {
+         u = String(u || '').replace(/^\s+|\s+$/g, '');
+         t = String(t || '');
+-        var m = /^https?:\/\/([^\/?#]+)/i.exec(u), h, user, pass, path, ui, dm, um, pm;
++        var m = /^(https?):\/\/([^\/?#]+)/i.exec(u), scheme = 'http', h, user, pass, path, ui, dm, um, pm;
+         if (m) {
+-            h = m[1];
++            scheme = m[1].toLowerCase();
++            h = m[2];
+             ui = /^([^:@]+):([^@]+)@(.+)$/.exec(h);
+             if (ui) {
+                 user = decodeQueryValue(ui[1]);
+@@ -129,7 +130,7 @@
+         user = user || um && String(um[1] || '').replace(/^\s+|\s+$/g, '');
+         pass = pass || pm && String(pm[1] || '').replace(/^\s+|\s+$/g, '');
+         return h && user && pass ? {
+-            d: 'http://' + h,
++            d: scheme + '://' + h,
+             u: user,
+             p: pass
+         } : null;

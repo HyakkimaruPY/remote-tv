@@ -1,8 +1,21 @@
-# Aura · Remote TV LG 1.0.0
+# Aura · Remote TV LG · atualização online 1.0.1
 
 Porte para LG webOS da interface **Remote TV 0.56-beta.5**, conforme o manifesto da revisão `d39ea99d9dcc6dfcde9e6358a7dd8daa7f2b241a`. A aplicação Android anexada foi analisada como referência para autenticação e carregamento por categoria; seu código Java e o APK não rodam em webOS.
 
-## Instalar e abrir
+
+## Atualização online 1.0.1 — sem reinstalar
+
+A versão **1.0.1 é o player remoto**, entregue pelo manifesto e pelo marcador desta pasta. O launcher/IPK original **1.0.0 permanece inalterado**. Não é preciso enviar nem instalar outro pacote para receber estas correções.
+
+No app original já instalado: abra o Aura, aguarde a indicação de **1.0.1 disponível/salva** e selecione **Executar**. A verificação/download é automática; não é necessário pressionar Atualizar. O player confirma a inicialização e fica salvo no cache. Se o usuário executar antes do término do download, a sessão já aberta continua com a cópia local e a nova versão fica disponível na próxima execução.
+
+Foram extraídas do arquivo `Aura-LG-1.1.1.ipk` enviado pelo usuário as alterações de runtime: checkbox maior e acionável por OK, botões superiores/filmes/séries acionados explicitamente, aliases de teclas do controle, ajuste de prévia após tela cheia, atalhos de canais e VOD e preservação do esquema HTTPS. A estrelinha de favoritos permanece como no pacote recebido: a alteração de tamanho foi indicada como pendente pelo autor.
+
+`FRIEND-FIX-ORIGIN.json` registra o hash do IPK e do HTML recebido. O novo HTML é idêntico ao HTML recebido após normalizar **1.1.1 → 1.0.1** e os rótulos locais **beta.6 → beta.5**. Esses rótulos não eram uma atualização verificada do upstream. Os quatro fontes originais beta.5 permanecem íntegros; as diferenças no código derivado são aplicadas por patches explícitos em `src/patches/`, sem editar os arquivos históricos.
+
+**Compatibilidade do atualizador:** o launcher original 1.0.0 aceita esta atualização automaticamente, como verificado em teste. O launcher modificado dentro do IPK 1.1.1 tem um filtro numérico local e ignora automaticamente um marcador remoto 1.0.1 por considerá-lo menor. Publicar somente o HTML não executa código antes dessa comparação. Essa limitação específica foi reproduzida; não há promessa de atualização automática desse pacote 1.1.1 para 1.0.1. O presente lançamento atende ao launcher original instalado, sem novo IPK.
+
+## Instalação inicial (somente quem ainda não possui o app)
 
 O pacote de desenvolvimento está em `dist/com.srhell.aura.lg_1.0.0_all.ipk`, com ID `com.srhell.aura.lg` e nome visível **Aura**. Configure a TV no CLI oficial da LG e instale:
 
@@ -25,7 +38,7 @@ A opção Lembrar acesso é desmarcada por padrão. Quando marcada, os campos fi
 
 ## Interface portada da beta.5
 
-Os quatro módulos originais da beta estão preservados, sem edição, em `src/upstream/`; bytes e SHA-256 estão em `UPSTREAM.json`. `build.py` aplica as adaptações explicitamente e gera um HTML autocontido. O catálogo e a interface não foram substituídos por uma imitação da versão estável.
+Os quatro módulos originais da beta estão preservados, sem edição, em `src/upstream/`; bytes e SHA-256 estão em `UPSTREAM.json`. `build.py` aplica as adaptações e os patches recuperados do IPK e gera um HTML autocontido. O catálogo e a interface não foram substituídos por uma imitação da versão estável.
 
 - Ao vivo, Filmes, Séries, Favoritos, Continuar e Log seguem a organização da beta.
 - Categorias laterais, catálogo de uma categoria por vez e detalhes sob demanda.
@@ -73,6 +86,7 @@ src/sources.js        seleção das três fontes
 src/lg-adapter.js     adaptação do catálogo e vídeo nativo LG
 src/lg.css            adaptação responsiva da interface beta
 src/init.js           teclado, escala e confirmação de boot
+src/patches/          correções de runtime extraídas do IPK recebido
 releases/1.0.0/       HTML remoto imutável por versão
 manifest.json         tamanho e hash do HTML remoto
 version               marcador de ativação, publicar por último
@@ -92,6 +106,8 @@ npm run package
 ```
 
 O teste de navegador requer Chromium/Playwright e um vídeo de teste local de 40 segundos, sem conteúdo de terceiros. Os comandos e resultados desta entrega estão em `VALIDACAO.md`.
+
+`python3 build.py` gera apenas a release online, manifesto e marcador; não modifica `app/` nem `dist/`. A opção explícita `--update-embedded` só deve ser usada quando houver um pedido separado para atualizar o fallback de um novo pacote.
 
 Para uma atualização remota: alterar `VERSION` no build, gerar e testar; publicar primeiro o novo `releases/<versão>/player.html`, o manifesto, os fontes e o relatório; verificar os blobs remotos; publicar `Remote TV LG/version` por último. Não alterar o `version` ou manifesto da raiz do repositório: eles pertencem à Philco. Releases anteriores devem permanecer disponíveis. Atualizações do próprio launcher exigem novo IPK.
 

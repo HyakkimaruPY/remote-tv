@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const {JSDOM}=require('jsdom'),acorn=require('acorn'),root=path.resolve(__dirname,'..');
 for(const dir of ['src','app'])for(const file of fs.readdirSync(path.join(root,dir)))if(file.endsWith('.js'))acorn.parse(fs.readFileSync(path.join(root,dir,file),'utf8'),{ecmaVersion:5});
 for(const m of JSON.parse(fs.readFileSync(root+'/UPSTREAM.json')).modules){const b=fs.readFileSync(root+'/src/upstream/'+path.basename(m.path));assert.equal(b.length,m.bytes);assert.equal(crypto.createHash('sha256').update(b).digest('hex'),m.sha256);}
-const html=fs.readFileSync(root+'/releases/1.0.0/player.html','utf8');acorn.parse(html.match(/<script>([\s\S]*)<\/script>/)[1],{ecmaVersion:5});
+const html=fs.readFileSync(root+'/'+JSON.parse(fs.readFileSync(root+'/manifest.json')).path,'utf8');acorn.parse(html.match(/<script>([\s\S]*)<\/script>/)[1],{ecmaVersion:5});
 const hash={};vm.createContext(hash);vm.runInContext(fs.readFileSync(root+'/app/sha256.js','utf8'),hash);
 for(const s of ['', 'abc','Aura · ação 中文 🎬','x'.repeat(300000)])assert.equal(hash.AuraSHA(s),crypto.createHash('sha256').update(s).digest('hex'));
 const manifest=JSON.parse(fs.readFileSync(root+'/manifest.json'));assert.equal(manifest.bytes,Buffer.byteLength(html));assert.equal(manifest.sha256,hash.AuraSHA(html));

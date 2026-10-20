@@ -1,0 +1,10 @@
+{
+  "version": "1.1.1",
+  "bytes": 211457,
+  "sha256": "a5a66508a108fe94ae183a95c7d20c8a29bb3f24848cf6505f8b343bce9ae248",
+  "ipk_sha256": "1a9147bec803f79c47a0aca8e71144c6efd7964883712dc1022d46cee53f4e01",
+  "source": "Aura-LG-1.1.1.ipk supplied by user",
+  "target_remote_version": "1.0.1",
+  "upstream_note": "beta.6 labels in received HTML were not a verified upstream update; preserved code fixes on beta.5 base.",
+  "normalized_html_sha256": "afdedacb0bc20305268adc614f9199b188f5cbac5e867eb2fbff93d3a4ddf02f"
+}

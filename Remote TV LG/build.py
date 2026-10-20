@@ -1,14 +1,36 @@
 #!/usr/bin/env python3
 """Build a self-contained ES5 player, local recovery image and update manifest."""
 from pathlib import Path
-import json, hashlib, re
+import json, hashlib, re, argparse
 ROOT=Path(__file__).resolve().parent
-VERSION='1.0.0'
+VERSION='1.0.1'
+parser=argparse.ArgumentParser()
+parser.add_argument('--update-embedded', action='store_true', help='Explicitly regenerate the packaged fallback; remote publication does not require a new IPK.')
+args=parser.parse_args()
 src=ROOT/'src'
 def replace_function(code,name,replacement):
     start=code.index('    function '+name+'(')
     end=code.index('\n    function ',start+10)
     return code[:start]+replacement+code[end:]
+
+def apply_source_patch(code, patch_path):
+    """Apply reviewed hunks by exact context; never silently patch a new baseline."""
+    hunks=[]
+    before=[];after=[];active=False
+    for line in patch_path.read_text().splitlines(keepends=True):
+        if line.startswith('@@'):
+            if active:hunks.append((''.join(before),''.join(after)))
+            before=[];after=[];active=True
+        elif active:
+            if line.startswith((' ','-')):before.append(line[1:])
+            if line.startswith((' ','+')):after.append(line[1:])
+    if active:hunks.append((''.join(before),''.join(after)))
+    for before,after in hunks:
+        if not before or code.count(before)!=1:
+            raise ValueError('Patch baseline differs or is ambiguous: '+str(patch_path))
+        code=code.replace(before,after,1)
+    return code
+
 def adapt(name):
     code=(src/'upstream'/name).read_text()
     if name.startswith('xtream-lazy-core'):
@@ -46,6 +68,12 @@ def adapt(name):
     if name.startswith(('xtream-ui','graphos-skin')):
         code=re.sub(r'(-?\d+(?:\.\d+)?)px',lambda m:format(float(m[1])/20,'.5g')+'rem',code)
         code=code.replace('1280rem','100%')
+    if name.startswith('xtream-lazy-core'):
+        code=apply_source_patch(code,src/'patches/xtream-core.patch')
+    if name.startswith('xtream-ui'):
+        code=code.replace('LG '+VERSION,'LG __AURA_VERSION__')
+        code=apply_source_patch(code,src/'patches/xtream-ui.patch')
+        code=code.replace('__AURA_VERSION__',VERSION)
     return code
 mods=['xtream-lazy-core.beta56-3.js','tmdb-metadata.beta56-5.js','xtream-ui.beta56-5.js','graphos-skin-beta56-5.js']
 parts=[(src/'core.js').read_text(),(src/'sources.js').read_text(),adapt(mods[0]),(src/'lg-adapter.js').read_text(),adapt(mods[1]),adapt(mods[2]),adapt(mods[3]),(src/'init.js').read_text()]
@@ -59,5 +87,5 @@ manifest={'schema':1,'version':VERSION,'base':'remote-tv 0.56-beta.5','path':'re
 (ROOT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 (ROOT/'version').write_text(VERSION+'\n')
 fallback={k:manifest[k] for k in ('version','bytes','sha256')};fallback['html']=html
-(ROOT/'app'/'fallback.js').write_text('window.AuraFallback='+json.dumps(fallback,ensure_ascii=True).replace('</','<\\/')+';\n')
+if args.update_embedded: (ROOT/'app'/'fallback.js').write_text('window.AuraFallback='+json.dumps(fallback,ensure_ascii=True).replace('</','<\\/')+';\n')
 print(json.dumps({k:v for k,v in manifest.items()}))

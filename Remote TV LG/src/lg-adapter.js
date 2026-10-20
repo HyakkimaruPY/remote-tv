@@ -250,18 +250,36 @@
     var box = A.$("playback"),
       pv = d.querySelector(".pv14"),
       r;
-    if (live && !full && pv) {
-      r = pv.getBoundingClientRect();
-      box.style.left = r.left + "px";
-      box.style.top = r.top + "px";
-      box.style.width = r.width + "px";
-      box.style.height = r.height + "px";
-      box.style.zIndex = "100";
+    if (!box) return;
+    if (live && !full) {
+      r = pv ? pv.getBoundingClientRect() : null;
+      if (r && r.width > 1 && r.height > 1) {
+        box.style.left = r.left + "px";
+        box.style.top = r.top + "px";
+        box.style.width = r.width + "px";
+        box.style.height = r.height + "px";
+        box.style.right = "auto";
+        box.style.bottom = "auto";
+        box.style.zIndex = "100";
+      } else {
+        /* The live UI can be hidden or in the middle of a re-render here.
+           Keep the stream behind the UI until .pv14 exists again; liveHub()
+           calls fullscreen(0) after rebuilding the preview. */
+        box.style.left = "0";
+        box.style.top = "0";
+        box.style.width = "100%";
+        box.style.height = "100%";
+        box.style.right = "auto";
+        box.style.bottom = "auto";
+        box.style.zIndex = "10";
+      }
     } else {
       box.style.left = "0";
       box.style.top = "0";
       box.style.width = "100%";
       box.style.height = "100%";
+      box.style.right = "auto";
+      box.style.bottom = "auto";
       box.style.zIndex = "700";
     }
     box.style.background = "#000";
@@ -367,18 +385,94 @@
     }
     return false;
   }
+  function prev() {
+    if (opts.list && opts.index > 0) {
+      var prevOpts = {
+          list: opts.list,
+          index: opts.index - 1,
+          series: opts.series,
+          onExit: opts.onExit,
+        },
+        n = opts.list[prevOpts.index];
+      stop(false);
+      begin(n, prevOpts, false);
+      return true;
+    }
+    return false;
+  }
+  function jump(delta) {
+    if (!isFinite(v.duration) || v.duration <= 0) {
+      A.$("pstatus").textContent = "Busca indisponível neste conteúdo.";
+      show();
+      return;
+    }
+    var t = Math.max(0, Math.min(v.duration - 0.5, v.currentTime + delta));
+    pendingSeek = null;
+    try {
+      v.currentTime = t;
+    } catch (e) {}
+    A.$("pstatus").textContent =
+      (delta > 0 ? "+" : "\u2212") +
+      Math.abs(delta) +
+      " s \xB7 " +
+      clock(t) +
+      " / " +
+      clock(v.duration);
+    show();
+  }
+  function cycleFit() {
+    fit = (fit + 1) % 3;
+    v.style.objectFit = ["contain", "cover", "fill"][fit];
+    show();
+  }
   function handle(e) {
     var k = e.keyCode || e.which;
     if (!on || live) return false;
-    if (k === 461 || k === 27 || k === 8) {
+    if (
+      k === 461 ||
+      k === 27 ||
+      k === 8 ||
+      k === 462 ||
+      k === 528 ||
+      k === 166 ||
+      k === 464 ||
+      k === 1061 ||
+      k === 10009
+    ) {
       if (pendingSeek !== null) cancelSeek();
       else stop();
       return true;
     }
     if (pendingSeek !== null) {
       if (k === 37 || k === 39) prepareSeek(k === 37 ? -1 : 1);
-      else if (k === 13) commitSeek();
+      else if (k === 13 || k === 41) commitSeek();
       else if (k === 38) cancelSeek();
+      return true;
+    }
+    if (k === 33) {
+      jump(60);
+      return true;
+    }
+    if (k === 34) {
+      jump(-60);
+      return true;
+    }
+    if (k === 176) {
+      prev();
+      return true;
+    }
+    if (k === 177) {
+      next();
+      return true;
+    }
+    if (k === 457) {
+      show();
+      var first = A.$("transport").querySelector("button");
+      if (first) first.focus();
+      return true;
+    }
+    if (k === 1005) {
+      cycleFit();
       return true;
     }
     if (k === 412 || k === 417) {
@@ -403,7 +497,7 @@
       A.$("transport").querySelector("button").focus();
       return true;
     }
-    if (k === 13) {
+    if (k === 13 || k === 41) {
       d.activeElement.click();
       return true;
     }
@@ -502,11 +596,7 @@
     ["Próximo episódio", next],
     [
       "Proporção",
-      function () {
-        fit = (fit + 1) % 3;
-        v.style.objectFit = ["contain", "cover", "fill"][fit];
-        show();
-      },
+      cycleFit,
     ],
     [
       "Voltar",
@@ -563,6 +653,7 @@
       setVideo(value);
       return true;
     },
+    ratio: cycleFit,
     exit: function () {
       stop(false);
       A.sourceHome();

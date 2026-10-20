@@ -97,7 +97,7 @@
     get("version", function (err, marker) {
       if (err) return end(err);
       marker = marker.replace(/^\s+|\s+$/g, "");
-      if (!/^\\d+\\.\\d+\\.\\d+$/.test(marker))
+      if (!/^\d+\.\d+\.\d+$/.test(marker))
         return end("Versão remota inválida. A versão local foi mantida.");
       if (versionNum(marker) < versionNum(best().version))
         return end("A versão local é mais recente; nenhuma regressão aplicada.");

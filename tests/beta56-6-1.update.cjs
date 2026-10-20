@@ -18,6 +18,7 @@ function harness(opts={}){
     sync:opts.noSync?undefined:function(first){syncCalls++;assert.equal(first,false); if(opts.error)R.lastError='modules:xtream-ui:HTTP 502';}};
   const windowRef={RemoteTV:R,localStorage:storage,location:{reload(){reloads++}}};
   const ctx={windowRef,documentRef:doc,document:doc,setTimeout(fn,ms){let id=++seq;tasks.set(id,{fn,at:stamp+ms});return id},clearTimeout(id){tasks.delete(id)}};
+  ctx.RemoteTV=R;ctx.localStorage=storage;ctx.location=windowRef.location;
   vm.createContext(ctx);vm.runInContext(source,ctx);
   function tick(ms){let end=stamp+ms;for(let i=0;i<1000;i++){let next=[...tasks].filter(x=>x[1].at<=end).sort((a,b)=>a[1].at-b[1].at)[0];if(!next)break;tasks.delete(next[0]);stamp=next[1].at;next[1].fn();if(i===999)throw Error('unbounded timer')}stamp=end}
   return {R,nodes,storage,tick,get deleted(){return deleted},get syncCalls(){return syncCalls},get reloads(){return reloads},tasks};

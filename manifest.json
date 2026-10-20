@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.19-beta.56.5",
+  "release": "2026.10.20-beta.56.6",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-5.js",
+      "path": "system/readable/xtream-ui.beta56-6.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "b6cef7c101ecc529930e9ec39b1859aa0babc2c4ac20d635fecf82b45fc76eec",
-      "bytes": 124066
+      "sha256": "a0b90f8ed92881a34400f7e456f2dafe0fcc5a9d38adf6b5ef05a45bb4b10e5a",
+      "bytes": 126465
     },
     {
       "id": "live-log-overlay",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.56-beta.5"
+  "version": "0.56-beta.6"
 }

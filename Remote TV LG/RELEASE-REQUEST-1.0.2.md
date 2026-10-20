@@ -3,3 +3,5 @@
 Validar remotamente os testes do player LG e produzir o IPK com fallback 1.0.2. Ativar o marcador online apenas após validar pacote e runtime. Não alterar a pasta do player Philco.
 
 Retry 2: runner FFmpeg ausente no primeiro teste; fallback de instalação registrado na workflow. Sem ativação antecipada.
+
+Retry 3: o teste identificou que a versão em staging 1.0.3 não aparecia no rótulo quando o payload tinha bytes iguais aos da base; rótulo corrigido.

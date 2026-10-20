@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.20-beta.56.6",
+  "release": "2026.10.20-beta.56.6.1",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-5.html",
+      "path": "apps/player1/shell.beta56-6-1.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "400062f1a3cb19d44b3576600134a91a0fb065b09c6f0c1774e992fcdaea610a",
-      "bytes": 1199
+      "sha256": "82ab5c60c9365d3c8be6dac5580b9924305f0d548b78e169c8be1b2afe273cac",
+      "bytes": 1218
     },
     {
       "id": "style",
@@ -61,12 +61,12 @@
     },
     {
       "id": "force-update",
-      "path": "system/readable/force-update.beta56-3.js",
+      "path": "system/readable/force-update.beta56-6-1.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "aafbdafee763abf0f8fd585dafb89c44338fc7cbe1f16387b28319396ffa8be4",
-      "bytes": 1730
+      "sha256": "48ccce5839505e2082a15ac980a844c64d9a0234f40a6830b245396132ccbfe9",
+      "bytes": 4370
     },
     {
       "id": "inject-base",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6.js",
+      "path": "system/readable/xtream-ui.beta56-6-1.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "a0b90f8ed92881a34400f7e456f2dafe0fcc5a9d38adf6b5ef05a45bb4b10e5a",
-      "bytes": 126465
+      "sha256": "ec496eaab452070c2ce7dc5373db60a30b981239daa621693025161c20f4ff7e",
+      "bytes": 126467
     },
     {
       "id": "live-log-overlay",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.56-beta.6"
+  "version": "0.56-beta.6.1"
 }

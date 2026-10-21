@@ -38,3 +38,10 @@ Os arquivos do protótipo foram entregues como pacote de laboratório na convers
 5. Criar arquivos de runtime **versionados**, testes de regressão, hashes SHA-256, manifesto arquivado e ativo; ativar `version` por último e só após verificar os módulos. Não alterar a versão ativa para anunciar um recurso ainda não operacional.
 
 Este é um checkpoint de arquitetura do projeto Philco. Não modifica módulos ou configurações em produção.
+
+
+## Plano enxuto revisado — controle local modular (21/10/2026)
+
+O primeiro marco da Beta 7 passou a ser **somente pareamento por QR + controle no celular**, com screenshot opcional. O código de laboratório foi modularizado: `companion/remote.html` importa `phone.css` e `phone.js`; TV tem módulos ES5 separados para QR e entrada do remoto. Um script `tests/stage_beta7.py` prepara shell novo e manifesto **candidato** com SHA-256/bytes em checkout local sem alterar `manifest.json` ou `version`. Testes em host Go, Node, QR/OpenCV e staging foram executados. O pacote é entregue no chat de 21/10/2026, e não está na release ativa.
+
+Um único pacote de **firmware** pode conter serviço local + assets da TV; não se pode confundir isso com a atualização **exclusivamente HTML/CSS/JS** de `remote-tv`: o bridge estudado continua restrito a `127.0.0.1:8765`. Após o serviço nativo estar presente, o GitHub pode atualizar UI/QR/scripts JS livremente, dentro das capacidades disponibilizadas por esse serviço. Não disparar instalação nativa sem ferramenta de empacotamento comprovada/rollback. O binary Go cross-compilado deve ser validado no MIPS/Linux 3.1.10 físico (incluindo syscalls/memória) antes de considerá-lo instalável. Captura da tela/decoder permanece não implementada.

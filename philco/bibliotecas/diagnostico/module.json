@@ -1,0 +1,15 @@
+{
+  "id": "diagnostico",
+  "version": "6.4.0",
+  "category": "diagnostic",
+  "host": "RemoteTV Philco 6.4",
+  "runtime": "es5-bridge",
+  "entry": "src/module.js",
+  "restartRequired": false,
+  "defaultEnabled": false,
+  "capabilities": [
+    "timer",
+    "DOM-events"
+  ],
+  "description": "Coleta eventos e erros de interface somente quando habilitada, sem credenciais; teste mostra contadores e duração."
+}

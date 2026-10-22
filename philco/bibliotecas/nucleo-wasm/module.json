@@ -1,0 +1,14 @@
+{
+  "id": "nucleo-wasm",
+  "version": "6.4.0",
+  "runtime": "wasm",
+  "entry": "dist/core.wasm",
+  "category": "diagnostic",
+  "restartRequired": false,
+  "defaultEnabled": true,
+  "exports": [
+    "classify",
+    "quality"
+  ],
+  "fallback": "ES5; without WebAssembly the decoder is unchanged"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "estabilidade",
+  "version": "6.4.0",
+  "category": "stability",
+  "host": "RemoteTV Philco 6.4",
+  "runtime": "es5-bridge",
+  "entry": "src/module.js",
+  "restartRequired": false,
+  "defaultEnabled": false,
+  "capabilities": [
+    "timer",
+    "DOM-events"
+  ],
+  "description": "Watchdog passivo da thread de interface com detecção de atraso; não mexe em reprodução, busca ou reconexões."
+}

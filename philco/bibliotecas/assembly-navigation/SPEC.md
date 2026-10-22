@@ -1,6 +1,6 @@
 # Philco — módulo Assembly WASM de controle de módulos
 
-Fonte: `src/navigation.wat` (WebAssembly Text Format, Assembly de pilha tipada). Binário: `dist/navigation.wasm` (122 bytes). Compilação de referência: `wat2wasm src/navigation.wat -o dist/navigation.wasm`.
+Fonte: `src/navigation.wat` (WebAssembly Text Format, Assembly de pilha tipada). Binário: `dist/navigation.wasm.base64` (base64 dos 122 bytes WASM validados). Reconstruir o binário com `base64 -d dist/navigation.wasm.base64 > dist/navigation.wasm` ou compilar `wat2wasm src/navigation.wat -o dist/navigation.wasm`.
 
 Exportações: `next_focus(index,delta,count)` (índice circular ou -1 para lista vazia), `accept_key(now,last,interval)` (antirrepique unsigned de 32 bits) e `needs_restart(requested,running,requires)` (bit de alteração para módulo que requer reinício). Sem imports nem privilégios. Não intercepta teclas por si só; o JavaScript ES5 integra o controle e o watchdog existente sem alterar o decoder. Em QtWebKit antigo sem WebAssembly, usa funções ES5 equivalentes.
 

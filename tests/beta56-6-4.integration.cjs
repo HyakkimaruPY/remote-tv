@@ -1,4 +1,5 @@
 'use strict';
+(async function(){
 const fs=require('fs'),assert=require('node:assert/strict'),crypto=require('crypto'),vm=require('vm'),acorn=require('acorn'),{JSDOM}=require('jsdom');
 const candidate=JSON.parse(fs.readFileSync('manifest.beta56-6-4.json','utf8'));
 const previous=JSON.parse(fs.readFileSync('manifest.beta56-6-3.json','utf8'));
@@ -73,3 +74,5 @@ try{
  const poll=await call('/session/poll?sid='+s.sid+'&token='+s.tvToken);assert.equal(JSON.parse(poll.data).q,'Teste pela TV');
 }finally{await new Promise(resolve=>server.close(resolve));}
 console.log('PASS Philco 6.4 candidate: 30 hashes, WASM binary, ES5, opt-in modules, Xtream scoped search, authenticated phone relay');
+
+})().catch(function(e){ console.error(e);process.exitCode=1; });

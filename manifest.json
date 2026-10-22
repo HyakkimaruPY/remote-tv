@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.22-beta.56.6.4",
+  "release": "2026.10.22-beta.56.6.4.1",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-4.js",
+      "path": "system/readable/xtream-ui.beta56-6-4-1.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "399a90aa099dc48ee00b2760c7c4f827accc77ee5e62630f52ecdd822f289ce1",
-      "bytes": 129523
+      "sha256": "182c48191d53e1a901ac214e1b277d39c4b5b914227f36674c53198e0329041c",
+      "bytes": 130733
     },
     {
       "id": "live-log-overlay",
@@ -223,21 +223,21 @@
     },
     {
       "id": "philco-search-ui",
-      "path": "system/readable/philco-search.beta56-6-4.js",
+      "path": "system/readable/philco-search.beta56-6-4-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "8a2d9f8d2ddbefc251527f4e2ac08c3bc4386276a5b1729486c49a4edb3bf8f7",
-      "bytes": 8793
+      "sha256": "d6a1ab7e290ddcf79838d06a6907f2324cd5750a745fb1265a6e5f6da6c4fea9",
+      "bytes": 8983
     },
     {
       "id": "philco-library-manager",
-      "path": "philco/bibliotecas/manager.beta56-6-4.js",
+      "path": "philco/bibliotecas/manager.beta56-6-4-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "ed86807943290b34d602608c1b7037c2c429fae2a8ea1f0fa1d989aa68e0309a",
-      "bytes": 7995
+      "sha256": "03b6c79ce7f858475924edd2e0e3a05f9454827206bad7c837ce8c344b14afc4",
+      "bytes": 14781
     },
     {
       "id": "philco-module-diagnostic",
@@ -274,7 +274,16 @@
       "required": false,
       "sha256": "e09946d7212e272a481a5c2cead9239f2293b6cd0157cdf1834c294d9406a7db",
       "bytes": 491
+    },
+    {
+      "id": "philco-module-assembly",
+      "path": "philco/bibliotecas/assembly-navigation/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "d0744f9f02a879db10a630cffbb0d0904326b6e8b60bc28b26ad37bae5e7eed1",
+      "bytes": 690
     }
   ],
-  "version": "0.56-beta.6.4"
+  "version": "0.56-beta.6.4.1"
 }

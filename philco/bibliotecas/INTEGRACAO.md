@@ -1,11 +1,22 @@
-# Integração segura — ainda não instalada no player
+# Integração Philco Beta 6.4 — estado de produção
 
-Inserir na página Philco, em ordem: runtime.js; diagnostico/src/module.js; estabilidade/src/module.js; rede-ssl/src/module.js; busca-contextual/src/module.js; loader.js. Adicionar botão existente ou novo que chame PhilcoModulesUI.open(). NÃO instalar no projeto LG.
+Todos os arquivos ativos e a ordem são definidos pelo `manifest.beta56-6-4.json` e por `manifest.json` quando a release é publicada. Não inserir tags de script duplicadas manualmente.
 
-Adaptador obrigatório para busca: window.PhilcoSearchAdapter={currentCategory:function(){return 'c'|'m'|'s';},search:function(type,query,callback){ /* consultar catálogo local e devolver lista */ },open:function(type,item){ /* navegação normal do player */ }}. Adaptar à API real antes de habilitar.
+## Ordem de inicialização
+1. Core Xtream original, VOD, UI e skin existentes; UI 6.4 adiciona somente `PhilcoSearchAdapter`.
+2. `philco-search-catalog.beta56-6-4.js`: transporte isolado e categoria específica.
+3. `vendor/qrcode.js`: gerador MIT ES5 (carregado antes de a interface ser aberta).
+4. `philco-search.beta56-6-4.js`: interface de busca, QR opcional e captura da tecla vermelha.
+5. `manager.beta56-6-4.js`: painel acessível pelo botão Bibliotecas do shell existente; instância WASM compilada em C com fallback ES5.
+6. Bibliotecas individuais `diagnostico`, `estabilidade`, `rede-ssl`, `busca-contextual`, cada uma se registra no gerenciador.
 
-A busca via smartphone/QR exige servidor local autenticado e gerador de QR, não incluídos neste protótipo. Não abrir endpoint sem autenticação. Botão vermelho usa keyCode 403; confirmar mapeamento real no controle. Testar foco e tecla de retorno.
+A busca vem **desativada**, e alterações de busca só são aplicadas depois do botão **Reiniciar motores**. Diagnósticos isolados ativam/desativam imediatamente. Nenhum módulo busca ou altera playlist no boot.
 
-O runtime ES5 é um gerenciador JS de módulos, NÃO um núcleo WASM. Para um núcleo WASM real, compilar código fonte e validar WebAssembly.instantiate no WebKit da TV ou usar runtime nativo autorizado. Nenhum binário falso é entregue.
+## Integração com canais
+`PhilcoSearchAdapter.currentCategory()` usa a categoria/tipo atual. `search(type,query,callback)` faz consultas sob escopo independente, canceláveis. `open(type,item)` usa `loadLiveCategory`/ `chooseLive` para canais e `item` para detalhes VOD. `back` restaura feed inicial para item aberto pela busca. O botão vermelho só funciona enquanto `viewState.on` e `search` habilitada no boot.
 
-Rollback: remover referências dos scripts e limpar a chave localStorage philco.modules.v1. A base original não deve ser sobrescrita.
+## Precauções
+Nunca executar `get_*_streams` sem `category_id`; não apagar `remote-tv.active.v2`, `previous`, favoritos, histórico ou credenciais. Não alterar `Remote TV LG`. Uma falha no carregador opcional deve deixar o player intacto.
+
+## QR
+`teclado-remoto/server.cjs` é infraestrutura separada e precisa de Node 18+ numa máquina alcançável pela TV. O helper 127.0.0.1:8765 permite encaminhar consultas HTTP mas **não** aceita requisições do celular diretamente. Consulte `REMOTE_BETA56_6_4_VALIDATION.md` para comandos e limites.

@@ -227,8 +227,8 @@
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "73474d14a97ea02629e7656294e1764d2f683d1616ffbd5b096878fdf38c5896",
-      "bytes": 8904
+      "sha256": "d6a1ab7e290ddcf79838d06a6907f2324cd5750a745fb1265a6e5f6da6c4fea9",
+      "bytes": 8983
     },
     {
       "id": "philco-library-manager",

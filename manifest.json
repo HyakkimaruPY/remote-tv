@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.22-beta.56.6.4.1",
+  "release": "2026.10.22-beta.56.6.4.2",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-4-1.js",
+      "path": "system/readable/xtream-ui.beta56-6-4-2.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "182c48191d53e1a901ac214e1b277d39c4b5b914227f36674c53198e0329041c",
-      "bytes": 130733
+      "sha256": "853fe2042c35fa750b8c88db790e7d73cfe030c7be1793429f07cb51ed443d86",
+      "bytes": 130738
     },
     {
       "id": "live-log-overlay",
@@ -205,12 +205,12 @@
     },
     {
       "id": "philco-search-catalog",
-      "path": "system/readable/philco-search-catalog.beta56-6-4.js",
+      "path": "system/readable/philco-search-catalog.beta56-6-4-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "efa5d19f3680da2d6ec7625a262af50b5cc6636a563776452014debbb250b2f5",
-      "bytes": 3224
+      "sha256": "bb18d39456438c3c69a76d67c4a9a5dcef0b83c6976a1c2187fc54098f034e06",
+      "bytes": 3971
     },
     {
       "id": "philco-qrcode",
@@ -222,22 +222,31 @@
       "bytes": 56694
     },
     {
-      "id": "philco-search-ui",
-      "path": "system/readable/philco-search.beta56-6-4-1.js",
+      "id": "philco-localhost-client",
+      "path": "philco/bibliotecas/localhost/src/client.beta56-6-4-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "d6a1ab7e290ddcf79838d06a6907f2324cd5750a745fb1265a6e5f6da6c4fea9",
-      "bytes": 8983
+      "sha256": "be5aa8c32e09d21ca590a44036cd778cba1a6fdcceb5a68d0012143af16c351e",
+      "bytes": 2284
+    },
+    {
+      "id": "philco-search-ui",
+      "path": "system/readable/philco-search.beta56-6-4-2.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "fa7c54416ee51b07c9ec76b223ec1c2f5eca48da43a274a1999d54a7a8c03e74",
+      "bytes": 12775
     },
     {
       "id": "philco-library-manager",
-      "path": "philco/bibliotecas/manager.beta56-6-4-1.js",
+      "path": "philco/bibliotecas/manager.beta56-6-4-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "03b6c79ce7f858475924edd2e0e3a05f9454827206bad7c837ce8c344b14afc4",
-      "bytes": 14781
+      "sha256": "e329bc5b8b84cd0c219f93a5334435c467f891a89552504ceaa529acbd855788",
+      "bytes": 15430
     },
     {
       "id": "philco-module-diagnostic",
@@ -268,12 +277,12 @@
     },
     {
       "id": "philco-module-search",
-      "path": "philco/bibliotecas/busca-contextual/src/module.js",
+      "path": "philco/bibliotecas/busca-contextual/src/module.beta56-6-4-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "e09946d7212e272a481a5c2cead9239f2293b6cd0157cdf1834c294d9406a7db",
-      "bytes": 491
+      "sha256": "51665284c334eb30128b895ba2914af5ca5514c8907586b0c4ba1edb7a989eea",
+      "bytes": 492
     },
     {
       "id": "philco-module-assembly",
@@ -283,7 +292,34 @@
       "required": false,
       "sha256": "d0744f9f02a879db10a630cffbb0d0904326b6e8b60bc28b26ad37bae5e7eed1",
       "bytes": 690
+    },
+    {
+      "id": "philco-module-localhost",
+      "path": "philco/bibliotecas/localhost/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "952a4d41a00d32953863cf15c3524b705f06b727ff39a55943c228749648991c",
+      "bytes": 535
+    },
+    {
+      "id": "philco-module-performance",
+      "path": "philco/bibliotecas/performance/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "1af34b6a7a8e034273823584e9de2a1b9704d5b93107dbb3da7067eac96b8c39",
+      "bytes": 617
+    },
+    {
+      "id": "philco-module-ir",
+      "path": "philco/bibliotecas/ir-mapping/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "b6f713529a45adddd1e9bf94c51d2650405b24871b6d69a0be1f7c7cb77dc60b",
+      "bytes": 2230
     }
   ],
-  "version": "0.56-beta.6.4.1"
+  "version": "0.56-beta.6.4.2"
 }

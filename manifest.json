@@ -29,7 +29,7 @@
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "c5d260b6173028d40ba27970d818608029c48819b2d430cc74291981672c3680",
+      "sha256": "7a384d369bdd51efded11b64d27489f06888673c9573b9b5f1d3a6b46c1ee81e",
       "bytes": 1257
     },
     {
@@ -200,7 +200,7 @@
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "2758530078b61b1ee7e91ae9f664bf177842e9e572c74050da32db6fc18786d6",
+      "sha256": "3573ba00856669fe78f8de378049be7e6e42a3c5a637082b90ac20b57bd53bef",
       "bytes": 7925
     },
     {

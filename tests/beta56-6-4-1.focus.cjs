@@ -114,7 +114,7 @@ headerDom.window.close();
 
 // Hardware-facing red mapping: IR red(403) must forward a document keydown.
 let forwarded=[],lastIR=0;const redCtx={windowRef:{},remoteTV:{libraryManager:{isOpen:function(){return false;}},},viewState:{on:1},
-Date:{now:()=>50000},navAt31:0,guardUntil31:0,held31:0,lastAt31:0,firstAt31:0,lastKey31:0,lastSource35:'',keyCode:e=>e.keyCode,
+Date:Date,navAt31:0,guardUntil31:0,held31:0,lastAt31:0,firstAt31:0,lastKey31:0,lastSource35:'',keyCode:e=>e.keyCode,
 documentRef:{activeElement:{dispatchEvent:e=>forwarded.push(e.keyCode)},createEvent:function(){return {initEvent:function(){},keyCode:0,which:0};}},
 consumeInputEvent:function(){},handleImageNavigation:function(){},setTimeout:function(){},clearTimeout:function(){}};
 vm.createContext(redCtx);

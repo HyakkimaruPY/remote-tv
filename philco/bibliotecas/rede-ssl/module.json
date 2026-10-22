@@ -1,0 +1,15 @@
+{
+  "id": "rede-ssl",
+  "version": "6.4.0",
+  "category": "network",
+  "host": "RemoteTV Philco 6.4",
+  "runtime": "es5-bridge",
+  "entry": "src/module.js",
+  "restartRequired": false,
+  "defaultEnabled": true,
+  "capabilities": [
+    "RequestScope.fetch",
+    "RequestScope.local"
+  ],
+  "description": "Testes de saúde da ponte local, conectividade e HTTPS. HTTPS acessível não prova cadeia de certificados; sem bypass TLS."
+}

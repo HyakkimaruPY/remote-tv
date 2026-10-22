@@ -59,6 +59,13 @@ function circular(index, step, length) {
     }
     return ((index + step) % length + length) % length;
 }
+function acceptKey(now, last, interval) {
+    if (asmRequested && navAsm) {
+        try { return !!navAsm.accept_key(now | 0, last | 0, interval | 0); }
+        catch (e) { navAsm = null; updateMode(); }
+    }
+    return now - last >= interval;
+}
 function needsReload(requested, old, requires) {
     if (asmRequested && navAsm) {
         try { return !!navAsm.needs_restart(requested ? 1 : 0, old ? 1 : 0, requires ? 1 : 0); }
@@ -255,7 +262,7 @@ function onkey(e) {
     prevent(e);
     if (k === 0) return true;
     var now = new Date().getTime();
-    if (k === lastCode && now - lastKeyAt >= 0 && now - lastKeyAt < 135) return true;
+    if (k === lastCode && now - lastKeyAt >= 0 && !acceptKey(now, lastKeyAt, 135)) return true;
     lastCode = k; lastKeyAt = now;
     if (k === 8 || k === 27 || k === 461 || k === 462 || k === 528 || k === 10009 || k === 166) { close(); return true; }
     if (k === 38 || k === 37) { move(-1); return true; }

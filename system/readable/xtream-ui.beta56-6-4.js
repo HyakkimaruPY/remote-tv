@@ -2879,6 +2879,7 @@
     }
     // Beta 6.4: narrow adapter for the optional search; original player code remains unchanged.
     windowRef.PhilcoSearchAdapter = {
+        active: function () { return !!viewState.on; },
         currentCategory: function () { return viewState.on ? viewState.t : 'c'; },
         currentItems: function () {
             if (!viewState.on || (viewState.view !== 'library' && viewState.view !== 'live')) return [];

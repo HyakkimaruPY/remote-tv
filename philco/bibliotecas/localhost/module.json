@@ -1,0 +1,16 @@
+{
+  "id": "localhost",
+  "version": "6.4.2",
+  "category": "network",
+  "runtime": "es5-bridge + native optional",
+  "entry": "src/module.js",
+  "requiredCompanion": "main.go",
+  "restartRequired": false,
+  "defaultEnabled": true,
+  "capabilities": [
+    "local-pair-create",
+    "local-pair-poll",
+    "local-pair-close"
+  ],
+  "firmwareModify": false
+}

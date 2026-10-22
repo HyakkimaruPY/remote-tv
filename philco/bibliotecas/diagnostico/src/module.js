@@ -1,1 +1,7 @@
-(function(w){'use strict';var timer=0,events=0,errors=0,host;function onError(){errors++;}function onKey(){events++;}w.PhilcoModules.register({id:'diagnostico',name:'Diagnóstico',category:'diagnostic',runtime:'js',restartRequired:false,start:function(h){host=h;w.addEventListener('error',onError,false);w.addEventListener('keydown',onKey,false);timer=w.setInterval(function(){host.record('diagnostico','keys='+events+' errors='+errors+' wasm='+host.wasmSupported());},60000);},stop:function(){w.removeEventListener('error',onError,false);w.removeEventListener('keydown',onKey,false);w.clearInterval(timer);timer=0;}});})(window);
+/* Philco Beta 6.4 diagnostic module — passive until enabled. */
+(function(w){'use strict';var R=w.RemoteTV||(w.RemoteTV={}),events=0,errors=0,startAt=0,active=false;
+function err(){errors++;}function key(){events++;}
+function start(){if(active)return;active=true;startAt=new Date().getTime();if(w.addEventListener){w.addEventListener('error',err,false);w.addEventListener('keydown',key,false);}}
+function stop(){if(!active)return;active=false;if(w.removeEventListener){w.removeEventListener('error',err,false);w.removeEventListener('keydown',key,false);}}
+if(R.libraryManager)R.libraryManager.register({id:'diagnostico',title:'Diagnóstico de interface',enabled:false,category:'diagnostic',restartRequired:false,start:start,stop:stop,test:function(scope,done){var seconds=active?Math.floor((new Date().getTime()-startAt)/1000):0;done(true,'Teclas '+events+' · erros '+errors+' · sessão '+seconds+' s');}});
+})(this);

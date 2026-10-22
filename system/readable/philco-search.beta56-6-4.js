@@ -3,7 +3,9 @@
 var R=w.RemoteTV||(w.RemoteTV={}),KEY='remote-tv.libs.beta6.v1',RELAY='philco.beta64.relay';
 var box=null,kind='c',query='',input=null,grid=null,info=null,qrBox=null,pair=null,scope=null,pollTimer=0,searchTimer=0,searchJob=null,requestSeq=0,adapter=null,origin=null,results=[],status=null,buttons=[];
 function el(tag,txt,css){var x=d.createElement(tag);if(txt!==undefined&&txt!==null)x.appendChild(d.createTextNode(txt));if(css)x.style.cssText=css;return x;}
-function enabled(){try{var obj=JSON.parse(w.localStorage.getItem(KEY)||'{}');return obj.search===true;}catch(e){return false;}}
+function savedEnabled(){try{var obj=JSON.parse(w.localStorage.getItem(KEY)||'{}');return obj.search===true;}catch(e){return false;}}
+var bootEnabled=savedEnabled();
+function enabled(){return bootEnabled;}
 function stop(e){if(e.preventDefault)e.preventDefault();if(e.stopPropagation)e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();e.returnValue=false;}
 function clear(){requestSeq++;clearTimeout(searchTimer);clearTimeout(pollTimer);searchTimer=pollTimer=0;if(searchJob&&searchJob.cancel)searchJob.cancel();searchJob=null;if(scope){scope.cancel();scope=null;}pair=null;results=[];}
 function close(){clear();if(box&&box.parentNode)box.parentNode.removeChild(box);box=null;if(origin&&origin.focus)origin.focus();}

@@ -91,20 +91,6 @@ prevent(e);return true;
 }
 if(d.addEventListener)d.addEventListener('keydown',onkey,true);
 var ir=d.onirkeypress;d.onirkeypress=function(e){if(onkey(e||w.event))return false;return ir?ir.call(d,e):true;};
-var target='https://raw.githubusercontent.com/HyakkimaruPY/remote-tv/main/version';
-register({id:'network',title:'Rede e bridge local',enabled:true,test:function(scope,done){
-var since=new Date().getTime();
-scope.local('/health',function(err){
-if(err){done(false,'Bridge local: '+errorText(err));return;}
-if(classify(200,new Date().getTime()-since)<1){done(false,'Bridge local indisponível');return;}
-var started=new Date().getTime();
-scope.fetch(target,function(e){var ms=new Date().getTime()-started;done(!e&&classify(200,ms)>0,e?'Internet: '+errorText(e):'Bridge e Internet · '+ms+' ms');},6000);
-},2500);
-}});
-register({id:'https',title:'HTTPS / TLS pelo bridge',enabled:true,test:function(scope,done){
-var started=new Date().getTime();scope.fetch(target,function(e){var ms=new Date().getTime()-started,ok=!e&&classify(200,ms)>0;
-done(ok,ok?'HTTPS acessível · '+ms+' ms (certificado não inspecionado)':errorText(e)+' · sem inspeção TLS');},6000);
-}});
 entry.onclick=open;
 R.libraryManager={register:register,open:open,close:close,engine:wasmMode,quality:function(stalls,errors,delay){
 if(quality)return quality(stalls|0,errors|0,delay|0);return errors>0||stalls>4||delay>8000?1:2;},

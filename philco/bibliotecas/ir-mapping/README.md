@@ -1,0 +1,3 @@
+# Diagnóstico do botão vermelho
+
+A tecla vermelha pode não chegar como keyCode 403 no firmware MStar. O módulo registra a captura numérica a pedido do usuário: Bibliotecas → Mapeamento · botão vermelho → Testar → aguardar cerca de 0,4 s → pressionar o botão vermelho. Se houver evento no WebKit, salva o código no armazenamento local e o transforma no evento de busca 403. Códigos de setas, OK, Voltar e mídia são protegidos contra remapeamento. Se nenhum evento for entregue ao navegador, a configuração não é possível remotamente e o botão **Busca** da barra superior continua disponível. Nenhum código IR é inventado.

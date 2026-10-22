@@ -236,8 +236,8 @@
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "d22e777c69ca7d6f29dc6dea78fe9474dbea0ec8e705c252704c51edad3f7267",
-      "bytes": 14524
+      "sha256": "03b6c79ce7f858475924edd2e0e3a05f9454827206bad7c837ce8c344b14afc4",
+      "bytes": 14781
     },
     {
       "id": "philco-module-diagnostic",

@@ -173,7 +173,9 @@ function createRow(lib) {
     lib.wrap = wrap;
     wrap.appendChild(el('div', lib.title + (lib.restartRequired ? ' · requer reinício' : ''), 'font:20px Arial;color:#fff;margin-bottom:3px;'));
     lib.switchBtn = el('button', '', buttonCSS);
+    lib.switchBtn.id = 'rtvLibToggle-' + lib.id;
     lib.testBtn = el('button', 'Testar', buttonCSS);
+    lib.testBtn.id = 'rtvLibTest-' + lib.id;
     lib.result = el('div', lib.on ? 'Pronta · teste manual' : 'Desativada', 'color:#aaa;font:15px Arial;margin-top:2px;min-height:18px;');
     lib.switchBtn.onclick = function () { toggle(lib); };
     lib.testBtn.onclick = function () { execute(lib); };

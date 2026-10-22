@@ -37,7 +37,7 @@ qrBox=el('div','Configure o endereço do serviço para conectar o celular.','hei
 var right=el('div',null,'position:absolute;left:43%;top:0;width:57%;height:100%;padding:18px;box-sizing:border-box');
 status=el('div','Digite um título para pesquisar','height:26px;font-size:16px;color:#bbb');right.appendChild(status);
 grid=el('div',null,'height:642px;overflow:auto;');right.appendChild(grid);box.appendChild(right);d.body.appendChild(box);input.focus();changed('','tv');return true;}
-function key(e){var k=e.keyCode||e.which||0;if(!box){if(k===403&&enabled()&&w.PhilcoSearchAdapter){var a=w.PhilcoSearchAdapter;if(open(a.currentCategory?a.currentCategory():'c'))stop(e);}return;}
+function key(e){var k=e.keyCode||e.which||0;if(R.libraryManager&&R.libraryManager.isOpen&&R.libraryManager.isOpen())return;if(!box){if(k===403&&enabled()&&w.PhilcoSearchAdapter){var a=w.PhilcoSearchAdapter;if(open(a.currentCategory?a.currentCategory():'c'))stop(e);}return;}
 if(k===403){stop(e);return;}
 if(k===27||k===8||k===461||k===10009){stop(e);close();return;}
 var x=d.activeElement,ix=x&&x.getAttribute&&x.getAttribute('data-idx');

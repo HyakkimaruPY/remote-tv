@@ -30,6 +30,11 @@ jobs:
         run: npm install --no-save --no-package-lock acorn@8 jsdom@24
       - name: Validate Beta 6.4 manifest, modules, WebAssembly and phone relay
         run: node tests/beta56-6-4.integration.cjs
+      - name: Exercise new Xtream UI against historic LIVE regression harness
+        run: |
+          cp manifest.beta56-6-4.json manifest.json
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
       - name: Verify preserved baseline VOD and artwork
         run: |
           node tests/beta56-5.vod.cjs

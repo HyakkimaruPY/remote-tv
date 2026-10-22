@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.22-beta.56.6.2",
+  "release": "2026.10.22-beta.56.6.3",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-6-1.html",
+      "path": "apps/player1/shell.beta56-6-3.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "82ab5c60c9365d3c8be6dac5580b9924305f0d548b78e169c8be1b2afe273cac",
-      "bytes": 1218
+      "sha256": "c5d260b6173028d40ba27970d818608029c48819b2d430cc74291981672c3680",
+      "bytes": 1257
     },
     {
       "id": "style",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-1.js",
+      "path": "system/readable/xtream-ui.beta56-6.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "ec496eaab452070c2ce7dc5373db60a30b981239daa621693025161c20f4ff7e",
-      "bytes": 126467
+      "sha256": "a0b90f8ed92881a34400f7e456f2dafe0fcc5a9d38adf6b5ef05a45bb4b10e5a",
+      "bytes": 126465
     },
     {
       "id": "live-log-overlay",
@@ -195,6 +195,15 @@
       "bytes": 958
     },
     {
+      "id": "diagnostic-libraries",
+      "path": "system/readable/diagnostic-libraries.beta56-6-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "2758530078b61b1ee7e91ae9f664bf177842e9e572c74050da32db6fc18786d6",
+      "bytes": 7925
+    },
+    {
       "id": "actions",
       "path": "system/actions.json",
       "type": "actions",
@@ -204,5 +213,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.56-beta.6.2"
+  "version": "0.56-beta.6.3"
 }

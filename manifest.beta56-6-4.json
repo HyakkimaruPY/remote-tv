@@ -164,8 +164,8 @@
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "8f072c01dac98ccdfc9d2135a821458a0be948882340bacdd4077bbed7c151f1",
-      "bytes": 129467
+      "sha256": "399a90aa099dc48ee00b2760c7c4f827accc77ee5e62630f52ecdd822f289ce1",
+      "bytes": 129523
     },
     {
       "id": "live-log-overlay",
@@ -227,8 +227,8 @@
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "2177964375677e80311c86bdf3428ec299397b7c7628a2d187edfae308f98c3a",
-      "bytes": 8551
+      "sha256": "8a2d9f8d2ddbefc251527f4e2ac08c3bc4386276a5b1729486c49a4edb3bf8f7",
+      "bytes": 8793
     },
     {
       "id": "philco-library-manager",

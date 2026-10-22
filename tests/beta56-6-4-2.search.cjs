@@ -47,7 +47,7 @@ function key(k){const ev=new w.Event('keydown',{bubbles:true,cancelable:true});O
 key(40);assert.equal(d.activeElement.getAttribute('data-name'),'A');
 await new Promise(r=>setTimeout(r,160));key(39);assert.equal(d.activeElement.getAttribute('data-name'),'B');
 await new Promise(r=>setTimeout(r,160));key(40);assert.equal(d.activeElement.getAttribute('data-name'),'I');
-key(38);key(38);assert.equal(d.activeElement.id,'ph642input');
+key(38);await new Promise(r=>setTimeout(r,160));key(38);assert.equal(d.activeElement.id,'ph642input');
 const input=d.getElementById('ph642input');
 input.value='ca';input.dispatchEvent(new w.Event('input',{bubbles:true}));
 await new Promise(r=>setTimeout(r,80));assert.equal(called.length,0,'two chars do not search');

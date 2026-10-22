@@ -1,16 +1,46 @@
-/* Philco 6.4 opt-in contextual search bridge, ES5 only; never mutates player core. */
+/* Philco Beta 6.4 - ES5 contextual search + authenticated optional phone pairing */
 (function(w,d){'use strict';
-var R=w.RemoteTV||(w.RemoteTV={}),enabled=false,box=null,items=[],kind='c',query='',input=null,grid=null,adapter=null,seq=0,origin=null;
-var KEY='philco.beta64.search.enabled';
-try{enabled=w.localStorage.getItem(KEY)==='1';}catch(e){}
-function node(tag,label,css){var x=d.createElement(tag);if(label!=null)x.appendChild(d.createTextNode(label));if(css)x.style.cssText=css;return x;}
-function stop(e){if(e.preventDefault)e.preventDefault();if(e.stopPropagation)e.stopPropagation();e.cancelBubble=true;}
-function close(){seq++;if(box&&box.parentNode)box.parentNode.removeChild(box);box=null;if(origin&&origin.focus)origin.focus();}
-function draw(){if(!grid)return;grid.innerHTML='';for(var i=0;i<items.length;i++){(function(it){var b=node('button',it.n||it.name||'Sem título','display:inline-block;width:47%;margin:1%;padding:16px;background:#222;color:#fff;border:1px solid #666;text-align:left;');b.onclick=function(){close();if(adapter&&adapter.open)adapter.open(kind,it);};grid.appendChild(b);})(items[i]);}}
-function search(){var s=++seq;if(!adapter||!adapter.search){items=[];draw();return;}adapter.search(kind,query,function(v){if(s!==seq||!box)return;items=(v||[]).slice(0,250);draw();});}
-function append(c){query+=c;input.value=query;search();}
-function open(type){if(!enabled||box)return false;adapter=w.PhilcoSearchAdapter;if(!adapter||typeof adapter.search!=='function'||typeof adapter.open!=='function')return false;origin=d.activeElement;kind=type||'c';query='';items=[];box=node('section',null,'position:fixed;z-index:9500;top:0;left:0;width:1280px;height:720px;background:#000;color:#fff;font:20px Arial;');var left=node('div',null,'float:left;width:43%;padding:24px;box-sizing:border-box;');left.appendChild(node('h2','Busca · '+(kind==='c'?'Canais':kind==='m'?'Filmes':'Séries')));input=node('input',null,'width:95%;height:42px;font-size:23px;');input.oninput=function(){query=input.value;search();};left.appendChild(input);left.appendChild(node('p','Teclado remoto por QR indisponível sem servidor LAN pareado.','font-size:15px;color:#aaa;'));var chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ';for(var i=0;i<chars.length;i++){(function(c){var b=node('button',c===' '?'_':c,'margin:3px;padding:11px;background:#202020;color:#fff;border:1px solid #555;');b.onclick=function(){append(c);};left.appendChild(b);})(chars.charAt(i));}var del=node('button','Apagar','padding:12px;');del.onclick=function(){query=query.slice(0,-1);input.value=query;search();};left.appendChild(del);var back=node('button','Voltar','padding:12px;');back.onclick=close;left.appendChild(back);grid=node('div',null,'float:right;width:56%;height:680px;overflow:auto;');box.appendChild(left);box.appendChild(grid);d.body.appendChild(box);input.focus();search();return true;}
-function key(e){var k=e.keyCode||e.which;if(box){if(k===27||k===8||k===461||k===10009){stop(e);close();}return;}if(!enabled||k!==403)return;if(R.libraryManager&&R.libraryManager.enabled&&R.libraryManager.enabled('search')===false)return;if(w.PhilcoSearchAdapter){var t=w.PhilcoSearchAdapter.currentCategory?w.PhilcoSearchAdapter.currentCategory():'c';if(open(t))stop(e);}}
-d.addEventListener('keydown',key,true);
-w.PhilcoSearch64={open:open,close:close,enabled:function(v){if(arguments.length){enabled=!!v;try{w.localStorage.setItem(KEY,enabled?'1':'0');}catch(e){}if(!enabled)close();}return enabled;}};
+var R=w.RemoteTV||(w.RemoteTV={}),KEY='remote-tv.libs.beta6.v1',RELAY='philco.beta64.relay';
+var box=null,kind='c',query='',input=null,grid=null,info=null,qrBox=null,pair=null,scope=null,pollTimer=0,searchTimer=0,searchJob=null,requestSeq=0,adapter=null,origin=null,results=[],status=null,buttons=[];
+function el(tag,txt,css){var x=d.createElement(tag);if(txt!==undefined&&txt!==null)x.appendChild(d.createTextNode(txt));if(css)x.style.cssText=css;return x;}
+function enabled(){try{var obj=JSON.parse(w.localStorage.getItem(KEY)||'{}');return obj.search===true;}catch(e){return false;}}
+function stop(e){if(e.preventDefault)e.preventDefault();if(e.stopPropagation)e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();e.returnValue=false;}
+function clear(){requestSeq++;clearTimeout(searchTimer);clearTimeout(pollTimer);searchTimer=pollTimer=0;if(searchJob&&searchJob.cancel)searchJob.cancel();searchJob=null;if(scope){scope.cancel();scope=null;}pair=null;results=[];}
+function close(){clear();if(box&&box.parentNode)box.parentNode.removeChild(box);box=null;if(origin&&origin.focus)origin.focus();}
+function focusResult(i){if(i<0)return;if(i>=results.length)return;var b=d.getElementById('ph64item'+i);if(b){b.focus();if(b.scrollIntoView)b.scrollIntoView(false);}}
+function draw(){if(!grid)return;grid.innerHTML='';buttons=[];var i;for(i=0;i<results.length;i++){(function(o,idx){var b=el('button',(o.n||'Sem título')+' · '+(o._catName64||''),'display:inline-block;vertical-align:top;box-sizing:border-box;width:47%;height:90px;margin:1% 1%;padding:10px 12px;background:#191919;color:#eee;border:1px solid #555;border-radius:5px;font:17px Arial;text-align:left;overflow:hidden;');b.id='ph64item'+idx;b.className='ph64result';b.setAttribute('data-idx',idx);b.onclick=function(){var current=adapter,which=kind;close();if(current&&current.open)current.open(which,o);};grid.appendChild(b);buttons.push(b);})(results[i],i);}}
+function perform(){if(!box||!adapter||!adapter.search)return;var seq=++requestSeq;if(searchJob&&searchJob.cancel)searchJob.cancel();searchJob=null;if(status)status.textContent='Buscando…';searchJob=adapter.search(kind,query,function(data,done,msg){if(!box||seq!==requestSeq)return;var focus=d.activeElement,selected=focus&&focus.getAttribute&&focus.getAttribute('data-idx');results=data||[];draw();if(selected!==null&&selected!==undefined)focusResult(+selected);if(status)status.textContent=results.length+' resultado(s)'+(msg?' · '+msg:'')+(done?'':' · buscando…');});}
+function changed(x,source){query=String(x||'').slice(0,120);if(input&&input.value!==query)input.value=query;clearTimeout(searchTimer);searchTimer=setTimeout(perform,source==='phone'?120:320);}
+function sendKey(c){changed(query+c,'tv');if(input)input.focus();}
+function config(){try{return String(w.localStorage.getItem(RELAY)||'').replace(/\/$/,'');}catch(e){return '';}}
+function syncPair(){if(!pair||!box||!scope)return;var my=pair,addr=my.addr;scope.fetch(addr+'/session/poll?sid='+encodeURIComponent(my.sid)+'&token='+encodeURIComponent(my.tvToken)+'&_='+new Date().getTime(),function(err,body){if(!box||pair!==my)return;if(!err){try{var v=JSON.parse(body);if(v.seq>my.seq){my.seq=v.seq;changed(v.q,'phone');}if(v.expiresIn<=0){qrBox.textContent='Sessão expirada. Gere outro QR.';pair=null;return;}}catch(e){}}pollTimer=setTimeout(syncPair,1600);},6500);}
+function createPair(){var addr=config();if(!/^https?:\/\/[^/]+/i.test(addr)){qrBox.textContent='Configure um servidor de pareamento acessível na rede.';return;}if(!R.RequestScope){qrBox.textContent='Ponte de rede indisponível.';return;}
+if(scope)scope.cancel();clearTimeout(pollTimer);pair=null;scope=new R.RequestScope();qrBox.textContent='Gerando sessão segura…';
+scope.fetch(addr+'/session/create?_='+new Date().getTime(),function(err,body){if(!box)return;var data;if(err){qrBox.textContent='Servidor indisponível';return;}try{data=JSON.parse(body);}catch(e){qrBox.textContent='Resposta inválida';return;}
+if(!data.sid||!data.tvToken||!data.phoneUrl){qrBox.textContent='Serviço não configurado';return;}
+if(typeof w.qrcode!=='function'){qrBox.textContent='Gerador QR ausente';return;}
+try{var qr=w.qrcode(0,'M');qr.addData(data.phoneUrl);qr.make();qrBox.innerHTML='';var im=el('img');im.src=qr.createDataURL(5,2);im.style.cssText='height:158px;width:158px;background:#fff';qrBox.appendChild(im);qrBox.appendChild(el('div','Escaneie para digitar pelo celular','font-size:14px'));pair={sid:data.sid,tvToken:data.tvToken,seq:0,addr:addr};syncPair();}catch(e){qrBox.textContent='Não foi possível gerar o QR';}
+},8000);}
+function open(t){if(box||!enabled())return false;adapter=w.PhilcoSearchAdapter;if(!adapter||!adapter.search||!adapter.open)return false;origin=d.activeElement;kind=t==='m'||t==='s'?t:'c';query='';results=[];box=el('section',null,'position:fixed;z-index:9100;left:0;top:0;width:1280px;height:720px;box-sizing:border-box;background:#060606;color:#eee;font:19px Arial;');
+var left=el('div',null,'position:absolute;left:0;top:0;width:43%;height:100%;box-sizing:border-box;padding:14px 21px;border-right:1px solid #333;overflow:hidden;');
+left.appendChild(el('h2','Busca · '+(kind==='c'?'Ao vivo':kind==='m'?'Filmes':'Séries'),'margin:2px 0 12px;font:27px Arial;'));
+input=el('input');input.id='ph64query';input.maxLength=120;input.style.cssText='display:block;width:97%;height:39px;font:21px Arial;background:#161616;color:#fff;border:1px solid #777;padding:5px';input.oninput=function(){changed(input.value,'tv');};left.appendChild(input);
+var kb=el('div',null,'margin-top:10px;height:242px;overflow:hidden;');var chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ';for(var i=0;i<chars.length;i++){(function(c){var b=el('button',c===' '?'_':c,'display:inline-block;width:10%;height:43px;margin:2px .4%;background:#242424;color:#eee;border:1px solid #666;border-radius:4px;font:17px Arial;');b.onclick=function(){sendKey(c);};kb.appendChild(b);})(chars.charAt(i));}
+var del=el('button','⌫ Apagar','padding:8px;margin:4px;background:#222;color:#fff;border:1px solid #777');del.onclick=function(){changed(query.slice(0,-1),'tv');input.focus();};kb.appendChild(del);
+var back=el('button','Voltar','padding:8px;margin:4px;background:#222;color:#fff;border:1px solid #777');back.onclick=close;kb.appendChild(back);left.appendChild(kb);
+left.appendChild(el('div','Teclado pelo celular · QR Code','font-size:17px;margin:6px 0'));
+var cfg=el('input');cfg.value=config();cfg.placeholder='http://IP-DO-SERVIDOR:8766';cfg.id='ph64relay';cfg.style.cssText='background:#131313;color:#eee;border:1px solid #666;padding:7px;width:90%;font:15px Arial';cfg.onchange=function(){try{w.localStorage.setItem(RELAY,cfg.value.replace(/\/$/,''));}catch(e){}};left.appendChild(cfg);
+var qrBtn=el('button','Gerar QR','margin:6px 0;background:#222;color:#fff;border:1px solid #777;padding:7px');qrBtn.onclick=function(){try{w.localStorage.setItem(RELAY,cfg.value.replace(/\/$/,''));}catch(e){}createPair();};left.appendChild(qrBtn);
+qrBox=el('div','Configure o endereço do serviço para conectar o celular.','height:190px;margin:4px 0;font-size:14px;color:#bbb');left.appendChild(qrBox);box.appendChild(left);
+var right=el('div',null,'position:absolute;left:43%;top:0;width:57%;height:100%;padding:18px;box-sizing:border-box');
+status=el('div','Digite um título para pesquisar','height:26px;font-size:16px;color:#bbb');right.appendChild(status);
+grid=el('div',null,'height:642px;overflow:auto;');right.appendChild(grid);box.appendChild(right);d.body.appendChild(box);input.focus();changed('','tv');return true;}
+function key(e){var k=e.keyCode||e.which||0;if(!box){if(k===403&&enabled()&&w.PhilcoSearchAdapter){var a=w.PhilcoSearchAdapter;if(open(a.currentCategory?a.currentCategory():'c'))stop(e);}return;}
+if(k===27||k===8||k===461||k===10009){stop(e);close();return;}
+var x=d.activeElement,ix=x&&x.getAttribute&&x.getAttribute('data-idx');
+if(ix!==null&&ix!==undefined){ix=+ix;if(k===37||k===39||k===38||k===40){stop(e);focusResult(ix+(k===37?-1:k===39?1:k===38?-2:2));return;}if(k===13||k===41){stop(e);x.click();return;}}
+if(x===input&&k===39&&results.length){stop(e);focusResult(0);}
+}
+if(d.addEventListener){d.addEventListener('keydown',key,true);d.addEventListener('irkeypress',key,true);}
+w.PhilcoSearch64={open:open,close:close,enabled:enabled};
 })(this,document);

@@ -1,0 +1,289 @@
+{
+  "schema": 1,
+  "release": "2026.10.22-beta.56.6.4.1",
+  "bootstrap_min": 4,
+  "app": "player1",
+  "ready_timeout_ms": 2200,
+  "modules": [
+    {
+      "id": "policy",
+      "path": "system/policy.json",
+      "type": "json",
+      "phase": "pre",
+      "required": true,
+      "sha256": "61045e256831ceab2ec6ef82a52806dbeb6e654fdbd0674da9ff684faa92f54f",
+      "bytes": 539
+    },
+    {
+      "id": "runtime",
+      "path": "system/runtime-beta56-3.js",
+      "type": "js",
+      "phase": "pre",
+      "required": true,
+      "sha256": "4c6f4e1020bab1c7bfbe183ccc09367088f05f6783658308294ee19a26c8afb4",
+      "bytes": 3664
+    },
+    {
+      "id": "shell",
+      "path": "apps/player1/shell.beta56-6-3.html",
+      "type": "html",
+      "phase": "shell",
+      "required": true,
+      "sha256": "7a384d369bdd51efded11b64d27489f06888673c9573b9b5f1d3a6b46c1ee81e",
+      "bytes": 1257
+    },
+    {
+      "id": "style",
+      "path": "apps/player1/style.beta56-6-2.css",
+      "type": "css",
+      "phase": "shell",
+      "required": true,
+      "sha256": "3fb161ba14b3cb3d51be350f6ec0d8e3e0b844e24ebc60c036f22266f2183a95",
+      "bytes": 3127
+    },
+    {
+      "id": "feature-loader",
+      "path": "system/feature-loader-beta56-3.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "fa72c37930e981715e591fb01e84a598d4a149b04a71e921a9881a93b978c5a8",
+      "bytes": 4373
+    },
+    {
+      "id": "app",
+      "path": "apps/player1/app.beta56-3.js",
+      "type": "js",
+      "phase": "app",
+      "required": true,
+      "sha256": "9c2eef831338df7a6df31f16a5a8904db28597d73914d7a39d2346a8f7adbd40",
+      "bytes": 40728
+    },
+    {
+      "id": "force-update",
+      "path": "system/readable/force-update.beta56-6-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "48ccce5839505e2082a15ac980a844c64d9a0234f40a6830b245396132ccbfe9",
+      "bytes": 4370
+    },
+    {
+      "id": "inject-base",
+      "path": "system/readable/inject-base.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "2bf3e595f4bd55b42ffce61a88c6ee099be50e0d242ae329b7818ed73de7a8ee",
+      "bytes": 211
+    },
+    {
+      "id": "xtream-api-first",
+      "path": "system/readable/xtream-api-first.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "c995a58d78b968d1e024eb66c8d8bd579a54ffa4a7215256352f9e759a3e572b",
+      "bytes": 9817
+    },
+    {
+      "id": "xtream-lazy-core",
+      "path": "system/readable/xtream-lazy-core.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "0d298441a06bc6e9043147f81fbdfae69510153c0c5a80d269ae9b5be9585e90",
+      "bytes": 21806
+    },
+    {
+      "id": "xtream-auth-guard",
+      "path": "system/readable/xtream-auth-guard.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "03548d37e17b60e531429bf760f2eedca446b9a8e4d13371ace9b44f10ac6239",
+      "bytes": 3711
+    },
+    {
+      "id": "xtream-stream-router",
+      "path": "system/readable/xtream-stream-router.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "abe12c724fdb0840b07dab7c52e994cee9a1d9339b02c513e728f9059ab6b932",
+      "bytes": 2012
+    },
+    {
+      "id": "autovod",
+      "path": "system/readable/autovod.beta56-4.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "89a1b5bad7946880f195290c74a5312a977323e3d23e8e8216ec5fb320fa9619",
+      "bytes": 9571
+    },
+    {
+      "id": "hlsjs-loader",
+      "path": "system/readable/hlsjs-loader.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "fd8a5b9bc5c5fbcec6546dfa3a371abb0c5780f618177db0a351af481dcca542",
+      "bytes": 6720
+    },
+    {
+      "id": "xtream-vod-player",
+      "path": "system/readable/xtream-vod-player.beta56-5.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "2d33520ad269b6851b24336066dfed6fd4f87ef5e6ec4bd3bb69598472ee8631",
+      "bytes": 76506
+    },
+    {
+      "id": "common-player-ui",
+      "path": "system/readable/common-player-ui.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "9552394b7c6382e0be3bf50028b8c1064d3bb612a4be3eb962ed2dfcba089b4f",
+      "bytes": 31889
+    },
+    {
+      "id": "tmdb-metadata",
+      "path": "system/readable/tmdb-metadata.beta56-5.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 11198,
+      "sha256": "6e6a4c12e836b6549632b2412d55e36ccb530905601f3977d144e775b08165fa"
+    },
+    {
+      "id": "xtream-ui",
+      "path": "system/readable/xtream-ui.beta56-6-4-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "182c48191d53e1a901ac214e1b277d39c4b5b914227f36674c53198e0329041c",
+      "bytes": 130733
+    },
+    {
+      "id": "live-log-overlay",
+      "path": "system/readable/live-log-overlay.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "f79548eabfc63d53cba28c718a77cd13eabc672c0243c02d82af7736c909b110",
+      "bytes": 6443
+    },
+    {
+      "id": "graphos-skin",
+      "path": "system/injections/graphos-skin-beta56-6-2.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "cc15a24cc2e311cb75b1a7537540d6de4f3ea370a3276cf54d1b914201838af3",
+      "bytes": 10837
+    },
+    {
+      "id": "hooks",
+      "path": "system/readable/hooks.beta56-3.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "sha256": "5f03c8948aa379509b2bc962212f1377dd3aa2f25efefd324d353040a542b8a5",
+      "bytes": 958
+    },
+    {
+      "id": "actions",
+      "path": "system/actions.json",
+      "type": "actions",
+      "phase": "post",
+      "required": false,
+      "sha256": "966d2e8d187da295a4c8ca40c9c1b29e310467b92b85866cc65bc22703cc57f7",
+      "bytes": 201
+    },
+    {
+      "id": "philco-search-catalog",
+      "path": "system/readable/philco-search-catalog.beta56-6-4.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "efa5d19f3680da2d6ec7625a262af50b5cc6636a563776452014debbb250b2f5",
+      "bytes": 3224
+    },
+    {
+      "id": "philco-qrcode",
+      "path": "philco/bibliotecas/vendor/qrcode.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "79ec86f82856005b1c887905cfccfcfbec3821ca61c7fd5a952faa5f778f791c",
+      "bytes": 56694
+    },
+    {
+      "id": "philco-search-ui",
+      "path": "system/readable/philco-search.beta56-6-4-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "73474d14a97ea02629e7656294e1764d2f683d1616ffbd5b096878fdf38c5896",
+      "bytes": 8904
+    },
+    {
+      "id": "philco-library-manager",
+      "path": "philco/bibliotecas/manager.beta56-6-4-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "d22e777c69ca7d6f29dc6dea78fe9474dbea0ec8e705c252704c51edad3f7267",
+      "bytes": 14524
+    },
+    {
+      "id": "philco-module-diagnostic",
+      "path": "philco/bibliotecas/diagnostico/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "697f29f3d0f9a05eb247a0467e2bc49d11fd5e9a5c450afbda3ac6e34dce2f50",
+      "bytes": 923
+    },
+    {
+      "id": "philco-module-watchdog",
+      "path": "philco/bibliotecas/estabilidade/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "b1df7aa051be852633f79f486a7cc693bb2dc9d5915090a58decc040b9aeaba3",
+      "bytes": 825
+    },
+    {
+      "id": "philco-module-network",
+      "path": "philco/bibliotecas/rede-ssl/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "33ea06205d3dd19d7cda3a43cf236f77e7a1287410de30be0d919114f0a84783",
+      "bytes": 1041
+    },
+    {
+      "id": "philco-module-search",
+      "path": "philco/bibliotecas/busca-contextual/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "e09946d7212e272a481a5c2cead9239f2293b6cd0157cdf1834c294d9406a7db",
+      "bytes": 491
+    },
+    {
+      "id": "philco-module-assembly",
+      "path": "philco/bibliotecas/assembly-navigation/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "d0744f9f02a879db10a630cffbb0d0904326b6e8b60bc28b26ad37bae5e7eed1",
+      "bytes": 690
+    }
+  ],
+  "version": "0.56-beta.6.4.1"
+}

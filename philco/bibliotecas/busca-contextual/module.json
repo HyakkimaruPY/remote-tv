@@ -1,0 +1,15 @@
+{
+  "id": "busca-contextual",
+  "version": "6.4.0",
+  "category": "feature",
+  "host": "RemoteTV Philco 6.4",
+  "runtime": "es5-bridge",
+  "entry": "src/module.js",
+  "restartRequired": true,
+  "defaultEnabled": false,
+  "capabilities": [
+    "XtreamUI.SearchAdapter",
+    "RequestScope.fetch"
+  ],
+  "description": "Busca contextual com filtro Xtream por categoria e teclado; botão vermelho e pareamento por QR opcional, sujeito a servidor LAN."
+}

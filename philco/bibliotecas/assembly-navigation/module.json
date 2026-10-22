@@ -1,0 +1,23 @@
+{
+  "id": "assembly-navigation",
+  "version": "6.4.1",
+  "runtime": "wasm",
+  "language": "WebAssembly Text (Assembly)",
+  "category": "stability",
+  "entry": "dist/navigation.wasm",
+  "source": "src/navigation.wat",
+  "exports": [
+    "next_focus",
+    "accept_key",
+    "needs_restart"
+  ],
+  "restartRequired": false,
+  "defaultEnabled": true,
+  "capabilities": [
+    "numeric-focus-arbitration",
+    "debounce",
+    "restart-classification"
+  ],
+  "fallback": "ES5 numerically equivalent",
+  "firmwarePrivilege": false
+}

@@ -1,0 +1,42 @@
+name: Validate Philco Beta 6.4.1 Focus and Assembly
+
+on:
+  push:
+    branches: [fix/philco-beta64-focus-search-asm, main]
+    paths:
+      - '.github/workflows/philco-beta641.yml'
+      - 'philco/bibliotecas/**'
+      - 'system/readable/xtream-ui.beta56-6-4-1.js'
+      - 'system/readable/philco-search.beta56-6-4-1.js'
+      - 'tests/beta56-6-4-1.focus.cjs'
+      - 'manifest.beta56-6-4-1.json'
+      - 'manifest.json'
+      - 'version'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install ephemeral DOM and ES5 parser
+        run: npm install --no-save --no-package-lock acorn@8 jsdom@24
+      - name: Validate 31 manifest hashes, focus/IR and Assembly WASM
+        run: node tests/beta56-6-4-1.focus.cjs
+      - name: Regression test Beta 6.4 baseline
+        run: node tests/beta56-6-4.integration.cjs
+      - name: Exercise candidate LIVE and VOD without promoting version marker
+        run: |
+          cp manifest.beta56-6-4-1.json manifest.json
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
+          node tests/beta56-5.vod.cjs
+          node tests/beta56-5.artwork.cjs
+          node tests/beta56-6-1.update.cjs

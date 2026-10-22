@@ -1,0 +1,13 @@
+{
+  "id": "frame-budget",
+  "version": "6.4.2",
+  "category": "optimization",
+  "entry": "src/module.js",
+  "runtime": "es5",
+  "restartRequired": false,
+  "defaultEnabled": true,
+  "capabilities": [
+    "render-batch-budget"
+  ],
+  "controls": "PhilcoSearch642.setPerformanceMode"
+}

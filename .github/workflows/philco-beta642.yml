@@ -1,0 +1,60 @@
+name: Validate Philco Beta 6.4.2 Search and LAN
+
+on:
+  push:
+    branches:
+      - fix/philco-beta645-search-performance
+      - main
+    paths:
+      - '.github/workflows/philco-beta642.yml'
+      - 'philco/bibliotecas/**'
+      - 'system/readable/philco-search*'
+      - 'system/readable/xtream-ui.beta56-6-4-2.js'
+      - 'manifest.beta56-6-4-2.json'
+      - 'manifest.json'
+      - 'tests/beta56-6-4-2.search.cjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test-only dependencies
+        run: npm install --no-save --no-package-lock acorn@8 jsdom@24
+      - name: Test search performance, directional controls, 35 SHA hashes and ES5
+        run: node tests/beta56-6-4-2.search.cjs
+      - name: Validate original 6.4.1 baseline
+        run: node tests/beta56-6-4-1.focus.cjs
+      - name: Regression tests with candidate Xtream UI
+        run: |
+          cp manifest.beta56-6-4-2.json manifest.json
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
+          node tests/beta56-5.vod.cjs
+          node tests/beta56-5.artwork.cjs
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      - name: Test native optional localhost service
+        run: go test -v philco/bibliotecas/localhost/main.go philco/bibliotecas/localhost/main_test.go
+      - name: Cross compile MStar candidate (not auto-installed)
+        run: |
+          cd philco/bibliotecas/localhost
+          GOOS=linux GOARCH=mipsle GOMIPS=softfloat CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o philco-localhost-mipsle main.go
+          file philco-localhost-mipsle
+          sha256sum philco-localhost-mipsle > philco-localhost-mipsle.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: philco-localhost-mipsle-beta642-candidate
+          path: |
+            philco/bibliotecas/localhost/philco-localhost-mipsle
+            philco/bibliotecas/localhost/philco-localhost-mipsle.sha256
+          if-no-files-found: error

@@ -7,7 +7,7 @@ var KEY = 'remote-tv.libs.beta6.v1';
 var DIAG_WASM = 'AGFzbQEAAAABDgJgAn9/AX9gA39/fwF/AwMCAAEEBQFwAQEBBQMBAAIGCAF/AUGAiAQLBx8DBm1lbW9yeQIACGNsYXNzaWZ5AAAHcXVhbGl0eQABClQCGgBBAEEBQQIgAUG4F0sbIABB8HxqQbh+SRsLNwEBf0EAIQMCQCABIAJyIAJyQQBIDQBBAUEBQQFBAiACQcA+ShsgAUEAShsgAEEEShshAwsgAws=';
 var NAV_ASM = 'AGFzbQEAAAABCAFgA39/fwF/AwQDAAAABysDCm5leHRfZm9jdXMAAAphY2NlcHRfa2V5AAENbmVlZHNfcmVzdGFydAACCjMDGAAgAkEATAR/QX8FIAAgAWogAmogAm8LCwoAIAAgAWsgAk8LDQAgACABRyACQQBHcQs=';
 var flags = {}, libs = [], panel = null, rows = null, mode = null, focusLabel = null, active = false, prior = null;
-var diag = null, navAsm = null, wasmStarted = false, pendingRestart = false, selected = null, lastCode = -1, lastKeyAt = 0;
+var diag = null, navAsm = null, wasmStarted = false, pendingRestart = false, selected = null, asmRequested = false, lastCode = -1, lastKeyAt = 0;
 try { flags = JSON.parse(w.localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
 function el(tag, text, style) {
     var n = d.createElement(tag);
@@ -27,7 +27,7 @@ function from64(s) {
     for (i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
     return bytes;
 }
-function wasmState() { return (diag ? 'Diagnóstico WASM' : 'Diagnóstico ES5') + ' · ' + (navAsm ? 'Navegação Assembly WASM' : 'Navegação ES5'); }
+function wasmState() { return (diag ? 'Diagnóstico WASM' : 'Diagnóstico ES5') + ' · ' + (!asmRequested ? 'Assembly desativado' : navAsm ? 'Navegação Assembly WASM' : 'Navegação ES5'); }
 function updateMode() { if (mode) mode.textContent = wasmState(); }
 function loadWasm() {
     if (wasmStarted) return;
@@ -53,14 +53,14 @@ function loadWasm() {
 }
 function circular(index, step, length) {
     if (!length) return -1;
-    if (navAsm) {
+    if (asmRequested && navAsm) {
         try { return navAsm.next_focus(index | 0, step | 0, length | 0); }
         catch (e) { navAsm = null; updateMode(); }
     }
     return ((index + step) % length + length) % length;
 }
 function needsReload(requested, old, requires) {
-    if (navAsm) {
+    if (asmRequested && navAsm) {
         try { return !!navAsm.needs_restart(requested ? 1 : 0, old ? 1 : 0, requires ? 1 : 0); }
         catch (e) { navAsm = null; updateMode(); }
     }
@@ -271,6 +271,8 @@ entry.onclick = open;
 R.libraryManager = {
     register:register, open:open, close:close, isOpen:function(){return active;},
     engine:wasmState,
+    setAssemblyActive:function(v){asmRequested=!!v;updateMode();},
+    assemblyActive:function(){return asmRequested;},
     quality:function(stalls,errors,delay){ if(diag&&diag.quality)return diag.quality(stalls|0,errors|0,delay|0);return errors>0||stalls>4||delay>8000?1:2; },
     needsRestart:function(){return pendingRestart;},
     enabled:function(id){for(var i=0;i<libs.length;i++)if(libs[i].id===id)return !!libs[i].on;return false;},

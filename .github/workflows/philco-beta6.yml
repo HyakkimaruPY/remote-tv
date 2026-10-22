@@ -10,6 +10,10 @@ on:
       - 'manifest.json'
       - 'manifest.beta56-6.json'
       - 'manifest.beta56-6-1.json'
+      - 'manifest.beta56-6-2.json'
+      - 'apps/player1/style.beta56-6-2.css'
+      - 'system/injections/graphos-skin-beta56-6-2.js'
+      - 'tests/beta56-6-2.theme.cjs'
       - 'apps/player1/shell.beta56-6-1.html'
       - 'system/readable/force-update.beta56-6-1.js'
       - 'system/readable/xtream-ui.beta56-6-1.js'
@@ -48,23 +52,25 @@ jobs:
           import hashlib, json
           from pathlib import Path
           m=json.loads(Path('manifest.json').read_text())
-          frozen=json.loads(Path('manifest.beta56-6-1.json').read_text())
+          frozen=json.loads(Path('manifest.beta56-6-2.json').read_text())
           assert m==frozen, 'Beta6 archive mismatches active manifest'
-          assert m['version']=='0.56-beta.6.1'
-          assert m['release']=='2026.10.20-beta.56.6.1'
+          assert m['version']=='0.56-beta.6.2'
+          assert m['release']=='2026.10.22-beta.56.6.2'
           assert len(set(x['id'] for x in m['modules']))==len(m['modules'])
           for x in m['modules']:
               b=Path(x['path']).read_bytes()
               assert len(b)==x['bytes'], x['path']
               assert hashlib.sha256(b).hexdigest()==x['sha256'], x['path']
           marker=Path('version').read_text().strip()
-          assert marker in ('0.56-beta.6', '0.56-beta.6.1'), marker
+          assert marker in ('0.56-beta.6.1', '0.56-beta.6.2'), marker
           print('All',len(m['modules']),'Philco modules checked; gate:',marker)
           PY
 
       - name: Run focused live-recovery tests and ES5 parse
         run: |
           node --check system/readable/xtream-ui.beta56-6.js
+          node --check system/injections/graphos-skin-beta56-6-2.js
+          node tests/beta56-6-2.theme.cjs
           node --check system/readable/force-update.beta56-6-1.js
           node tests/beta56-6-1.update.cjs
           node tests/beta56-6.live.cjs

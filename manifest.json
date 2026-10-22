@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.20-beta.56.6.1",
+  "release": "2026.10.22-beta.56.6.2",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -34,12 +34,12 @@
     },
     {
       "id": "style",
-      "path": "apps/player1/style.css",
+      "path": "apps/player1/style.beta56-6-2.css",
       "type": "css",
       "phase": "shell",
       "required": true,
-      "sha256": "5bf86aa7e733f09d4551156dffc249d7dd3141bff434fa3340b74feae22dd616",
-      "bytes": 2336
+      "sha256": "3fb161ba14b3cb3d51be350f6ec0d8e3e0b844e24ebc60c036f22266f2183a95",
+      "bytes": 3127
     },
     {
       "id": "feature-loader",
@@ -178,12 +178,12 @@
     },
     {
       "id": "graphos-skin",
-      "path": "system/injections/graphos-skin-beta56-5.js",
+      "path": "system/injections/graphos-skin-beta56-6-2.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "b4ee0009fcc0fb87d024b52919d473a5742d47155c779088c6eb9c664ad154d1",
-      "bytes": 9551
+      "sha256": "cc15a24cc2e311cb75b1a7537540d6de4f3ea370a3276cf54d1b914201838af3",
+      "bytes": 10837
     },
     {
       "id": "hooks",
@@ -204,5 +204,5 @@
       "bytes": 201
     }
   ],
-  "version": "0.56-beta.6.1"
+  "version": "0.56-beta.6.2"
 }

@@ -1,0 +1,27 @@
+'use strict';
+const fs=require('fs'),assert=require('node:assert/strict'),crypto=require('crypto'),vm=require('vm'),acorn=require('acorn');
+const m=JSON.parse(fs.readFileSync('manifest.json','utf8'));
+assert.deepEqual(m,JSON.parse(fs.readFileSync('manifest.beta56-6-2.json','utf8')));
+assert.equal(m.version,'0.56-beta.6.2');
+assert.equal(m.release,'2026.10.22-beta.56.6.2');
+for(const mod of m.modules){const b=fs.readFileSync(mod.path);assert.equal(b.length,mod.bytes,mod.id+' bytes');assert.equal(crypto.createHash('sha256').update(b).digest('hex'),mod.sha256,mod.id+' hash');}
+const css=fs.readFileSync(m.modules.find(x=>x.id==='style').path,'utf8');
+assert.ok(css.includes('html,body{background:transparent}'),'preserve transparent native-video background');
+assert.ok(css.includes('#menu,#new,#tvlist,#yt3probe,#side,#logp{background:#000000!important}'));
+assert.ok(css.includes('#rtvForce53{background:#000000!important}'));
+const script=fs.readFileSync(m.modules.find(x=>x.id==='graphos-skin').path,'utf8');
+acorn.parse(script,{ecmaVersion:5});
+let rule=null;
+const doc={getElementById(){return null},createElement(){return {textContent:'',id:''}},head:{appendChild(n){rule=n.textContent}}};
+const window={document:doc,RemoteTV:{}};
+vm.runInNewContext(script,window);
+assert.equal(window.RemoteTV.graphOS,'0.56-beta.6.2');
+assert.ok(rule.includes('#r14h,#c14h,#r14 .catcol14'),'graphite headers changed to true black');
+let tail=rule.slice(rule.lastIndexOf('#r14h,#c14h,#r14 .catcol14'));
+assert.ok(tail.includes('#r14 .series19,#r14 .seriesLeft19,#r14 .movie19{background-color:#000000!important}'));
+assert.ok(tail.includes('background-color:#000000!important'));
+assert.ok(!tail.includes('#xv25video{background'),'video native plane');
+assert.ok(!tail.includes('#r14.live #r14body{background'),'live native plane');
+assert.ok(!tail.includes('#c14body{background'),'common live native plane');
+assert.ok(['0.56-beta.6.1','0.56-beta.6.2'].includes(fs.readFileSync('version','utf8').trim()));
+console.log('PASS: Philco Beta 6.2, 22 module SHA-256, ES5, #000000 UI and transparent native video');

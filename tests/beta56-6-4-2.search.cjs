@@ -24,7 +24,7 @@ const seen=[],catalog=read(entry('philco-search-catalog').path),scope={
  setTimeout,clearTimeout,Date,JSON,encodeURIComponent};
 scope.window=scope;vm.createContext(scope);vm.runInContext(catalog,scope);
 let results=null;
-scope.PhilcoSearchCatalog642.search('c','ca',()=>{throw Error('unexpected search')});
+scope.PhilcoSearchCatalog642.search('c','ca',(arr,done,msg)=>{assert.equal(arr.length,0);assert.equal(done,true);assert.match(msg,/3 letras/);});
 assert.equal(seen.length,0,'no request before three letters');
 await new Promise((resolve,reject)=>{
  const guard=setTimeout(()=>reject(Error('API walk timeout')),1800);

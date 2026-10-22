@@ -1,0 +1,1 @@
+(function(w){'use strict';var active=false;w.PhilcoModules.register({id:'rede-ssl',name:'Rede e TLS (observacional)',category:'network',runtime:'js',restartRequired:false,start:function(host){active=true;host.record('rede-ssl','browser cannot inspect peer certificate without native host support');},stop:function(){active=false;}});})(window);

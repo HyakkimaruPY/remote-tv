@@ -26,9 +26,9 @@ function pumpImages(){clearTimeout(imageTimer);if(!box)return;var i=0,limit=perf
  if(imageQueue.length)imageTimer=setTimeout(pumpImages,perfMode?110:0);
 }
 function render(){if(!grid||!box)return;var p=Math.floor(resultIndex/12),start=p*12,stopAt=Math.min(results.length,start+12),i,o,button,img,cover,label,foundNode=null;
- if(page===p&&grid.getAttribute('data-count')===(stopAt-start)+'/'+results.length)return;
+ if(page===p&&grid.getAttribute('data-count')===(stopAt-start)+'/'+start)return;
  clearTimeout(imageTimer);imageTimer=0;imageQueue=[];
- grid.innerHTML='';page=p;grid.setAttribute('data-count',(stopAt-start)+'/'+results.length);
+ grid.innerHTML='';page=p;grid.setAttribute('data-count',(stopAt-start)+'/'+start);
  for(i=start;i<stopAt;i++){
   o=results[i];button=make('button',null,'display:inline-block;position:relative;box-sizing:border-box;vertical-align:top;width:47%;margin:2px 1%;height:99px;text-align:left;border:2px solid #555;border-radius:6px;background:#1b1b1b;color:#eee;padding:7px;font:16px Arial;overflow:hidden;');
   button.id='ph642result'+i;button.setAttribute('data-name',o.n||'Sem título');button.setAttribute('data-index',i);
@@ -96,7 +96,7 @@ function open(type){if(box||!atBoot)return false;
  input=make('input');input.id='ph642input';input.maxLength=120;input.style.cssText='width:98%;height:41px;box-sizing:border-box;background:#181818;color:#fff;border:2px solid #777;padding:6px;font:23px Arial;';
  input.setAttribute('data-name','Barra de busca');input.oninput=function(){changed(input.value,false);};left.appendChild(input);
  focusText=make('div','Selecionado: Barra de busca','height:22px;font:15px Arial;color:#ccc;margin:5px 0 3px');left.appendChild(focusText);
- var keyboard=make('div',null,'height:274px;overflow:hidden;white-space:normal;');keyboard.id='ph642keyboard';
+ var keyboard=make('div',null,'height:280px;overflow:hidden;white-space:normal;');keyboard.id='ph642keyboard';
  var chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '.split('');chars.push('⌫');chars.push('Voltar');
  var i;
  for(i=0;i<chars.length;i++){(function(ch,idx){var b=make('button',ch===' '?'_':ch,'display:inline-block;vertical-align:top;width:13.5%;height:42px;margin:2px .35%;background:#1b1b1b;border:2px solid #555;border-radius:4px;color:#eee;font:17px Arial;padding:2px;');

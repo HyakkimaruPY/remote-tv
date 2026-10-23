@@ -25,7 +25,6 @@ Beta publicada e validada localmente em 1280×720. Arquivos da 0.55 preservados;
 | Sintaxe de todos os módulos JS do manifesto beta | Acorn `ecmaVersion: 5` | PASS |
 | Live, HLS loader, fila de logos | `node tests/beta56.test.cjs` | 17 grupos PASS; relógio virtual e mocks das APIs nativas |
 | VOD e integração de recuperação HLS | `node tests/beta56.vod.cjs` | 8 cenários PASS, com JSDOM e mídia simulada |
-| Player real + helper Go + browser 16:9 | `PHILCO_REAL_BRIDGE=1 node local-lab/test-browser.cjs` | 8 verificações PASS; detalhes em `local-lab/results/browser-go.json` |
 | Helper Go recuperado v7.2 | `GO111MODULE=off go test -v` | 8 testes PASS: redirecionamento/cookie/gzip, URI/chave AES preservadas, seleção de variante, MIME TS, retry limitado |
 | Núcleo C do kit | `make clean test` em `native/playiptv` | 3 executáveis PASS: núcleo, política de transporte e tamanhos de evidência ABI MStar |
 

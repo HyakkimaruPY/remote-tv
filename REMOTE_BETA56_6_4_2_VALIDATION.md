@@ -11,7 +11,7 @@ A gravação contém cerca de 15 segundos de imagem/áudio com overlay de log. V
 - **Busca por letras**: a UI enviava consulta com apenas 2 caracteres e após debounce fixo de 320 ms; causava múltiplas varreduras, cancelamentos, parsing de grandes arrays e DOM refeito a cada callback. O `JSON.parse(body)` da categoria inteira é síncrono na thread do WebKit.
 - **Foco da busca**: o overlay não tratava direcional para as teclas virtuais; a navegação genérica/IR continuava em caminhos concorrentes.
 - **Painel de bibliotecas**: as setas ↑↓ percorriam listas lineares compostas por cada botão Ativar e Testar; a tecla Baixo avançava horizontalmente antes de chegar ao próximo módulo.
-- **QR**: dependia de URL/IP manual de relay. O bridge instalado no estudo v7.2 escuta `127.0.0.1:8765`, só oferece `/health`, `/hls`, `/fetch` e `validRemote` impede requisições proxy para `127.0.0.1`. Um script remoto não pode tornar o loopback visível ao smartphone, e não há API nativa comprovada para criar listeners LAN por JavaScript.
+- **QR**: dependia de URL/IP manual de relay. Um script remoto não pode tornar o loopback visível ao smartphone, e não há API nativa comprovada para criar listeners LAN por JavaScript.
 
 ## Alterações da Beta 6.4.2
 
@@ -22,9 +22,9 @@ A gravação contém cerca de 15 segundos de imagem/áudio com overlay de log. V
 5. **QR automático**: HTML usa módulo de cliente ES5, que tenta `127.0.0.1:8766` e não pede IP. O servidor nativo opcional (`philco/bibliotecas/localhost/main.go`) detecta IPv4 local do Wi-Fi/Ethernet, cria chave por abertura (192 bits), gera URL na LAN e **consome a chave no primeiro GET**; tentativas seguintes recebem HTTP 410. Cookie de sessão HttpOnly acompanha a página única do smartphone; encerrar ou expirar revoga o uso. Sem companion instalado, TV mostra aviso e busca pelo controle continua funcionando. Disponibilizado código, testes, binário cross-compilado como artefato GitHub Actions **não instalado automaticamente**.
 6. **Render leve**: module `frame-budget` controla batching de imagens, sem compressão/descompressão de vídeo ou interferência no codec. Evita picos de conversão de imagens e repetição de árvore DOM.
 
-## Compatibilidade firmware
+## Compatibilidade do aplicativo
 
-Televisor estudado: PH32C10DSGWVA, MStar Linux 3.x, navegador QtWebKit 4.8.2 legado. Código JS em ES5. O sidecar Go para linux/mipsle softfloat é **candidato**, precisa de teste da ABI no aparelho. Não mexe em `/etc/init.d`, no kernel, nem instala novos certificados. Não há meio suportado de **ativar o binário nativo somente pelo manifesto remoto**; instalar/iniciar exige autorização e acesso nativo separado. Não publicar artefato MIPS como se estivesse rodando dentro da TV. Para segurança, manter a porta 8767 restrita à LAN confiável sem port forwarding.
+JavaScript em ES5. O companion opcional requer instalação e validação separadas no dispositivo; o manifesto remoto não instala componentes nativos. A reprodução física e o controle IR continuam pendentes de validação.
 
 ## Testes
 
@@ -32,7 +32,4 @@ CI: `tests/beta56-6-4-2.search.cjs` verifica 35 hashes, JS ES5, min 3 letras, bu
 
 ## Referências
 
-- [Philco firmware stock e partições](https://github.com/HyakkimaruPY/philco-estudos/tree/main/firmware/stock)
-- [QtWebKit 4.8.2](https://github.com/HyakkimaruPY/philco-estudos/tree/main/decompiled/libraries/web/QtWebKit-4.8.2)
-- [Bridge native v7.2](https://github.com/HyakkimaruPY/philco-estudos/blob/main/builds/v7.2/src/hlsbridge_v7_2.go)
 - `REMOTE_UPDATE_ARCHITECTURE.md`, `REMOTE_BETA56_6_4_1_FIXES.md`, `philco/bibliotecas/SPEC.md`.

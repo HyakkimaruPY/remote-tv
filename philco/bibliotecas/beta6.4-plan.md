@@ -9,6 +9,6 @@ Base verificada: manifest.json aponta para 0.56-beta.6.3 e 2026.10.22-beta.56.6.
 5. Testar no WebKit MStar, incluindo ausência de WebAssembly, controle vermelho, retorno e canais longos; validar reprodução ao vivo e VOD antes de mudar manifest.json.
 6. Gerar manifest.beta56-6-4.json com SHA-256 e bytes calculados sobre artefatos exatos; executar CI, revisão e só então promover manifest.json.
 
-Referências: REMOTE_BETA56_6_3_RECOVERY.md; REMOTE_UPDATE_ARCHITECTURE.md; manifest.beta56-6-3.json; system/readable/xtream-ui.beta56-6.js; system/readable/diagnostic-libraries.beta56-6-3.js; HyakkimaruPY/philco-estudos/decompiled/libraries/web/QtWebKit-4.8.2/EVIDENCE.md.
+Referências: REMOTE_BETA56_6_3_RECOVERY.md; REMOTE_UPDATE_ARCHITECTURE.md; manifest.beta56-6-3.json; system/readable/xtream-ui.beta56-6.js; system/readable/diagnostic-libraries.beta56-6-3.js
 
 Estado: candidata em desenvolvimento, NÃO implantada. A atualização automática deve continuar na 6.3 até validação completa.

@@ -21,5 +21,3 @@ A arquitetura MIPS little-endian/software-float é **candidata**, baseada nos es
 Cada entrada na busca cria ID, chave QR e token de controle novos de 192 bits. O primeiro GET válido para `/pair/open?key=...` consome a chave, envia um cookie HttpOnly e mostra teclado. Reutilização do mesmo endereço retorna HTTP 410. Ao sair da busca, o browser solicita `/pair/close`; sem comunicação, a sessão expira em no máximo 5 minutos. O celular nunca recebe senhas IPTV. As rotas /pair/new, /pair/poll e /pair/close não são expostas na porta pública 8767.
 
 Usar somente em Wi‑Fi/LAN confiável, sem encaminhamento de portas no roteador: o serviço usa HTTP local, não HTTPS com autenticação de aparelho. Não expor o serviço na internet. A operação independe de certificados expirados do WebKit.
-
-Referências: [firmware MStar](https://github.com/HyakkimaruPY/philco-estudos/tree/main/firmware/stock), [QtWebKit 4.8.2](https://github.com/HyakkimaruPY/philco-estudos/tree/main/decompiled/libraries/web/QtWebKit-4.8.2), [bridge v7.2](https://github.com/HyakkimaruPY/philco-estudos/blob/main/builds/v7.2/src/hlsbridge_v7_2.go).

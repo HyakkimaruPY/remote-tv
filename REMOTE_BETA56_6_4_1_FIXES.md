@@ -13,8 +13,9 @@ Base congelada: `0.56-beta.6.4`; candidato: `0.56-beta.6.4.1` com integridade SH
 ## Reprodução original
 Arquivos e hashes de `xtream-lazy-core`, `xtream-vod-player`, `common-player-ui`, `autovod`, `hlsjs-loader`, `graphos-skin` e `style` são os mesmos da Beta 6.4. A UI Xtream recebeu apenas o botão/roteamento de IR/guardas de modal.
 
-## Compatibilidade e limites do firmware
-Modelo de referência: Philco PH32C10DSGWVA, MStar e QtWebKit legado documentado em [philco-estudos](https://github.com/HyakkimaruPY/philco-estudos), especialmente `decompiled/libraries/web/QtWebKit-4.8.2/EVIDENCE.md`. Um navegador antigo pode não carregar WebAssembly. O gerenciador detecta suporte ao abrir e usa ES5 caso não exista. **Isto não injeta Assembly MIPS no kernel da TV**, não corrige drivers ou certificados expirados, nem concede suporte nativo a APIs recentes. Para Assembly MIPS no firmware seria necessário build/instalação nativos com validação de ABI, fora do alcance do atualizador HTML/JS.
+## Compatibilidade do aplicativo
+
+O gerenciador detecta suporte a WebAssembly e utiliza fallback ES5 quando necessário. A atualização remota atua somente no aplicativo.
 
 ## Verificações
 

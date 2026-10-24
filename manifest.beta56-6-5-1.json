@@ -245,8 +245,8 @@
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "567b793169c2b08deb0991c45e12327965e6941ab12a4254f4d6995c0adf42de",
-      "bytes": 24305
+      "sha256": "b7fd54a3d2c760345d84b5810b674984300672bb627a00d0560bb582e4e682a0",
+      "bytes": 24457
     },
     {
       "id": "philco-module-diagnostic",
@@ -295,12 +295,12 @@
     },
     {
       "id": "philco-module-localhost",
-      "path": "philco/bibliotecas/localhost/src/module.js",
+      "path": "philco/bibliotecas/localhost/src/module.beta56-6-5-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "952a4d41a00d32953863cf15c3524b705f06b727ff39a55943c228749648991c",
-      "bytes": 535
+      "sha256": "426896b7ae2fd45ab18dbb64f5d1bf32a4ab7bf76a381d42fd09d936c292a649",
+      "bytes": 741
     },
     {
       "id": "philco-module-performance",
@@ -362,8 +362,8 @@
       "type": "js",
       "phase": "post",
       "required": false,
-      "bytes": 1649,
-      "sha256": "ea74ffb36e0101617ac31a1f3baa49b8a088f1bf7af355f8bee06147cc467293"
+      "bytes": 1650,
+      "sha256": "19a0e11baa79716a879790febfaa26967ef8092eb38ebb17eca7fba5479eedd6"
     },
     {
       "id": "philco-module-webkit-injector",

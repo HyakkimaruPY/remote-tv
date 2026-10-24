@@ -145,7 +145,7 @@ function createRow(lib){
     lib.wrap=wrap;wrap.setAttribute('data-module-row','1');
     meta.appendChild(el('span',TAB_LABEL[lib.category]||lib.category,'rtvLib651Tag'));
     if(lib.visualBytes)cost=' · '+mb(lib.visualBytes)+' MB visual';
-    meta.appendChild(d.createTextNode((lib.restartRequired?'requer reinício':'probe OK')+cost));
+    meta.appendChild(d.createTextNode((lib.actionOnly?'diagnóstico sob demanda':lib.restartRequired?'requer reinício':'probe OK')+cost));
     lib.result=el('div',lib.message||(lib.actionOnly?'Verificação sob demanda':lib.on?'Pronta · compatibilidade validada':'Desativada'),'rtvLib651Result');
     lib.switchBtn=el('button','','rtvLib651Btn');lib.switchBtn.id='rtvLibToggle-'+lib.id;
     lib.testBtn=el('button','Testar','rtvLib651Btn');lib.testBtn.id='rtvLibTest-'+lib.id;

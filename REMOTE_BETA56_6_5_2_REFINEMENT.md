@@ -99,6 +99,11 @@ foco e transições; sua ativação não comprova acesso direto a registradores 
 - Browser local não executado: o download do Chromium retornou arquivo inválido.
   O workflow 6.5.2 executa layout/foco a 1280×720 em Chromium e guarda captura como
   evidência de host; o resultado remoto deve ser conferido antes da ativação.
+- CI de preparação confirmada em `e22f1731e11f494bbd05c3f3b9e530d8f86c692d`:
+  workflow 6.5.2 e gate geral Beta 6 PASS. A captura 1280×720 foi inspecionada:
+  duas verificações visíveis, causas por porta, foco único e rodapé sem corte.
+  O rótulo dos módulos de inspeção indica diagnóstico sob demanda, sem sugerir
+  que um bridge nativo ausente tenha passado no teste.
 - 6.5.1 preservada em arquivos/manifesto arquivados. Preparar o manifesto 6.5.2,
   verificar o commit remoto/CI e publicar `version` por último, em commit separado.
 

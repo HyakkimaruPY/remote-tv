@@ -15,7 +15,9 @@ import (
  "net/http"
  "net/url"
  "os"
+ "strconv"
  "strings"
+ "syscall"
  "sync"
  "time"
 )
@@ -32,6 +34,144 @@ type session struct {
  last time.Time
 }
 type service struct {mu sync.Mutex; sessions map[string]*session; lanIP string; now func()time.Time}
+const portalRoot = "/Customer/apps/remote-tv-portal"
+const portalHelloDir = portalRoot + "/hello"
+const portalAppCfg = "/Customer/app.cfg"
+const portalBegin = "// REMOTE_TV_PORTAL_HELLO_BEGIN"
+const portalEnd = "// REMOTE_TV_PORTAL_HELLO_END"
+var portalMu sync.Mutex
+
+func procPIDs(needle string) []int {
+ entries, _ := os.ReadDir("/proc")
+ out := []int{}
+ for _, e := range entries {
+  if !e.IsDir() { continue }
+  pid, err := strconv.Atoi(e.Name()); if err != nil { continue }
+  b, err := os.ReadFile("/proc/"+e.Name()+"/cmdline"); if err != nil { continue }
+  cmd := strings.ReplaceAll(string(b), "\x00", " ")
+  if strings.Contains(cmd, needle) { out = append(out, pid) }
+ }
+ return out
+}
+func executable(path string) bool {
+ st, err := os.Stat(path)
+ return err == nil && !st.IsDir() && st.Mode()&0111 != 0
+}
+func portalProbe() map[string]interface{} {
+ reasons := []string{}
+ if _, err := os.Stat(portalAppCfg); err != nil { reasons = append(reasons, "app.cfg ausente") }
+ if !executable("/applications/MWB/MstarLauncher") { reasons = append(reasons, "MstarLauncher ausente") }
+ if !executable("/applications/apm/bigbang") { reasons = append(reasons, "bigbang ausente") }
+ if len(procPIDs("/applications/apm/appmgr")) == 0 { reasons = append(reasons, "appmgr não está ativo") }
+ if len(procPIDs("/applications/apm/bigbang")) == 0 { reasons = append(reasons, "supervisor bigbang não está ativo") }
+ if err := os.MkdirAll(portalRoot, 0755); err != nil { reasons = append(reasons, "Customer sem escrita") } else {
+  p := portalRoot + "/.probe"
+  if err := os.WriteFile(p, []byte("ok"), 0600); err != nil { reasons = append(reasons, "Customer sem escrita") } else { _ = os.Remove(p) }
+ }
+ return map[string]interface{}{"ok":len(reasons)==0,"portal":true,"helloWorld":len(reasons)==0,"reasons":reasons}
+}
+func helloHTML() string {
+ return "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=1280,height=720'><title>Hello World</title><style>html,body{margin:0;width:100%;height:100%;background:#050505;color:#f4f4f4;font-family:Arial;overflow:hidden}main{position:absolute;left:0;top:0;width:1280px;height:720px;text-align:center}h1{font-size:64px;font-weight:normal;margin:270px 0 12px}p{font-size:20px;color:#888}</style></head><body><main><h1>Hello World</h1><p>Remote TV · Portal Philco</p></main></body></html>\n"
+}
+func helloBlock() string {
+ return portalBegin+"\n"+
+  "[RemoteTVHello]\n"+
+  "pretty_name=Hello World\n"+
+  "icon_path=/applications/CommUI/rc/rc/img/Demo_img/App/GRIDMENU_IMG_DEFAULT.png\n"+
+  "path=/applications/MWB/MstarLauncher\n"+
+  "exe_type=app\n"+
+  "exe_domain=native\n"+
+  "exclusive=0\n"+
+  "argv1 = \"-qws -display directfb:layerid=0:boundingrectflip:videoonly -maximize -transparent-background -nomouse -app MSTARLAUNCHER file:///Customer/apps/remote-tv-portal/hello/index.html\"\n"+
+  "envv1 = QT_PLUGIN_PATH=/vendor/lib/qt/plugins/ MSTAR_DEVICE_INPUT=APM DFB_LAYER=0 WINDOW_STACK=middle\n"+
+  "envv2 = LD_LIBRARY_PATH=/applications/appdata/:/applications/MWB/lib:/config:/vendor/lib:/vendor/lib/utopia:/vendor/lib/directfb-1.4-0/inputdrivers:/vendor/lib/qt/plugins/gfxdrivers/\n"+
+  "envv3 = MSTAR_QT_KEYMAP=/applications/MWB/mstarkeymap.csv CERT_CA_BUNDLE_PATH=/applications/MWB/certificates\n"+
+  "envv4 = WEB_RESOLUTION_WIDTH=1280 WEB_RESOLUTION_HEIGHT=720\n"+
+  "timeout=0\npriority=\nhotkey1=\n"+
+  portalEnd+"\n"
+}
+func stripPortalBlock(s string) string {
+ a := strings.Index(s, portalBegin)
+ if a < 0 { return s }
+ b := strings.Index(s[a:], portalEnd)
+ if b < 0 { return s }
+ b = a + b + len(portalEnd)
+ for b < len(s) && (s[b] == '\r' || s[b] == '\n') { b++ }
+ return strings.TrimRight(s[:a], "\r\n") + "\n" + s[b:]
+}
+func atomicWrite(path string, data []byte, fallback os.FileMode) error {
+ mode := fallback
+ if st, err := os.Stat(path); err == nil { mode = st.Mode().Perm() }
+ tmp := path + ".remote-tv.tmp"
+ f, err := os.OpenFile(tmp, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, mode); if err != nil { return err }
+ if _, err = f.Write(data); err == nil { err = f.Sync() }
+ if e := f.Close(); err == nil { err = e }
+ if err != nil { _ = os.Remove(tmp); return err }
+ if err = os.Rename(tmp, path); err != nil { _ = os.Remove(tmp); return err }
+ return nil
+}
+func restartAppMgr(old []int) error {
+ oldSet := map[int]bool{}; for _, p := range old { oldSet[p] = true }
+ for _, pid := range old {
+  if p, err := os.FindProcess(pid); err == nil { _ = p.Signal(syscall.SIGTERM) }
+ }
+ deadline := time.Now().Add(8*time.Second)
+ for time.Now().Before(deadline) {
+  time.Sleep(150*time.Millisecond)
+  for _, pid := range procPIDs("/applications/apm/appmgr") {
+   if !oldSet[pid] { return nil }
+  }
+ }
+ return fmt.Errorf("appmgr não foi relançado pelo bigbang")
+}
+func portalHelloStatus() map[string]interface{} {
+ b, _ := os.ReadFile(portalAppCfg)
+ cfg := string(b)
+ _, pageErr := os.Stat(portalHelloDir+"/index.html")
+ installed := strings.Contains(cfg, portalBegin) && strings.Contains(cfg, "[RemoteTVHello]") && pageErr == nil
+ return map[string]interface{}{"ok":true,"installed":installed,"appmgr":len(procPIDs("/applications/apm/appmgr"))>0}
+}
+func applyPortalHello(enable bool) error {
+ portalMu.Lock(); defer portalMu.Unlock()
+ cap := portalProbe(); if ok, _ := cap["ok"].(bool); !ok { return fmt.Errorf("Portal indisponível") }
+ before, err := os.ReadFile(portalAppCfg); if err != nil { return err }
+ cfg := stripPortalBlock(string(before))
+ if enable {
+  if err = os.MkdirAll(portalHelloDir, 0755); err != nil { return err }
+  if err = atomicWrite(portalHelloDir+"/index.html", []byte(helloHTML()), 0644); err != nil { return err }
+  if _, err = os.Stat(portalRoot+"/app.cfg.before-hello"); os.IsNotExist(err) {
+   _ = atomicWrite(portalRoot+"/app.cfg.before-hello", before, 0600)
+  }
+  cfg = strings.TrimRight(cfg, "\r\n") + "\n\n" + helloBlock()
+ }
+ if !enable { _ = os.RemoveAll(portalHelloDir) }
+ if string(before) == cfg { return nil }
+ if err = atomicWrite(portalAppCfg, []byte(cfg), 0644); err != nil { return err }
+ old := procPIDs("/applications/apm/appmgr")
+ if err = restartAppMgr(old); err != nil {
+  _ = atomicWrite(portalAppCfg, before, 0644)
+  return err
+ }
+ return nil
+}
+func portalAllowed(r *http.Request) bool {
+ if r.Header.Get("X-Remote-TV-Portal") != "651" { return false }
+ o := strings.ToLower(strings.TrimSpace(r.Header.Get("Origin")))
+ ref := strings.ToLower(strings.TrimSpace(r.Header.Get("Referer")))
+ if o == "" || o == "null" || strings.HasPrefix(o, "file://") || strings.HasPrefix(o, "http://127.0.0.1") { return true }
+ if strings.HasPrefix(ref, "file://") || strings.Contains(ref, "127.0.0.1") { return true }
+ return false
+}
+func portalJSON(w http.ResponseWriter, r *http.Request, status int, x interface{}) {
+ noCache(w)
+ w.Header().Set("Content-Type","application/json; charset=utf-8")
+ w.Header().Set("Access-Control-Allow-Origin","*")
+ w.Header().Set("Access-Control-Allow-Headers","X-Remote-TV-Portal, Content-Type")
+ w.Header().Set("Access-Control-Allow-Methods","GET, POST, OPTIONS")
+ if r.Method == "OPTIONS" { w.WriteHeader(204); return }
+ w.WriteHeader(status); _ = json.NewEncoder(w).Encode(x)
+}
+
 func newService(ip string)*service{return &service{sessions:make(map[string]*session),lanIP:ip,now:time.Now}}
 func token()string { b:=make([]byte,24);if _,err:=rand.Read(b);err!=nil{panic(err)};return hex.EncodeToString(b)}
 func equal(a,b string)bool {if len(a)!=len(b){return false};return subtle.ConstantTimeCompare([]byte(a),[]byte(b))==1}
@@ -49,7 +189,29 @@ func response(w http.ResponseWriter,status int,x interface{}) {
 }
 func (s *service) tvHandler()http.Handler{
  m:=http.NewServeMux()
- m.HandleFunc("/health",func(w http.ResponseWriter,r *http.Request){response(w,200,map[string]interface{}{"ok":true,"service":"philco-localhost-6.4.2"})})
+ m.HandleFunc("/health",func(w http.ResponseWriter,r *http.Request){response(w,200,map[string]interface{}{"ok":true,"service":"philco-localhost-6.5.1","portal":true})})
+ m.HandleFunc("/portal/capabilities",func(w http.ResponseWriter,r *http.Request){
+  if r.Method=="OPTIONS"{portalJSON(w,r,204,map[string]bool{"ok":true});return}
+  if r.Method!="GET"||!portalAllowed(r){portalJSON(w,r,403,map[string]string{"error":"forbidden"});return}
+  portalJSON(w,r,200,portalProbe())
+ })
+ m.HandleFunc("/portal/hello/status",func(w http.ResponseWriter,r *http.Request){
+  if r.Method=="OPTIONS"{portalJSON(w,r,204,map[string]bool{"ok":true});return}
+  if r.Method!="GET"||!portalAllowed(r){portalJSON(w,r,403,map[string]string{"error":"forbidden"});return}
+  portalJSON(w,r,200,portalHelloStatus())
+ })
+ m.HandleFunc("/portal/hello/enable",func(w http.ResponseWriter,r *http.Request){
+  if r.Method=="OPTIONS"{portalJSON(w,r,204,map[string]bool{"ok":true});return}
+  if r.Method!="POST"||!portalAllowed(r){portalJSON(w,r,403,map[string]string{"error":"forbidden"});return}
+  if err:=applyPortalHello(true);err!=nil{portalJSON(w,r,500,map[string]string{"error":err.Error()});return}
+  portalJSON(w,r,200,portalHelloStatus())
+ })
+ m.HandleFunc("/portal/hello/disable",func(w http.ResponseWriter,r *http.Request){
+  if r.Method=="OPTIONS"{portalJSON(w,r,204,map[string]bool{"ok":true});return}
+  if r.Method!="POST"||!portalAllowed(r){portalJSON(w,r,403,map[string]string{"error":"forbidden"});return}
+  if err:=applyPortalHello(false);err!=nil{portalJSON(w,r,500,map[string]string{"error":err.Error()});return}
+  portalJSON(w,r,200,portalHelloStatus())
+ })
  m.HandleFunc("/pair/new",func(w http.ResponseWriter,r *http.Request){
   if r.Method!="GET"{response(w,405,map[string]string{"error":"method"});return}
   if s.lanIP==""{response(w,503,map[string]string{"error":"no LAN IPv4 available"});return}

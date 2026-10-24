@@ -32,14 +32,19 @@ jobs:
           node-version: '22'
       - name: Install test-only JS dependencies
         run: npm install --no-save --no-package-lock acorn@8 jsdom@24
-      - name: Print current Portal client hash
+      - name: Print current candidate delta hashes
         run: |
           python3 - <<'PY'
           import hashlib
           from pathlib import Path
-          p=Path('philco/bibliotecas/localhost/src/client.beta56-6-5-1.js')
-          b=p.read_bytes()
-          print('CLIENT_HASH',len(b),hashlib.sha256(b).hexdigest())
+          for name in [
+              'philco/bibliotecas/localhost/src/client.beta56-6-5-1.js',
+              'philco/bibliotecas/localhost/src/module.beta56-6-5-1.js',
+              'philco/bibliotecas/manager.beta56-6-5-1.js',
+              'philco/bibliotecas/blur-fx/src/module.beta56-6-5-1.js',
+          ]:
+              p=Path(name); b=p.read_bytes()
+              print('DELTA_HASH',name,len(b),hashlib.sha256(b).hexdigest())
           PY
       - name: Validate staged 6.5.1 manifest
         run: |

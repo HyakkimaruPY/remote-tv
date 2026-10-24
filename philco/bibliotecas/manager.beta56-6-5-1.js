@@ -185,9 +185,36 @@ function vertical(step){
     lib=a[p.row+step];target=p.col&&lib.on&&!lib.running?lib.testBtn:lib.switchBtn;highlight(target);
 }
 function toggle(lib){
-    var original=lib.on;cancel(lib);lib.on=!lib.on;
-    if(needsReload(lib.on,original,lib.restartRequired)){pendingRestart=true;lib.result.textContent='Alteração salva · reinicie para aplicar';}
-    else if(lib.on){if(startLib(lib))lib.result.textContent='Ativada · probe OK';else{lib.on=false;lib.result.textContent='Não ativada · limite visual ou falha de início';}}
+    var original=lib.on,want=!lib.on,epoch;
+    cancel(lib);
+    if(needsReload(want,original,lib.restartRequired)){
+        lib.on=want;pendingRestart=true;lib.result.textContent='Alteração salva · reinicie para aplicar';save();update(lib);highlight(lib.switchBtn);updateMode();return;
+    }
+    if(want&&lib.startAsync){
+        if(!reserve(lib.id,lib.visualBytes)){lib.result.textContent='Não ativada · limite visual';update(lib);return;}
+        lib.on=true;lib.running=true;epoch=lib.epoch;lib.result.textContent='Ativando…';save();update(lib);highlight(lib.switchBtn);
+        try{lib.startAsync(function(ok,msg){
+            if(lib.epoch!==epoch)return;
+            lib.running=false;
+            if(ok){lib.started=true;lib.result.textContent='Ativada · '+String(msg||'OK');}
+            else{lib.on=false;lib.started=false;release(lib.id);lib.result.textContent='Falha · '+String(msg||'ativação recusada');}
+            save();update(lib);highlight(lib.switchBtn);updateMode();
+        });}catch(e){lib.running=false;lib.on=false;release(lib.id);lib.result.textContent='Falha · '+String(e);save();update(lib);}
+        return;
+    }
+    if(!want&&lib.stopAsync){
+        lib.on=false;lib.running=true;epoch=lib.epoch;lib.result.textContent='Desativando…';save();update(lib);highlight(lib.switchBtn);
+        try{lib.stopAsync(function(ok,msg){
+            if(lib.epoch!==epoch)return;
+            lib.running=false;
+            if(ok){lib.started=false;release(lib.id);lib.result.textContent='Desativada · '+String(msg||'removida');}
+            else{lib.on=true;lib.result.textContent='Falha ao remover · '+String(msg||'');}
+            save();update(lib);highlight(lib.switchBtn);updateMode();
+        });}catch(e){lib.running=false;lib.on=true;lib.result.textContent='Falha ao remover · '+String(e);save();update(lib);}
+        return;
+    }
+    lib.on=want;
+    if(lib.on){if(startLib(lib))lib.result.textContent='Ativada · probe OK';else{lib.on=false;lib.result.textContent='Não ativada · limite visual ou falha de início';}}
     else{stopLib(lib);lib.result.textContent='Desativada';}
     save();update(lib);highlight(lib.switchBtn);updateMode();
     if(R.launcher651&&R.launcher651.refresh)R.launcher651.refresh();
@@ -205,8 +232,8 @@ function register(def){
     for(i=0;i<libs.length;i++)if(libs[i].id===id)return false;
     p=probe(def);if(!p.ok){rejected.push({id:id,reason:p.reason});updateMode();return false;}
     cost=typeof def.visualBytes==='number'?def.visualBytes:defaultVisualBytes(id);
-    lib={id:id,title:String(def.title).slice(0,64),category:categoryFor(def),test:def.test,start:def.start||null,stop:def.stop||null,restartRequired:!!def.restartRequired,on:typeof flags[id]==='boolean'?flags[id]:!!def.enabled,visualBytes:Math.max(0,cost|0),epoch:0,running:false,scope:null,switchBtn:null,testBtn:null,wrap:null,result:null,started:false};
-    if(lib.on&&!lib.restartRequired&&!startLib(lib)){rejected.push({id:id,reason:'falha no autoteste de início ou orçamento'});lib.on=false;updateMode();return false;}
+    lib={id:id,title:String(def.title).slice(0,64),category:categoryFor(def),test:def.test,start:def.start||null,stop:def.stop||null,startAsync:def.startAsync||null,stopAsync:def.stopAsync||null,restartRequired:!!def.restartRequired,on:typeof flags[id]==='boolean'?flags[id]:!!def.enabled,visualBytes:Math.max(0,cost|0),epoch:0,running:false,scope:null,switchBtn:null,testBtn:null,wrap:null,result:null,started:false};
+    if(lib.on&&!lib.restartRequired&&!lib.startAsync&&!startLib(lib)){rejected.push({id:id,reason:'falha no autoteste de início ou orçamento'});lib.on=false;updateMode();return false;}
     libs.push(lib);if(rows&&lib.category===activeTab){renderRows();if(active)highlight(tabButtons[activeTab]);}updateMode();return true;
 }
 function close(){if(!active)return;active=false;for(var i=0;i<libs.length;i++)if(libs[i].running){cancel(libs[i]);if(libs[i].result){libs[i].result.textContent='Cancelada';update(libs[i]);}}panel.style.display='none';if(prior&&prior.focus){try{prior.focus();}catch(e){}}}

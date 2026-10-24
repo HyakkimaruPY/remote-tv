@@ -1,0 +1,82 @@
+name: Validate Philco Beta 6.5.1 Portal
+
+on:
+  push:
+    branches:
+      - feature/philco-beta651-ui-budget
+      - main
+    paths:
+      - '.github/workflows/philco-beta651.yml'
+      - 'apps/player1/shell.beta56-6-5-1.html'
+      - 'system/readable/launcher-surface.beta56-6-5-1.js'
+      - 'philco/bibliotecas/manager.beta56-6-5-1.js'
+      - 'philco/bibliotecas/**/module.beta56-6-5-1.js'
+      - 'philco/bibliotecas/localhost/**'
+      - 'tests/beta56-6-5-1.portal.cjs'
+      - 'manifest.beta56-6-5-1.json'
+      - 'manifest.json'
+      - 'version'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test-only JS dependencies
+        run: npm install --no-save --no-package-lock acorn@8 jsdom@24
+      - name: Test launcher tabs and Portal
+        run: node tests/beta56-6-5-1.portal.cjs
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      - name: Check Go formatting
+        run: |
+          test -z "$(gofmt -d philco/bibliotecas/localhost/main.go philco/bibliotecas/localhost/main_test.go)"
+      - name: Test localhost companion including Portal rollback
+        run: go test -v philco/bibliotecas/localhost/main.go philco/bibliotecas/localhost/main_test.go
+      - name: Cross compile MStar companion
+        run: |
+          cd philco/bibliotecas/localhost
+          GOOS=linux GOARCH=mipsle GOMIPS=softfloat CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o philco-localhost-mipsle-beta651 main.go
+          file philco-localhost-mipsle-beta651
+      - name: Baseline player regressions
+        run: |
+          cp manifest.beta56-6-5.json manifest.json
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
+          node tests/beta56-5.vod.cjs
+          node tests/beta56-5.artwork.cjs
+      - name: Print candidate hashes
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          from pathlib import Path
+          paths = [
+            'apps/player1/shell.beta56-6-5-1.html',
+            'system/readable/launcher-surface.beta56-6-5-1.js',
+            'philco/bibliotecas/manager.beta56-6-5-1.js',
+            'philco/bibliotecas/localhost/src/client.beta56-6-5-1.js',
+            'philco/bibliotecas/render-scheduler/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/visual-compositor/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/modern-ui/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/texture-fx/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/blur-fx/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/webkit-injector/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/offline-store/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/vendor-bridge/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/webgl-surface/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/canvas-texture/src/module.beta56-6-5-1.js',
+            'philco/bibliotecas/portal-hello/src/module.beta56-6-5-1.js',
+          ]
+          for p in paths:
+            b=Path(p).read_bytes()
+            print(f'HASH {p} {len(b)} {hashlib.sha256(b).hexdigest()}')
+          PY

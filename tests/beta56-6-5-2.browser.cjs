@@ -8,6 +8,7 @@ const {chromium}=require('playwright'),fs=require('fs'),assert=require('node:ass
   const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   await page.setContent('<html><head></head><body>'+read('shell')+'</body></html>');
+  await page.addStyleTag({content:read('style')});
   await page.evaluate(()=>{window.RemoteTV={RequestScope:function(){this.cancel=function(){};}};window.PhilcoPortal651={capabilities(cb){cb('ausente',{ok:false,helloWorld:false,bridges:[{port:8765,state:'HTTP 404'},{port:8766,state:'Servidor ausente'}]});}};});
   await page.addScriptTag({content:read('philco-library-manager')});
   await page.addScriptTag({content:read('philco-module-portal-hello')});

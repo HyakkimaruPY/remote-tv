@@ -16,7 +16,8 @@ const files=[
  'philco/bibliotecas/webgl-surface/src/module.beta56-6-5-1.js',
  'philco/bibliotecas/canvas-texture/src/module.beta56-6-5-1.js',
  'philco/bibliotecas/portal-hello/src/module.beta56-6-5-1.js',
- 'philco/bibliotecas/localhost/src/client.beta56-6-5-1.js'
+ 'philco/bibliotecas/localhost/src/client.beta56-6-5-1.js',
+ 'philco/bibliotecas/localhost/src/module.beta56-6-5-1.js'
 ];
 for(const p of files)acorn.parse(read(p),{ecmaVersion:5});
 
@@ -33,6 +34,13 @@ w.RemoteTV={RequestScope:function(){this.cancel=function(){};this.local=function
 w.PhilcoSearch642={enabled:()=>false,setPerformanceMode:()=>{}};w.PhilcoSearchAdapter={active:()=>true};
 w.eval(read('philco/bibliotecas/manager.beta56-6-5-1.js'));
 assert.equal(w.RemoteTV.libraryManager.register({id:'broken-test',title:'Broken',category:'system',enabled:false,probe:function(){return false;},test:function(s,dn){dn(false,'x');}}),false);
+const beforeLocal=w.RemoteTV.libraryManager._inspect().total;
+w.PhilcoLocalhost651={health:cb=>cb('offline')};
+w.eval(read('philco/bibliotecas/localhost/src/module.beta56-6-5-1.js'));
+assert.equal(w.RemoteTV.libraryManager._inspect().total,beforeLocal,'offline localhost library must stay hidden');
+w.PhilcoLocalhost651={health:cb=>cb(null,{ok:true,portal:true})};
+w.eval(read('philco/bibliotecas/localhost/src/module.beta56-6-5-1.js'));
+assert.equal(w.RemoteTV.libraryManager._inspect().total,beforeLocal+1,'healthy localhost library must register');
 w.eval(read('philco/bibliotecas/render-scheduler/src/module.beta56-6-5-1.js'));
 w.eval(read('philco/bibliotecas/visual-compositor/src/module.beta56-6-5-1.js'));
 w.eval(read('philco/bibliotecas/modern-ui/src/module.beta56-6-5-1.js'));

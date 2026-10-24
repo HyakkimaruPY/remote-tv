@@ -227,8 +227,8 @@
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "e460c2df1b298d6130057dcc80832e987526544d34d165382b53cbb4ab3940a3",
-      "bytes": 2804
+      "sha256": "06258892a7b759baf88ac1cc581765eb874e1cbe0fbaf0a88a634deb66a13895",
+      "bytes": 3263
     },
     {
       "id": "philco-search-ui",

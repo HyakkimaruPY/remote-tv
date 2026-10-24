@@ -40,7 +40,7 @@ assert.ok(d.getElementById('rtvVisualCompositor65'));
 assert.match(d.getElementById('rtvSearchHome').className,/rtv65disabled/);
 
 d.getElementById('rtvLibs').click();
-assert.equal(w.RemoteTV.libraryManager._inspect().rows,10);
+assert.equal(w.RemoteTV.libraryManager._inspect().rows,11);
 assert.equal(w.RemoteTV.libraryManager._focused(),'rtvLibToggle-diagnostico');
 function key(k){now+=180;const ev=new w.Event('keydown',{bubbles:true,cancelable:true});Object.defineProperty(ev,'keyCode',{value:k});Object.defineProperty(ev,'which',{value:k});d.activeElement.dispatchEvent(ev);}
 key(40);assert.equal(w.RemoteTV.libraryManager._focused(),'rtvLibToggle-estabilidade');

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.24-beta.56.6.5",
+  "release": "2026.10.24-beta.56.6.5.1",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-6-5.html",
+      "path": "apps/player1/shell.beta56-6-5-1.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "5a6c3f328a39fb08d666933943693418d1c88978e06fe723332477b93593f93a",
-      "bytes": 3921
+      "sha256": "1f52e563afa8de16efa5283b2050ddd6f7840230807b676e5f7030eacfb7a348",
+      "bytes": 5090
     },
     {
       "id": "style",
@@ -223,12 +223,12 @@
     },
     {
       "id": "philco-localhost-client",
-      "path": "philco/bibliotecas/localhost/src/client.beta56-6-4-2.js",
+      "path": "philco/bibliotecas/localhost/src/client.beta56-6-5-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "be5aa8c32e09d21ca590a44036cd778cba1a6fdcceb5a68d0012143af16c351e",
-      "bytes": 2284
+      "sha256": "e460c2df1b298d6130057dcc80832e987526544d34d165382b53cbb4ab3940a3",
+      "bytes": 2804
     },
     {
       "id": "philco-search-ui",
@@ -241,12 +241,12 @@
     },
     {
       "id": "philco-library-manager",
-      "path": "philco/bibliotecas/manager.beta56-6-5.js",
+      "path": "philco/bibliotecas/manager.beta56-6-5-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "ff558336d7cd0a05b5b2ef74f8f10cda9109e21a41721982dbe9385dc4f702a3",
-      "bytes": 14537
+      "sha256": "567b793169c2b08deb0991c45e12327965e6941ab12a4254f4d6995c0adf42de",
+      "bytes": 24305
     },
     {
       "id": "philco-module-diagnostic",
@@ -322,31 +322,112 @@
     },
     {
       "id": "philco-module-render-scheduler",
-      "path": "philco/bibliotecas/render-scheduler/src/module.js",
+      "path": "philco/bibliotecas/render-scheduler/src/module.beta56-6-5-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "44f72558a940302952389002a29bc9f6a76ba729d946d702d2018119210c7fca",
-      "bytes": 1680
+      "sha256": "03de4636218be691ae09d8c4c874868b320ec5d6847700a3722ccc4d8f693e64",
+      "bytes": 1589
     },
     {
       "id": "philco-module-visual-compositor",
-      "path": "philco/bibliotecas/visual-compositor/src/module.js",
+      "path": "philco/bibliotecas/visual-compositor/src/module.beta56-6-5-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "5b4e337d33b7102c2f5a3e93052fadde8223eccbc70cccea2b0eb2c8483c9f66",
-      "bytes": 1443
+      "sha256": "c5b96263fef7b98e0bb075f661cf7ce3d7d70c2acf2c96037b74ce9ef74f2fe7",
+      "bytes": 1934
+    },
+    {
+      "id": "philco-module-modern-ui",
+      "path": "philco/bibliotecas/modern-ui/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1307,
+      "sha256": "bb95ae1a89933626eb721f4c13d110585cc0ec3c6be1845b8871661ddcde9d27"
+    },
+    {
+      "id": "philco-module-texture-fx",
+      "path": "philco/bibliotecas/texture-fx/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1648,
+      "sha256": "0393e16913eca2ad7765f93de66836388ac7dab040bd7220a383f47fe67d1db6"
+    },
+    {
+      "id": "philco-module-blur-fx",
+      "path": "philco/bibliotecas/blur-fx/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1649,
+      "sha256": "ea74ffb36e0101617ac31a1f3baa49b8a088f1bf7af355f8bee06147cc467293"
+    },
+    {
+      "id": "philco-module-webkit-injector",
+      "path": "philco/bibliotecas/webkit-injector/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1941,
+      "sha256": "32f1e1b51dd1989385f9c582cd14f1957c738cec82e96910dc28719a2cc1fdeb"
+    },
+    {
+      "id": "philco-module-offline-store",
+      "path": "philco/bibliotecas/offline-store/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1665,
+      "sha256": "ea522648b480f9fa1b94ebfeb50240832566e03c01cf4d8c0a08f1b6bd715e80"
+    },
+    {
+      "id": "philco-module-vendor-bridge",
+      "path": "philco/bibliotecas/vendor-bridge/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1358,
+      "sha256": "67496cf0a13daac51d2b0872ab9a38a54398b36786a78af45e23e475cfb59bb3"
+    },
+    {
+      "id": "philco-module-webgl-surface",
+      "path": "philco/bibliotecas/webgl-surface/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1089,
+      "sha256": "a2f22f789737658973f1c030cdcc8a852ced34fcc876c4349b07064bfe14142b"
+    },
+    {
+      "id": "philco-module-canvas-texture",
+      "path": "philco/bibliotecas/canvas-texture/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1088,
+      "sha256": "5e2a13b8fb670047f6c62d311ce8df2272487750518be395c4e11c73c37e4db7"
+    },
+    {
+      "id": "philco-module-portal-hello",
+      "path": "philco/bibliotecas/portal-hello/src/module.beta56-6-5-1.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1377,
+      "sha256": "1fe0598664ec8cc1b0b25cf480e17610e6029989d3844fccf20dbb0818db0e80"
     },
     {
       "id": "launcher-surface",
-      "path": "system/readable/launcher-surface.beta56-6-5.js",
+      "path": "system/readable/launcher-surface.beta56-6-5-1.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "042b62307777bc2693528966dac5408d1f64f4424d2c07c38e2f61b778f77155",
-      "bytes": 4261
+      "sha256": "7ec603a9f4e9f280e99b7e797a09a014de61f20155e971ab86b4089637d426d9",
+      "bytes": 6202
     }
   ],
-  "version": "0.56-beta.6.5"
+  "version": "0.56-beta.6.5.1"
 }

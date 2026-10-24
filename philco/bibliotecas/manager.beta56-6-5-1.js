@@ -3,8 +3,8 @@
 'use strict';
 var R = w.RemoteTV || (w.RemoteTV = {}), entry = d.getElementById('rtvLibs');
 if (!entry) return;
-var KEY = 'remote-tv.libs.beta6.v1', LIMIT = 10 * 1024 * 1024, TABS = ['system','injection','render'];
-var TAB_LABEL = {system:'Sistema',injection:'Injeção',render:'Renderização'};
+var KEY = 'remote-tv.libs.beta6.v1', LIMIT = 10 * 1024 * 1024, TABS = ['system','injection','render','portal'];
+var TAB_LABEL = {system:'Sistema',injection:'Injeção',render:'Renderização',portal:'Portal'};
 var DIAG_WASM = 'AGFzbQEAAAABDgJgAn9/AX9gA39/fwF/AwMCAAEEBQFwAQEBBQMBAAIGCAF/AUGAiAQLBx8DBm1lbW9yeQIACGNsYXNzaWZ5AAAHcXVhbGl0eQABClQCGgBBAEEBQQIgAUG4F0sbIABB8HxqQbh+SRsLNwEBf0EAIQMCQCABIAJyIAJyQQBIDQBBAUEBQQFBAiACQcA+ShsgAUEAShsgAEEEShshAwsgAws=';
 var NAV_ASM = 'AGFzbQEAAAABCAFgA39/fwF/AwQDAAAABysDCm5leHRfZm9jdXMAAAphY2NlcHRfa2V5AAENbmVlZHNfcmVzdGFydAACCjMDGAAgAkEATAR/QX8FIAAgAWogAmogAm8LCwoAIAAgAWsgAk8LDQAgACABRyACQQBHcQs=';
 var flags = {}, libs = [], rejected = [], reservations = {}, budgetUsed = 0, panel = null, rows = null, mode = null, focusLabel = null, tabBar = null, tabButtons = {};
@@ -16,9 +16,10 @@ function mb(n) { return (Math.round((n / 1048576) * 10) / 10).toFixed(1); }
 function cssProp(list) { var s=d.createElement('div').style,i; for(i=0;i<list.length;i++)if(list[i] in s)return true; return false; }
 function categoryFor(def) {
     var id=String(def.id||''), c=String(def.category||'');
-    if(c==='system'||c==='injection'||c==='render')return c;
+    if(c==='system'||c==='injection'||c==='render'||c==='portal')return c;
     if(id==='frame-budget'||id==='render-scheduler'||id==='visual-compositor'||id==='texture-fx'||id==='blur-fx'||id==='webgl-surface'||id==='canvas-texture'||id==='vector-assets')return 'render';
     if(id==='modern-ui'||id==='webkit-injector'||id==='offline-store'||id==='vendor-bridge'||id==='user-style')return 'injection';
+    if(id==='native-app-hello'||id==='portal-apps')return 'portal';
     return 'system';
 }
 function defaultProbe(id) {
@@ -214,7 +215,7 @@ function open(){
     if(!panel){
         panel=el('section');panel.id='rtvLibPanel';
         panel.appendChild(el('h1','Bibliotecas'));
-        panel.appendChild(el('div','Sistema cuida do runtime; Injeção estende o WebKit; Renderização cuida das superfícies e efeitos.','rtvLib651Sub'));
+        panel.appendChild(el('div','Sistema cuida do runtime; Injeção estende o WebKit; Renderização cuida das superfícies; Portal registra extensões fora do launcher.','rtvLib651Sub'));
         mode=el('div','Verificando compatibilidade…');mode.id='rtvLibMode';panel.appendChild(mode);
         tabBar=el('div');tabBar.id='rtvLibTabs';
         for(var t=0;t<TABS.length;t++){(function(cat){var b=el('button',TAB_LABEL[cat],'rtvLib651Tab');b.id='rtvLibTab-'+cat;b.onclick=function(){switchTab(cat,true);};tabButtons[cat]=b;tabBar.appendChild(b);}(TABS[t]));}

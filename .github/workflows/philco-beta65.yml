@@ -1,0 +1,44 @@
+name: Validate Philco Beta 6.5 Launcher
+
+on:
+  push:
+    branches:
+      - feature/philco-launcher-beta65
+      - main
+    paths:
+      - '.github/workflows/philco-beta65.yml'
+      - 'apps/player1/shell.beta56-6-5.html'
+      - 'system/readable/launcher-surface.beta56-6-5.js'
+      - 'philco/bibliotecas/manager.beta56-6-5.js'
+      - 'philco/bibliotecas/render-scheduler/**'
+      - 'philco/bibliotecas/visual-compositor/**'
+      - 'manifest.beta56-6-5.json'
+      - 'manifest.json'
+      - 'tests/beta56-6-5.launcher.cjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test-only dependencies
+        run: npm install --no-save --no-package-lock acorn@8 jsdom@24
+      - name: Validate launcher candidate
+        run: node tests/beta56-6-5.launcher.cjs
+      - name: Validate 6.4.2 search baseline
+        run: node tests/beta56-6-4-2.search.cjs
+      - name: Regression with candidate manifest
+        run: |
+          cp manifest.beta56-6-5.json manifest.json
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
+          node tests/beta56-5.vod.cjs
+          node tests/beta56-5.artwork.cjs

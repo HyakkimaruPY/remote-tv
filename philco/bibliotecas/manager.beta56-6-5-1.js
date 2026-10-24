@@ -27,7 +27,10 @@ function defaultProbe(id) {
     if (id === 'estabilidade') return !!(w.setInterval && w.clearInterval && w.Date);
     if (id === 'network' || id === 'https') return !!R.RequestScope;
     if (id === 'search') return !!(w.PhilcoSearchAdapter && w.PhilcoSearch642);
-    if (id === 'assembly-navigation') return !!(w.WebAssembly && w.Uint8Array && w.atob);
+    if (id === 'assembly-navigation') {
+        if (!(w.WebAssembly && w.Uint8Array && w.atob)) return false;
+        try { if (w.WebAssembly.Module) new w.WebAssembly.Module(from64(NAV_ASM)); return true; } catch (e) { return false; }
+    }
     if (id === 'localhost') return !!w.PhilcoLocalhost642;
     if (id === 'frame-budget') return !!w.PhilcoSearch642;
     if (id === 'ir-mapping') return !!(d.addEventListener && w.localStorage);

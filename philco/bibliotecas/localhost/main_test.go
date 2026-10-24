@@ -46,3 +46,30 @@ func TestQRExpiration(t *testing.T){
  r=get(t,phone.URL+"/pair/open?key="+url.QueryEscape(u.Query().Get("key")));r.Body.Close()
  if r.StatusCode!=410{t.Fatalf("expired QR opened: %d",r.StatusCode)}
 }
+
+func TestPortalConfigRoundTrip(t *testing.T){
+ base:="[System]\ndefault=SN\n\n[CommonUI]\npath=/applications/CommUI/bin/CommUI\n"
+ cfg:=strings.TrimRight(base,"\n")+"\n\n"+helloBlock()
+ if !strings.Contains(cfg,"[RemoteTVHello]")||!strings.Contains(cfg,"pretty_name=Hello World"){t.Fatal("hello app definition missing")}
+ if !strings.Contains(cfg,"file:///Customer/apps/remote-tv-portal/hello/index.html"){t.Fatal("hello page path missing")}
+ clean:=stripPortalBlock(cfg)
+ if strings.Contains(clean,portalBegin)||strings.Contains(clean,"[RemoteTVHello]"){t.Fatal("portal block was not removed")}
+ if strings.TrimSpace(clean)!=strings.TrimSpace(base){t.Fatalf("base config changed: %q",clean)}
+}
+func TestPortalRequestGuard(t *testing.T){
+ r:=httptest.NewRequest("POST","http://127.0.0.1:8766/portal/hello/enable",nil)
+ r.Header.Set("X-Remote-TV-Portal","651")
+ r.Header.Set("Origin","null")
+ if !portalAllowed(r){t.Fatal("local cached player should be allowed")}
+ remote:=httptest.NewRequest("POST","http://127.0.0.1:8766/portal/hello/enable",nil)
+ remote.Header.Set("X-Remote-TV-Portal","651")
+ remote.Header.Set("Origin","https://example.com")
+ if portalAllowed(remote){t.Fatal("remote web origin must not control Portal")}
+ missing:=httptest.NewRequest("POST","http://127.0.0.1:8766/portal/hello/enable",nil)
+ missing.Header.Set("Origin","null")
+ if portalAllowed(missing){t.Fatal("missing portal header must be rejected")}
+}
+func TestHelloHTMLIsStandalone(t *testing.T){
+ h:=helloHTML()
+ if !strings.Contains(h,"Hello World")||strings.Contains(h,"http://")||strings.Contains(h,"https://"){t.Fatal("hello page must be local and standalone")}
+}

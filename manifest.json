@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.22-beta.56.6.4.2",
+  "release": "2026.10.24-beta.56.6.5",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-6-3.html",
+      "path": "apps/player1/shell.beta56-6-5.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "7a384d369bdd51efded11b64d27489f06888673c9573b9b5f1d3a6b46c1ee81e",
-      "bytes": 1257
+      "sha256": "5a6c3f328a39fb08d666933943693418d1c88978e06fe723332477b93593f93a",
+      "bytes": 3921
     },
     {
       "id": "style",
@@ -241,12 +241,12 @@
     },
     {
       "id": "philco-library-manager",
-      "path": "philco/bibliotecas/manager.beta56-6-4-2.js",
+      "path": "philco/bibliotecas/manager.beta56-6-5.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "e329bc5b8b84cd0c219f93a5334435c467f891a89552504ceaa529acbd855788",
-      "bytes": 15430
+      "sha256": "ff558336d7cd0a05b5b2ef74f8f10cda9109e21a41721982dbe9385dc4f702a3",
+      "bytes": 14537
     },
     {
       "id": "philco-module-diagnostic",
@@ -319,7 +319,34 @@
       "required": false,
       "sha256": "b6f713529a45adddd1e9bf94c51d2650405b24871b6d69a0be1f7c7cb77dc60b",
       "bytes": 2230
+    },
+    {
+      "id": "philco-module-render-scheduler",
+      "path": "philco/bibliotecas/render-scheduler/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "44f72558a940302952389002a29bc9f6a76ba729d946d702d2018119210c7fca",
+      "bytes": 1680
+    },
+    {
+      "id": "philco-module-visual-compositor",
+      "path": "philco/bibliotecas/visual-compositor/src/module.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "5b4e337d33b7102c2f5a3e93052fadde8223eccbc70cccea2b0eb2c8483c9f66",
+      "bytes": 1443
+    },
+    {
+      "id": "launcher-surface",
+      "path": "system/readable/launcher-surface.beta56-6-5.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "sha256": "62797a0c67bdefe41a5d459090be21c412cb55f85aa8f8ef45663daec3ddb845",
+      "bytes": 4218
     }
   ],
-  "version": "0.56-beta.6.4.2"
+  "version": "0.56-beta.6.5"
 }

@@ -48,8 +48,13 @@ jobs:
               b=Path(x['path']).read_bytes()
               assert len(b)==x['bytes'], x['path']
               assert hashlib.sha256(b).hexdigest()==x['sha256'], x['path']
-          assert Path('version').read_text().strip()=='0.56-beta.6.5', 'staging must not auto-promote marker'
-          print('PASS staged manifest: 47 modules, hashes verified, public marker stays 6.5')
+          marker=Path('version').read_text().strip()
+          if __import__('os').environ.get('GITHUB_REF')=='refs/heads/main':
+              assert marker=='0.56-beta.6.5.1', marker
+              print('PASS release manifest: 47 modules, hashes verified, public marker is 6.5.1')
+          else:
+              assert marker=='0.56-beta.6.5', 'staging must not auto-promote marker'
+              print('PASS staged manifest: 47 modules, hashes verified, public marker stays 6.5')
           PY
       - name: Test launcher tabs and Portal
         run: node tests/beta56-6-5-1.portal.cjs

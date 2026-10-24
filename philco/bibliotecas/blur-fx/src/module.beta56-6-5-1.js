@@ -8,6 +8,6 @@ function start(){var box=d.getElementById('rtv651info'),layer,s,p=filterProp();i
  layer=d.getElementById(LAYER);layer.style[p]='blur(18px)';
 }
 function stop(){var s=d.getElementById(STYLE),layer=d.getElementById(LAYER);if(s&&s.parentNode)s.parentNode.removeChild(s);if(layer&&layer.parentNode)layer.parentNode.removeChild(layer);}
-m.register({id:'blur-fx',title:'Blur de superfície · compatível',category:'render',enabled:true,restartRequired:false,visualBytes:1048576,probe:probe,start:start,stop:stop,
+m.register({id:'blur-fx',title:'Blur de superfície · compatível',category:'render',enabled:false,restartRequired:false,visualBytes:1048576,probe:probe,start:start,stop:stop,
  test:function(scope,done){done(!!d.getElementById(LAYER),'Blur isolado em uma superfície pequena; custo visual reservado em 1.0 MB');}});
 }(this,document));

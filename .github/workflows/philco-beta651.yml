@@ -13,6 +13,7 @@ on:
       - 'philco/bibliotecas/**/module.beta56-6-5-1.js'
       - 'philco/bibliotecas/localhost/**'
       - 'tests/beta56-6-5-1.portal.cjs'
+      - 'tests/philco-companion-lifecycle.py'
       - 'manifest.beta56-6-5-1.json'
       - 'manifest.json'
       - 'version'
@@ -90,6 +91,8 @@ jobs:
           grep -q '^echo stock-after$' "$ROOT/Customer/setup.sh"
           test ! -e "$ROOT/Customer/remote-tv/philco-localhost-mipsle-beta651"
           test -f "$ROOT/Customer/remote-tv/setup.sh.before-beta651"
+      - name: Test companion process lifecycle
+        run: python3 tests/philco-companion-lifecycle.py
       - name: Upload beta651 companion candidate
         uses: actions/upload-artifact@v4
         with:

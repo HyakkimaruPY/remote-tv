@@ -21,6 +21,13 @@ O instalador:
 - verifica SHA-256 se sha256sum existir;
 - instala o serviço loopback 127.0.0.1:8766 e a interface de pareamento LAN :8767.
 
+Supervisor atualizado em 24/10/2026:
+- mantém PID do supervisor no lock e apenas uma instância ativa;
+- ao receber TERM/INT/HUP, encerra e aguarda o processo filho antes de liberar o lock;
+- a espera de retry também pode ser interrompida;
+- a desinstalação remove o executável antes de encerrar os processos, impedindo novo disparo.
+Esses scripts pertencem ao pacote auxiliar; atualizar o HTML não os instala na TV.
+
 O Portal privilegiado permanece somente no listener loopback.
 A API web prefere o bridge 8765 do firmware quando ele tiver suporte Portal e usa 8766 apenas como fallback.
 

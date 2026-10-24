@@ -1,0 +1,56 @@
+name: Validate Philco Beta 6.5.2 Refinement
+
+on:
+  push:
+    branches: [main, feature/philco-beta652-refinement]
+    paths:
+      - '.github/workflows/philco-beta652.yml'
+      - '**/*beta56-6-5-2*'
+      - 'manifest.json'
+      - 'version'
+      - 'tests/beta56-5.*.cjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock acorn@8 jsdom@24 playwright@1.56.1
+      - name: Validate Portal, navigation, transport, native display and module integrity
+        run: node tests/beta56-6-5-2.refine.cjs
+      - name: Verify staging or activation marker
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          active=json.loads(Path('manifest.json').read_text())
+          candidate=json.loads(Path('manifest.beta56-6-5-2.json').read_text())
+          assert active==candidate
+          assert Path('version').read_text().strip() in ('0.56-beta.6.5.1','0.56-beta.6.5.2')
+          PY
+      - name: Live, VOD and artwork regressions against the actual candidate modules
+        env:
+          RTV_APP_SOURCE: apps/player1/app.beta56-6-5-2.js
+          RTV_UI_SOURCE: system/readable/xtream-ui.beta56-6-5-2.js
+        run: |
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
+          node tests/beta56-5.vod.cjs
+          node tests/beta56-5.artwork.cjs
+      - name: Browser layout verification
+        run: |
+          npx playwright install --with-deps chromium
+          node tests/beta56-6-5-2.browser.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: philco-beta652-browser
+          path: test-artifacts/beta652-portal.png
+          if-no-files-found: error

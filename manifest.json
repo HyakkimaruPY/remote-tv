@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.24-beta.56.6.5.1",
+  "release": "2026.10.24-beta.56.6.5.2",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.beta56-3.js",
+      "path": "apps/player1/app.beta56-6-5-2.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "9c2eef831338df7a6df31f16a5a8904db28597d73914d7a39d2346a8f7adbd40",
-      "bytes": 40728
+      "sha256": "aa98468982fe93e5362297220992ea67ae42d8ae636937695766a1203a4cedea",
+      "bytes": 42538
     },
     {
       "id": "force-update",
@@ -106,12 +106,12 @@
     },
     {
       "id": "xtream-stream-router",
-      "path": "system/readable/xtream-stream-router.beta56-3.js",
+      "path": "system/readable/xtream-stream-router.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "abe12c724fdb0840b07dab7c52e994cee9a1d9339b02c513e728f9059ab6b932",
-      "bytes": 2012
+      "sha256": "f9c875c61fc5c34671ac5ebfb08b9508ae518c6437a8a442d77687ad28441af4",
+      "bytes": 2231
     },
     {
       "id": "autovod",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-4-2.js",
+      "path": "system/readable/xtream-ui.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "853fe2042c35fa750b8c88db790e7d73cfe030c7be1793429f07cb51ed443d86",
-      "bytes": 130738
+      "sha256": "72f02977b57f07080155c8e99fc3ad0e4a008c732468aa33b8d16fdf3086a4f4",
+      "bytes": 131595
     },
     {
       "id": "live-log-overlay",
@@ -223,12 +223,12 @@
     },
     {
       "id": "philco-localhost-client",
-      "path": "philco/bibliotecas/localhost/src/client.beta56-6-5-1.js",
+      "path": "philco/bibliotecas/localhost/src/client.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "06258892a7b759baf88ac1cc581765eb874e1cbe0fbaf0a88a634deb66a13895",
-      "bytes": 3263
+      "sha256": "2153931efe959e139cf4bfa578300feb1ee8b0e23ac70dfa87a83a3736d53d29",
+      "bytes": 4777
     },
     {
       "id": "philco-search-ui",
@@ -241,12 +241,12 @@
     },
     {
       "id": "philco-library-manager",
-      "path": "philco/bibliotecas/manager.beta56-6-5-1.js",
+      "path": "philco/bibliotecas/manager.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "b7fd54a3d2c760345d84b5810b674984300672bb627a00d0560bb582e4e682a0",
-      "bytes": 24457
+      "sha256": "b78a9d1dc6b5298043d5157e6bd8ce945e4aaf444aad6ca8fe6ac90d6e6b386d",
+      "bytes": 25715
     },
     {
       "id": "philco-module-diagnostic",
@@ -268,12 +268,12 @@
     },
     {
       "id": "philco-module-network",
-      "path": "philco/bibliotecas/rede-ssl/src/module.js",
+      "path": "philco/bibliotecas/rede-ssl/src/module.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "33ea06205d3dd19d7cda3a43cf236f77e7a1287410de30be0d919114f0a84783",
-      "bytes": 1041
+      "sha256": "fb82b5df5a4be25d255fdfc32e38935677243280914ca1dfca484a1f6b57e42b",
+      "bytes": 777
     },
     {
       "id": "philco-module-search",
@@ -295,12 +295,12 @@
     },
     {
       "id": "philco-module-localhost",
-      "path": "philco/bibliotecas/localhost/src/module.beta56-6-5-1.js",
+      "path": "philco/bibliotecas/localhost/src/module.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "426896b7ae2fd45ab18dbb64f5d1bf32a4ab7bf76a381d42fd09d936c292a649",
-      "bytes": 741
+      "sha256": "c0f4b3c7b03b667236ddc9bc66f2f0149ca3f8855217f5fb4b5398923bcbd412",
+      "bytes": 735
     },
     {
       "id": "philco-module-performance",
@@ -340,12 +340,12 @@
     },
     {
       "id": "philco-module-modern-ui",
-      "path": "philco/bibliotecas/modern-ui/src/module.beta56-6-5-1.js",
+      "path": "philco/bibliotecas/modern-ui/src/module.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "bytes": 1307,
-      "sha256": "bb95ae1a89933626eb721f4c13d110585cc0ec3c6be1845b8871661ddcde9d27"
+      "bytes": 1310,
+      "sha256": "fad9494f65e6352576f387b77a6d380bd559ed5384731ef55bed087272cea110"
     },
     {
       "id": "philco-module-texture-fx",
@@ -412,12 +412,12 @@
     },
     {
       "id": "philco-module-portal-hello",
-      "path": "philco/bibliotecas/portal-hello/src/module.beta56-6-5-1.js",
+      "path": "philco/bibliotecas/portal-hello/src/module.beta56-6-5-2.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "bytes": 1377,
-      "sha256": "1fe0598664ec8cc1b0b25cf480e17610e6029989d3844fccf20dbb0818db0e80"
+      "bytes": 4165,
+      "sha256": "b54a777688f48a4ae2b78e795927b9d383740ae8b65daab59e57654c2b9a5fe6"
     },
     {
       "id": "launcher-surface",
@@ -427,7 +427,16 @@
       "required": false,
       "sha256": "7ec603a9f4e9f280e99b7e797a09a014de61f20155e971ab86b4089637d426d9",
       "bytes": 6202
+    },
+    {
+      "id": "philco-module-live-health",
+      "path": "philco/bibliotecas/estabilidade/src/module.beta56-6-5-2.js",
+      "type": "js",
+      "phase": "post",
+      "required": false,
+      "bytes": 1228,
+      "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.1"
+  "version": "0.56-beta.6.5.2"
 }

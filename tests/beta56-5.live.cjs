@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict'),acorn=require('acorn');
 const read=p=>fs.readFileSync(p,'utf8');let count=0;function pass(n){count++;console.log('PASS '+n)}
-const app=read('apps/player1/app.beta56-3.js');
+const app=read(process.env.RTV_APP_SOURCE||'apps/player1/app.beta56-3.js');
 for(const p of JSON.parse(read('manifest.json')).modules.filter(x=>x.type==='js'))acorn.parse(read(p.path),{ecmaVersion:5});pass('all beta manifest JavaScript parses as ES5');
 function clock(c){let now=10000,id=0;const jobs=new Map();c.now=()=>now;c.Date=class extends Date{constructor(...a){super(...(a.length?a:[now]))}};c.setTimeout=(fn,ms)=>{jobs.set(++id,{fn,at:now+(ms||0)});return id};c.clearTimeout=i=>jobs.delete(i);return {jobs,tick(ms){let end=now+ms;for(let n=0;n<10000;n++){let j=[...jobs].filter(x=>x[1].at<=end).sort((a,b)=>a[1].at-b[1].at)[0];if(!j)break;jobs.delete(j[0]);now=j[1].at;j[1].fn()}now=end}}}
 function live(){let next=0;const status=[],logs=[],video={style:{},currentTime:0,error:null,paused:false,plays:0,pause(){this.paused=true},removeAttribute(){},load(){},play(){this.paused=false;this.plays++}};

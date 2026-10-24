@@ -32,6 +32,25 @@ jobs:
           node-version: '22'
       - name: Install test-only JS dependencies
         run: npm install --no-save --no-package-lock acorn@8 jsdom@24
+      - name: Validate staged 6.5.1 manifest
+        run: |
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          m=json.loads(Path('manifest.json').read_text())
+          frozen=json.loads(Path('manifest.beta56-6-5-1.json').read_text())
+          assert m==frozen
+          assert m['version']=='0.56-beta.6.5.1'
+          assert m['release']=='2026.10.24-beta.56.6.5.1'
+          assert len(m['modules'])==47
+          assert len({x['id'] for x in m['modules']})==47
+          for x in m['modules']:
+              b=Path(x['path']).read_bytes()
+              assert len(b)==x['bytes'], x['path']
+              assert hashlib.sha256(b).hexdigest()==x['sha256'], x['path']
+          assert Path('version').read_text().strip()=='0.56-beta.6.5', 'staging must not auto-promote marker'
+          print('PASS staged manifest: 47 modules, hashes verified, public marker stays 6.5')
+          PY
       - name: Test launcher tabs and Portal
         run: node tests/beta56-6-5-1.portal.cjs
       - uses: actions/setup-go@v5
@@ -46,7 +65,7 @@ jobs:
           file philco-localhost-mipsle-beta651
       - name: Baseline player regressions
         run: |
-          cp manifest.beta56-6-5.json manifest.json
+          cp manifest.beta56-6-5-1.json manifest.json
           node tests/beta56-6.live.cjs
           node tests/beta56-5.live.cjs
           node tests/beta56-5.vod.cjs

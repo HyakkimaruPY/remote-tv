@@ -22,12 +22,12 @@ for(const p of files)acorn.parse(read(p),{ecmaVersion:5});
 
 const shell=read('apps/player1/shell.beta56-6-5-1.html');
 assert.doesNotMatch(shell,/\bMP3\b/i);
-assert.equal((shell.match(/class="rtv651tile/g)||[]).length,6);
 assert.doesNotMatch(shell,/<small/i);
 assert.match(shell,/id=rtv651info/);
 
 const dom=new JSDOM('<!doctype html><html><head></head><body>'+shell+'</body></html>',{url:'file:///applications/RemoteTV/index.html',runScripts:'outside-only'});
 const w=dom.window,d=w.document;
+assert.equal(d.querySelectorAll('#menu .rtv651tile').length,6);
 w.requestAnimationFrame=fn=>w.setTimeout(fn,0);w.cancelAnimationFrame=id=>w.clearTimeout(id);
 w.RemoteTV={RequestScope:function(){this.cancel=function(){};this.local=function(u,cb){cb(null,'ok')};this.fetch=function(u,cb){cb(null,'ok')}}};
 w.PhilcoSearch642={enabled:()=>false,setPerformanceMode:()=>{}};w.PhilcoSearchAdapter={active:()=>true};

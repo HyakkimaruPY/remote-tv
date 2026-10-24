@@ -77,7 +77,8 @@ function boot() {
     w.setTimeout(refreshSearchCard, 600);
     w.setTimeout(refreshSearchCard, 1800);
 }
-if (d.readyState === 'loading' && d.addEventListener) d.addEventListener('DOMContentLoaded', boot, false);
+if (d.getElementById('menu')) boot();
+else if (d.readyState === 'loading' && d.addEventListener) d.addEventListener('DOMContentLoaded', boot, false);
 else boot();
 R.launcher65 = {refresh:schedule, searchReady:searchReady};
 }(this, document));

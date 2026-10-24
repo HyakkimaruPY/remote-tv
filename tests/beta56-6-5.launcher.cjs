@@ -33,6 +33,7 @@ for(const id of ['philco-module-diagnostic','philco-module-watchdog','philco-mod
 w.PhilcoSearch642={enabled:()=>false};
 w.PhilcoSearchAdapter={active:()=>false};
 w.eval(read(entry('launcher-surface').path));
+await new Promise(r=>setTimeout(r,40));
 assert.ok(d.getElementById('rtvPlayerLauncher65'));
 assert.ok(w.RemoteTV.renderScheduler65);
 assert.ok(d.getElementById('rtvVisualCompositor65'));

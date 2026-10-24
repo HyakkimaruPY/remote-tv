@@ -1,0 +1,30 @@
+<style id="rtvLauncher65css">#menu.rtv-launcher65{position:fixed;left:0;top:0;width:1280px;height:720px;padding:0;margin:0;background:#000!important;box-shadow:none!important;overflow:hidden}
+#menu.rtv-launcher65 .rtv65brand{position:absolute;left:70px;top:54px;width:760px;height:82px}
+#menu.rtv-launcher65 .rtv65brand h1{font:normal 36px Arial;margin:0 0 5px;color:#f2f2f2;letter-spacing:.2px}
+#menu.rtv-launcher65 .rtv65brand p{font:17px Arial;margin:0;color:#8f979d}
+#menu.rtv-launcher65 .rtv65status{position:absolute;right:72px;top:70px;width:330px;text-align:right;color:#777f84;font:15px Arial}
+#menu.rtv-launcher65 .rtv65tile{position:absolute;width:350px;height:150px;margin:0!important;padding:20px 22px!important;background:#111!important;color:#eee!important;border:1px solid #34383b!important;border-radius:8px!important;box-shadow:none!important;text-align:left!important;overflow:hidden}
+#menu.rtv-launcher65 .rtv65tile .rtv65kicker{display:block;color:#777f84;font:12px Arial;letter-spacing:1.4px;margin-bottom:14px}
+#menu.rtv-launcher65 .rtv65tile strong{display:block;color:#f2f2f2;font:normal 28px Arial;line-height:32px}
+#menu.rtv-launcher65 .rtv65tile small{display:block;color:#8f979d;font:15px Arial;margin-top:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#menu.rtv-launcher65 .rtv65tile:focus{outline:0!important;background:#1b1b1b!important;border:2px solid #f0f0f0!important;padding:19px 21px!important}
+#menu.rtv-launcher65 .rtv65primary{background:#151515!important}
+#rawLaunch{left:70px;top:170px}#rtvSearchHome{left:465px;top:170px}#rtvLibs{left:860px;top:170px}
+#tv{left:70px;top:360px}#forceUpdate{left:465px;top:360px}#yt3{left:860px;top:360px}
+#menu.rtv-launcher65 #y2{display:none!important}#menu.rtv-launcher65 .rtv65tile.rtv65disabled{opacity:.52}</style>
+<section id=menu class="rtv-launcher65">
+  <div class="rtv65brand"><h1 id="rtvVersionTitle">Remote TV</h1><p>Launcher leve · Philco</p></div>
+  <div id="rtv65status" class="rtv65status">M3U · mídia · bibliotecas</div>
+  <button id=rawLaunch class="rtv65tile rtv65primary"><span class=rtv65kicker>PLAYER</span><strong>M3U</strong><small>Ao vivo · filmes · séries</small></button>
+  <button id=rtvSearchHome class=rtv65tile><span class=rtv65kicker>CATÁLOGO</span><strong>Busca</strong><small>Pesquisa contextual</small></button>
+  <button id=rtvLibs class=rtv65tile><span class=rtv65kicker>SISTEMA</span><strong>Bibliotecas</strong><small>Recursos e desempenho</small></button>
+  <button id=tv class=rtv65tile><span class=rtv65kicker>LEGADO</span><strong>M3U Player</strong><small>Lista local compatível</small></button>
+  <button id=forceUpdate class=rtv65tile><span class=rtv65kicker>MANUTENÇÃO</span><strong>Atualizar</strong><small>Verificar versão remota</small></button>
+  <button id=yt3 class=rtv65tile><span class=rtv65kicker>WEB</span><strong>YouTube</strong><small>Teste mínimo</small></button>
+  <button id=y2 tabindex=-1>YouTube 2</button>
+</section>
+<section id=new class=h><h1>YouTube 2</h1><form id=sf><input id=q><button>Buscar</button></form><div id=results></div></section>
+<section id=tvlist class=h><h1>M3U Player</h1><div id=cats></div><button id=tvback>Voltar</button><button id=rawIn>M3U</button></section>
+<section id=player class=h><div id=side><h2 id=gt>Canais</h2><div id=channels></div></div><div id=stage><h1 id=pt>Selecione um canal</h1><video id=v autoplay></video><p id=ps>Pronto</p><div id=ctrl><button id=pb>Voltar</button><button id=pf>Tela cheia</button><button id=pl>Log</button></div></div></section>
+<aside id=logp class=h><h2>Log</h2><div id=logb></div></aside>
+<section id=yt3probe class=h><div id=yt3head><h1>YouTube 3 · teste mínimo</h1><button id=yt3back>Voltar</button></div><p id=yt3status>Embed oficial do YouTube.</p><iframe id=yt3frame src=about:blank frameborder=0 tabindex=0 allow="autoplay; encrypted-media" allowfullscreen></iframe></section>

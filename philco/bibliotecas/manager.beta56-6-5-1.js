@@ -232,7 +232,7 @@ function register(def){
     for(i=0;i<libs.length;i++)if(libs[i].id===id)return false;
     p=probe(def);if(!p.ok){rejected.push({id:id,reason:p.reason});updateMode();return false;}
     cost=typeof def.visualBytes==='number'?def.visualBytes:defaultVisualBytes(id);
-    lib={id:id,title:String(def.title).slice(0,64),category:categoryFor(def),test:def.test,start:def.start||null,stop:def.stop||null,startAsync:def.startAsync||null,stopAsync:def.stopAsync||null,restartRequired:!!def.restartRequired,on:typeof flags[id]==='boolean'?flags[id]:!!def.enabled,visualBytes:Math.max(0,cost|0),epoch:0,running:false,scope:null,switchBtn:null,testBtn:null,wrap:null,result:null,started:false};
+    lib={id:id,title:String(def.title).slice(0,64),category:categoryFor(def),test:def.test,start:def.start||null,stop:def.stop||null,startAsync:def.startAsync||null,stopAsync:def.stopAsync||null,restartRequired:!!def.restartRequired,on:typeof def.actualOn==='boolean'?def.actualOn:(typeof flags[id]==='boolean'?flags[id]:!!def.enabled),visualBytes:Math.max(0,cost|0),epoch:0,running:false,scope:null,switchBtn:null,testBtn:null,wrap:null,result:null,started:false};
     if(lib.on&&!lib.restartRequired&&!lib.startAsync&&!startLib(lib)){rejected.push({id:id,reason:'falha no autoteste de início ou orçamento'});lib.on=false;updateMode();return false;}
     libs.push(lib);if(rows&&lib.category===activeTab){renderRows();if(active)highlight(tabButtons[activeTab]);}updateMode();return true;
 }

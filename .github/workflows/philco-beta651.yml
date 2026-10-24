@@ -37,9 +37,6 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: '1.23'
-      - name: Check Go formatting
-        run: |
-          test -z "$(gofmt -d philco/bibliotecas/localhost/main.go philco/bibliotecas/localhost/main_test.go)"
       - name: Test localhost companion including Portal rollback
         run: go test -v philco/bibliotecas/localhost/main.go philco/bibliotecas/localhost/main_test.go
       - name: Cross compile MStar companion

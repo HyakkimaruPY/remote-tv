@@ -344,8 +344,8 @@
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "62797a0c67bdefe41a5d459090be21c412cb55f85aa8f8ef45663daec3ddb845",
-      "bytes": 4218
+      "sha256": "042b62307777bc2693528966dac5408d1f64f4424d2c07c38e2f61b778f77155",
+      "bytes": 4261
     }
   ],
   "version": "0.56-beta.6.5"

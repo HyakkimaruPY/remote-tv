@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/philco-launcher-beta65
+      - feature/philco-beta651-ui-budget
       - main
     paths:
       - '.github/workflows/philco-beta65.yml'
@@ -13,6 +14,11 @@ on:
       - 'philco/bibliotecas/render-scheduler/**'
       - 'philco/bibliotecas/visual-compositor/**'
       - 'manifest.beta56-6-5.json'
+      - 'manifest.beta56-6-5-1.json'
+      - 'apps/player1/shell.beta56-6-5-1.html'
+      - 'system/readable/launcher-surface.beta56-6-5-1.js'
+      - 'philco/bibliotecas/manager.beta56-6-5-1.js'
+      - 'tests/beta56-6-5-1.portal.cjs'
       - 'manifest.json'
       - 'tests/beta56-6-5.launcher.cjs'
   workflow_dispatch:
@@ -32,12 +38,21 @@ jobs:
       - name: Install test-only dependencies
         run: npm install --no-save --no-package-lock acorn@8 jsdom@24
       - name: Validate launcher candidate
-        run: node tests/beta56-6-5.launcher.cjs
+        run: |
+          if grep -q '"version": "0.56-beta.6.5.1"' manifest.json; then
+            node tests/beta56-6-5-1.portal.cjs
+          else
+            node tests/beta56-6-5.launcher.cjs
+          fi
       - name: Validate 6.4.2 search baseline
         run: node tests/beta56-6-4-2.search.cjs
       - name: Regression with candidate manifest
         run: |
-          cp manifest.beta56-6-5.json manifest.json
+          if grep -q '"version": "0.56-beta.6.5.1"' manifest.json; then
+            cp manifest.beta56-6-5-1.json manifest.json
+          else
+            cp manifest.beta56-6-5.json manifest.json
+          fi
           node tests/beta56-6.live.cjs
           node tests/beta56-5.live.cjs
           node tests/beta56-5.vod.cjs

@@ -1,0 +1,16 @@
+{
+  "id": "render-scheduler",
+  "version": "0.56-beta.6.5",
+  "category": "render",
+  "entry": "src/module.js",
+  "runtime": "webkit-es5",
+  "capabilities": [
+    "requestAnimationFrame",
+    "timer-fallback",
+    "dom-write-coalescing"
+  ],
+  "restartRequired": false,
+  "defaultEnabled": true,
+  "minHostVersion": "0.56-beta.6.5",
+  "failurePolicy": "fallback-inline"
+}

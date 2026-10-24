@@ -68,6 +68,13 @@ jobs:
           cd philco/bibliotecas/localhost
           GOOS=linux GOARCH=mipsle GOMIPS=softfloat CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o philco-localhost-mipsle-beta651 main.go
           file philco-localhost-mipsle-beta651
+      - name: Upload beta651 companion candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: philco-localhost-mipsle-beta651
+          path: philco/bibliotecas/localhost/philco-localhost-mipsle-beta651
+          if-no-files-found: error
+          retention-days: 14
       - name: Baseline player regressions
         run: |
           cp manifest.beta56-6-5-1.json manifest.json

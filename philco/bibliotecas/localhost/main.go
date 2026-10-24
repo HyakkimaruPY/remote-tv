@@ -136,6 +136,7 @@ func applyPortalHello(enable bool) error {
  cap := portalProbe(); if ok, _ := cap["ok"].(bool); !ok { return fmt.Errorf("Portal indisponível") }
  before, err := os.ReadFile(portalAppCfg); if err != nil { return err }
  cfg := stripPortalBlock(string(before))
+ hadPortal := strings.Contains(string(before), portalBegin)
  if enable {
   if err = os.MkdirAll(portalHelloDir, 0755); err != nil { return err }
   if err = atomicWrite(portalHelloDir+"/index.html", []byte(helloHTML()), 0644); err != nil { return err }
@@ -144,14 +145,21 @@ func applyPortalHello(enable bool) error {
   }
   cfg = strings.TrimRight(cfg, "\r\n") + "\n\n" + helloBlock()
  }
- if !enable { _ = os.RemoveAll(portalHelloDir) }
- if string(before) == cfg { return nil }
- if err = atomicWrite(portalAppCfg, []byte(cfg), 0644); err != nil { return err }
+ if string(before) == cfg {
+  if !enable { _ = os.RemoveAll(portalHelloDir) }
+  return nil
+ }
+ if err = atomicWrite(portalAppCfg, []byte(cfg), 0644); err != nil {
+  if enable && !hadPortal { _ = os.RemoveAll(portalHelloDir) }
+  return err
+ }
  old := procPIDs("/applications/apm/appmgr")
  if err = restartAppMgr(old); err != nil {
   _ = atomicWrite(portalAppCfg, before, 0644)
+  if enable && !hadPortal { _ = os.RemoveAll(portalHelloDir) }
   return err
  }
+ if !enable { _ = os.RemoveAll(portalHelloDir) }
  return nil
 }
 func portalAllowed(r *http.Request) bool {

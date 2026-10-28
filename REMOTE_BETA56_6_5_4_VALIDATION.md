@@ -1,6 +1,6 @@
 # Remote TV Philco 0.56-beta.6.5.4 — Continuar assistindo
 
-Base publicada: `29b5dab3cff5294e4d7403046dea5050a5b6e4d6` (0.56-beta.6.5.3). Código candidato: `86488464bd134decf78546f52f31449559153fd3`.
+Base publicada: `29b5dab3cff5294e4d7403046dea5050a5b6e4d6` (0.56-beta.6.5.3). Código candidato: `ef646dab433c6fefca4cd6dd32d145544013904e`.
 
 ## Resultado
 
@@ -8,7 +8,7 @@ Continuar assistindo abre diretamente o filme ou o episódio salvo, passando a p
 
 A mudança fica nos módulos versionados `xtream-ui.beta56-6-5-4.js` e `xtream-vod-player.beta56-6-5-4.js`, mantendo os 48 módulos, aliases, fases e recursos da 6.5.3.
 
-- A posição do filme é consultada na ação, com suporte ao registro já existente de Continuar quando necessário. O botão é atualizado ao retornar da reprodução.
+- A posição do filme é consultada na ação, com suporte ao registro já existente de Continuar quando necessário. O botão é atualizado ao retornar da reprodução. Cards já renderizados consultam novamente o registro persistido antes de abrir, evitando posição antiga após sair e clicar no mesmo card.
 - Série resolve `episode_id` por identidade (string ou número), com suporte ao objeto `episode` já persistido. Sem registro de Continuar, usa o progresso mais recente dos episódios disponíveis. Registro apontando para episódio ausente nunca inicia silenciosamente o episódio um; explica a ausência e conserva os dados.
 - Filme antigo sem extensão resolve somente a metadata necessária em segundo plano, sem abrir a informação. Respostas de uma tela já abandonada não iniciam reprodução.
 - OK nos cards de Favoritos/Continuar é consumido pela UI uma única vez; navegação horizontal alcança a nova ação na informação de série.
@@ -17,11 +17,11 @@ A mudança fica nos módulos versionados `xtream-ui.beta56-6-5-4.js` e `xtream-v
 
 ## Evidência executada
 
-[GitHub Actions aprovado](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40735783178).
+[GitHub Actions aprovado](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40736199250).
 
 `node tests/beta56-6-5-4.resume.cjs`: 14 cenários de integração com os módulos completos de UI e player, DOM jsdom e fixtures de mídia/rede/relógio:
 
-1. Continuar filme por OK abre direto na posição salva; sair e reabrir usa novo progresso.
+1. Continuar filme por OK abre direto na posição salva; sair e clicar novamente no mesmo card, sem redesenhar a lista, usa novo progresso.
 2. Continuar série resolve episódio de outra temporada e ID textual sem abrir informações.
 3. Filme por categoria oferece Continuar, inicia sem diálogo e atualiza posição ao voltar.
 4. Série por categoria oferece Continuar para o episódio salvo em outra temporada, com acesso por direcional.

@@ -1940,6 +1940,13 @@
         var focusNode = documentRef.activeElement, pr, rq = ++viewState.specialReq34, view = viewState.view;
         if (!o)
             return;
+        if (iscont) {
+            o = continueRecord654(t, o.id);
+            if (!o) {
+                drawContinue();
+                return;
+            }
+        }
         if (t == 'c') {
             clearTimeout(viewState.liveRecoveryTimer56);
             viewState.liveRecoveryTimer56 = 0;

@@ -164,8 +164,8 @@
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "36ba76795bac7fb72a7040700ad00ef5f9679ccdf4313de7316957913139ea33",
-      "bytes": 135098
+      "sha256": "205dc22bb846c8052c204e0b2f1d9bb6863382665c8b5b12465907858f0db663",
+      "bytes": 135266
     },
     {
       "id": "live-log-overlay",

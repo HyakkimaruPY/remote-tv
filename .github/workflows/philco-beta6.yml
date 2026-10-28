@@ -73,18 +73,18 @@ jobs:
           import hashlib, json
           from pathlib import Path
           m=json.loads(Path('manifest.json').read_text())
-          archive={'0.56-beta.6.3':'manifest.beta56-6-3.json','0.56-beta.6.4':'manifest.beta56-6-4.json','0.56-beta.6.4.1':'manifest.beta56-6-4-1.json','0.56-beta.6.4.2':'manifest.beta56-6-4-2.json','0.56-beta.6.5':'manifest.beta56-6-5.json','0.56-beta.6.5.1':'manifest.beta56-6-5-1.json','0.56-beta.6.5.2':'manifest.beta56-6-5-2.json'}[m['version']]
+          archive={'0.56-beta.6.5.3':'manifest.beta56-6-5-3.json','0.56-beta.6.3':'manifest.beta56-6-3.json','0.56-beta.6.4':'manifest.beta56-6-4.json','0.56-beta.6.4.1':'manifest.beta56-6-4-1.json','0.56-beta.6.4.2':'manifest.beta56-6-4-2.json','0.56-beta.6.5':'manifest.beta56-6-5.json','0.56-beta.6.5.1':'manifest.beta56-6-5-1.json','0.56-beta.6.5.2':'manifest.beta56-6-5-2.json'}[m['version']]
           frozen=json.loads(Path(archive).read_text())
           assert m==frozen, 'Beta6 archive mismatches active manifest'
-          assert m['version'] in ('0.56-beta.6.3','0.56-beta.6.4','0.56-beta.6.4.1','0.56-beta.6.4.2','0.56-beta.6.5','0.56-beta.6.5.1','0.56-beta.6.5.2')
-          assert m['release'] in ('2026.10.22-beta.56.6.3','2026.10.22-beta.56.6.4','2026.10.22-beta.56.6.4.1','2026.10.22-beta.56.6.4.2','2026.10.24-beta.56.6.5','2026.10.24-beta.56.6.5.1','2026.10.24-beta.56.6.5.2')
+          assert m['version'] in ('0.56-beta.6.3','0.56-beta.6.4','0.56-beta.6.4.1','0.56-beta.6.4.2','0.56-beta.6.5','0.56-beta.6.5.1','0.56-beta.6.5.2','0.56-beta.6.5.3')
+          assert m['release'] in ('2026.10.22-beta.56.6.3','2026.10.22-beta.56.6.4','2026.10.22-beta.56.6.4.1','2026.10.22-beta.56.6.4.2','2026.10.24-beta.56.6.5','2026.10.24-beta.56.6.5.1','2026.10.24-beta.56.6.5.2','2026.10.28-beta.56.6.5.3')
           assert len(set(x['id'] for x in m['modules']))==len(m['modules'])
           for x in m['modules']:
               b=Path(x['path']).read_bytes()
               assert len(b)==x['bytes'], x['path']
               assert hashlib.sha256(b).hexdigest()==x['sha256'], x['path']
           marker=Path('version').read_text().strip()
-          assert marker in ('0.56-beta.6.2', '0.56-beta.6.3', '0.56-beta.6.4', '0.56-beta.6.4.1','0.56-beta.6.4.2','0.56-beta.6.5','0.56-beta.6.5.1','0.56-beta.6.5.2'), marker
+          assert marker in ('0.56-beta.6.2', '0.56-beta.6.3', '0.56-beta.6.4', '0.56-beta.6.4.1','0.56-beta.6.4.2','0.56-beta.6.5','0.56-beta.6.5.1','0.56-beta.6.5.2','0.56-beta.6.5.3'), marker
           print('All',len(m['modules']),'Philco modules checked; gate:',marker)
           PY
 
@@ -92,7 +92,9 @@ jobs:
         run: |
           node --check system/readable/xtream-ui.beta56-6.js
           node --check system/injections/graphos-skin-beta56-6-2.js
-          if grep -q '"version": "0.56-beta.6.5.2"' manifest.json; then
+          if grep -q '"version": "0.56-beta.6.5.3"' manifest.json; then
+            node tests/beta56-6-5-3.vod.cjs
+          elif grep -q '"version": "0.56-beta.6.5.2"' manifest.json; then
             node tests/beta56-6-5-2.refine.cjs
           elif grep -q '"version": "0.56-beta.6.5.1"' manifest.json; then
             node tests/beta56-6-5-1.portal.cjs

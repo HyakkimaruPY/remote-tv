@@ -33,8 +33,9 @@ jobs:
           from pathlib import Path
           active=json.loads(Path('manifest.json').read_text())
           candidate=json.loads(Path('manifest.beta56-6-5-2.json').read_text())
-          assert active==candidate
-          assert Path('version').read_text().strip() in ('0.56-beta.6.5.1','0.56-beta.6.5.2')
+          if active['version']==candidate['version']: assert active==candidate
+          else: assert active['version']=='0.56-beta.6.5.3'
+          assert Path('version').read_text().strip() in ('0.56-beta.6.5.1','0.56-beta.6.5.2','0.56-beta.6.5.3')
           PY
       - name: Live, VOD and artwork regressions against the actual candidate modules
         env:

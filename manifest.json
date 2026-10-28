@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.24-beta.56.6.5.2",
+  "release": "2026.10.28-beta.56.6.5.3",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -133,12 +133,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/readable/xtream-vod-player.beta56-5.js",
+      "path": "system/readable/xtream-vod-player.beta56-6-5-3.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "2d33520ad269b6851b24336066dfed6fd4f87ef5e6ec4bd3bb69598472ee8631",
-      "bytes": 76506
+      "sha256": "d51c1775510257872179f279db47e42f82cd5a01fbab4195d4f87a9f1943eb85",
+      "bytes": 81209
     },
     {
       "id": "common-player-ui",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.2"
+  "version": "0.56-beta.6.5.3"
 }

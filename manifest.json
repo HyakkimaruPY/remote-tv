@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.28-beta.56.6.5.3",
+  "release": "2026.10.28-beta.56.6.5.4",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -133,12 +133,12 @@
     },
     {
       "id": "xtream-vod-player",
-      "path": "system/readable/xtream-vod-player.beta56-6-5-3.js",
+      "path": "system/readable/xtream-vod-player.beta56-6-5-4.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "91a0cebcc80a60d3de914233487fab7094b6dcde731ab69eaf3d29cdd8c40a40",
-      "bytes": 81308
+      "sha256": "da9d04db8d58bd244878d36c1004aa6975218089a9f47dbfd9eac2c2174e0ca4",
+      "bytes": 81157
     },
     {
       "id": "common-player-ui",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-5-2.js",
+      "path": "system/readable/xtream-ui.beta56-6-5-4.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "72f02977b57f07080155c8e99fc3ad0e4a008c732468aa33b8d16fdf3086a4f4",
-      "bytes": 131595
+      "sha256": "36ba76795bac7fb72a7040700ad00ef5f9679ccdf4313de7316957913139ea33",
+      "bytes": 135098
     },
     {
       "id": "live-log-overlay",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.3"
+  "version": "0.56-beta.6.5.4"
 }

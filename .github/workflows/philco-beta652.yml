@@ -34,8 +34,8 @@ jobs:
           active=json.loads(Path('manifest.json').read_text())
           candidate=json.loads(Path('manifest.beta56-6-5-2.json').read_text())
           if active['version']==candidate['version']: assert active==candidate
-          else: assert active['version']=='0.56-beta.6.5.3'
-          assert Path('version').read_text().strip() in ('0.56-beta.6.5.1','0.56-beta.6.5.2','0.56-beta.6.5.3')
+          else: assert active['version'] in ('0.56-beta.6.5.3','0.56-beta.6.5.4')
+          assert Path('version').read_text().strip() in ('0.56-beta.6.5.1','0.56-beta.6.5.2','0.56-beta.6.5.3','0.56-beta.6.5.4')
           PY
       - name: Live, VOD and artwork regressions against the actual candidate modules
         env:

@@ -457,6 +457,8 @@
             if (!(v.duration > 0) || v.readyState < 1)
                 return;
             cp = +v.currentTime || 0;
+            if (playIssued && cp < pos - 2)
+                sought = playIssued = confirmedAt = 0;
             if (!sought || Math.abs(cp - pos) > 2 && !playIssued) {
                 try {
                     if (pos > 0)

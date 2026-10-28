@@ -137,8 +137,8 @@
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "d51c1775510257872179f279db47e42f82cd5a01fbab4195d4f87a9f1943eb85",
-      "bytes": 81209
+      "sha256": "91a0cebcc80a60d3de914233487fab7094b6dcde731ab69eaf3d29cdd8c40a40",
+      "bytes": 81308
     },
     {
       "id": "common-player-ui",

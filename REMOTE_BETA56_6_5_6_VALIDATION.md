@@ -36,3 +36,9 @@ Não houve teste real da conta/CDN: a consulta ao servidor foi bloqueada pela re
 ## Publicação
 
 Preparar código, manifesto ativo/arquivado e relatório mantendo o marcador 6.5.5; conferir blobs remotos e CI; ativar `version=0.56-beta.6.5.6` em commit separado. Na TV: Atualizar, fechar/reabrir completamente o Player 1, conferir 6.5.6 no Log, abrir M3U e YouTube beta. Nenhuma limpeza dos dados do usuário é necessária.
+
+## Conferência remota
+
+Runtime preparado em `2ac820e53f520753544658a74f902f06d92a9ed2`, com proteção adicional de eventos de saída em `09966436e95fcbd54bbc1770fdc56bd25312a6d7`. Foram conferidos no remoto os blobs Git dos 49 módulos e do userscript separado, correspondendo aos arquivos locais validados.
+
+[Validação 6.5.6 aprovada, incluindo browser, rede e OK/IR](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40914726640). [Gate geral Philco aprovado](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40914726651). A ativação do marcador 6.5.6 é feita em commit separado posterior a estas verificações; não significa confirmação física na TV.

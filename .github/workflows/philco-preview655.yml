@@ -1,0 +1,54 @@
+name: Validate Philco preview 6.5.5
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/philco-preview655.yml'
+      - '**/*beta56-6-5-5*'
+      - 'apps/youtube-beta/**'
+      - 'tests/beta56-6-5-5.*'
+      - 'tools/build-youtube655.cjs'
+      - 'manifest.json'
+      - 'version'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-save --no-package-lock --ignore-scripts jsdom@24 acorn@8 playwright @sparticuz/chromium
+      - name: Verify archived candidate, exact integrity and ES5
+        run: |
+          node - <<'JS'
+          const fs=require('fs'),assert=require('node:assert/strict'),crypto=require('crypto'),acorn=require('acorn');
+          const m=JSON.parse(fs.readFileSync('manifest.beta56-6-5-5.json'));
+          assert.equal(m.version,'0.56-beta.6.5.5');
+          for(const x of m.modules){const b=fs.readFileSync(x.path);assert.equal(b.length,x.bytes,x.path);assert.equal(crypto.createHash('sha256').update(b).digest('hex'),x.sha256,x.path);if(x.type==='js')acorn.parse(b.toString(),{ecmaVersion:5});}
+          const player=fs.readFileSync('apps/youtube-beta/player-beta56-6-5-5.js','utf8'),loader=fs.readFileSync('system/feature-loader-beta56-6-5-5.js','utf8');
+          assert.ok(loader.includes(crypto.createHash('sha256').update(player).digest('hex')));acorn.parse(player,{ecmaVersion:5});console.log('48 modules + lazy fork verified');
+          JS
+      - name: Rendering, preparation, lifecycle, resume and live regressions
+        env:
+          RTV_RESUME_UI: system/readable/xtream-ui.beta56-6-5-5.js
+          RTV_UI_SOURCE: system/readable/xtream-ui.beta56-6-5-5.js
+          RTV_VOD_SOURCE: system/readable/xtream-vod-player.beta56-6-5-4.js
+          RTV_APP_SOURCE: apps/player1/app.beta56-6-5-2.js
+        run: |
+          node tests/beta56-6-5-5.render.cjs
+          node tests/beta56-6-5-5.lifecycle.cjs
+          node tests/beta56-6-5-4.resume.cjs
+          node tests/beta56-6-5-3.vod.cjs
+          node tests/beta56-6.live.cjs
+          node tests/beta56-5.live.cjs
+      - name: Browser fixture, 1280x720 and actual isolated upstream bundle
+        run: |
+          node - <<'JS'
+          const fs=require('fs'),z=require('zlib'),path=require('path');const root=path.dirname(require.resolve('@sparticuz/chromium/package.json'));fs.writeFileSync('/tmp/rtv-chromium',z.brotliDecompressSync(fs.readFileSync(path.join(root,'bin/chromium.br'))));fs.chmodSync('/tmp/rtv-chromium',0o755);
+          JS
+          node tests/beta56-6-5-5.browser.cjs

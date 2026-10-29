@@ -1,0 +1,37 @@
+<style id="rtvLauncher651css">#menu.rtv-launcher651{position:fixed;left:0;top:0;width:1280px;height:720px;padding:0;margin:0;background:#000!important;box-shadow:none!important;overflow:hidden}
+#menu.rtv-launcher651 .rtv651brand{position:absolute;left:70px;top:48px;width:690px;height:86px}
+#menu.rtv-launcher651 .rtv651brand h1{font:normal 36px Arial;margin:0 0 7px;color:#f2f2f2;letter-spacing:.2px}
+#menu.rtv-launcher651 .rtv651brand p{font:17px Arial;margin:0;color:#8f979d}
+#menu.rtv-launcher651 .rtv651status{position:absolute;right:72px;top:62px;width:390px;text-align:right;color:#777f84;font:15px Arial}
+#menu.rtv-launcher651 .rtv651tile{position:absolute;width:330px;height:128px;margin:0!important;padding:19px 21px!important;background:#101010!important;color:#eee!important;border:1px solid #34383b!important;border-radius:8px!important;box-shadow:none!important;text-align:left!important;overflow:hidden}
+#menu.rtv-launcher651 .rtv651tile .rtv651kicker{display:block;color:#777f84;font:12px Arial;letter-spacing:1.4px;margin-bottom:15px}
+#menu.rtv-launcher651 .rtv651tile strong{display:block;color:#f2f2f2;font:normal 27px Arial;line-height:32px}
+#menu.rtv-launcher651 .rtv651tile:focus{outline:0!important;background:#191919!important;border:2px solid #f0f0f0!important;padding:18px 20px!important}
+#menu.rtv-launcher651 .rtv651primary{background:#141414!important}
+#rawLaunch{left:70px;top:164px}#rtvSearchHome{left:430px;top:164px}#rtvLibs{left:70px;top:316px}
+#tv{left:430px;top:316px}#forceUpdate{left:70px;top:468px}#yt3{left:430px;top:468px}
+#menu.rtv-launcher651 #y2{display:none!important}#menu.rtv-launcher651 .rtv651tile.rtv651disabled{opacity:.48}
+#rtv651info{position:absolute;left:800px;top:164px;width:408px;height:432px;box-sizing:border-box;border:1px solid #2d3134;border-radius:9px;background:#080808;padding:28px 28px;visibility:hidden;opacity:0}
+#rtv651info.rtv651show{visibility:visible;opacity:1}
+#rtv651info .rtv651infoKicker{font:12px Arial;color:#737b80;letter-spacing:1.5px;margin-bottom:17px}
+#rtv651info h2{font:normal 30px Arial;color:#f1f1f1;margin:0 0 22px;line-height:35px}
+#rtv651info p{font:18px Arial;color:#a4aaae;line-height:28px;margin:0;max-width:345px}
+#rtv651info .rtv651hint{position:absolute;left:28px;bottom:25px;color:#686f74;font:14px Arial}</style>
+<section id=menu class="rtv-launcher651">
+  <div class="rtv651brand"><h1 id="rtvVersionTitle">Remote TV</h1><p>Launcher leve · Philco</p></div>
+  <div id="rtv651status" class="rtv651status">M3U · mídia · bibliotecas</div>
+  <button id=rawLaunch class="rtv651tile rtv651primary" data-kicker="PLAYER" data-desc="Abre a biblioteca M3U principal com TV ao vivo, filmes e séries."><span class=rtv651kicker>PLAYER</span><strong>M3U</strong></button>
+  <button id=rtvSearchHome class=rtv651tile data-kicker="CATÁLOGO" data-desc="Pesquisa canais e conteúdos do catálogo sem carregar listas inteiras na tela."><span class=rtv651kicker>CATÁLOGO</span><strong>Busca</strong></button>
+  <button id=rtvLibs class=rtv651tile data-kicker="SISTEMA" data-desc="Gerencia módulos compatíveis com esta Philco. Bibliotecas incompatíveis são ocultadas automaticamente."><span class=rtv651kicker>SISTEMA</span><strong>Bibliotecas</strong></button>
+  <button id=tv class=rtv651tile data-kicker="LEGADO" data-desc="Abre o caminho M3U legado preservado para compatibilidade e recuperação."><span class=rtv651kicker>LEGADO</span><strong>M3U Player</strong></button>
+  <button id=forceUpdate class=rtv651tile data-kicker="MANUTENÇÃO" data-desc="Verifica a versão remota e aplica apenas uma versão publicada e validada."><span class=rtv651kicker>MANUTENÇÃO</span><strong>Atualizar</strong></button>
+  <button id=yt3 class=rtv651tile data-kicker="WEB" data-desc="Testa o fork youtube-webos na Philco, com diagnóstico de interface, TLS e reprodução."><span class=rtv651kicker>WEB</span><strong>YouTube beta</strong></button>
+  <div id=rtv651info><div id=rtv651infoKicker class=rtv651infoKicker></div><h2 id=rtv651infoTitle></h2><p id=rtv651infoText></p><div class=rtv651hint>OK para abrir</div></div>
+  <button id=y2 tabindex=-1>YouTube 2</button>
+</section>
+<section id=new class=h><h1>YouTube 2</h1><form id=sf><input id=q><button>Buscar</button></form><div id=results></div></section>
+<section id=tvlist class=h><h1>M3U Player</h1><div id=cats></div><button id=tvback>Voltar</button><button id=rawIn>M3U</button></section>
+<section id=player class=h><div id=side><h2 id=gt>Canais</h2><div id=channels></div></div><div id=stage><h1 id=pt>Selecione um canal</h1><video id=v autoplay></video><p id=ps>Pronto</p><div id=ctrl><button id=pb>Voltar</button><button id=pf>Tela cheia</button><button id=pl>Log</button></div></div></section>
+<aside id=logp class=h><h2>Log</h2><div id=logb></div></aside>
+<section id=yt3probe class=h><div id=yt3head><h1>YouTube 3 · teste mínimo</h1><button id=yt3back>Voltar</button></div><p id=yt3status>Embed oficial do YouTube.</p><iframe id=yt3frame src=about:blank frameborder=0 tabindex=0 allow="autoplay; encrypted-media" allowfullscreen></iframe></section>
+

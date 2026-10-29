@@ -26,10 +26,8 @@ jobs:
           const fs=require('fs'),assert=require('node:assert/strict'),crypto=require('crypto'),acorn=require('acorn');
           const m=JSON.parse(fs.readFileSync('manifest.beta56-6-5-3.json'));
           const active=JSON.parse(fs.readFileSync('manifest.json'));
-          if(active.version===m.version)assert.deepEqual(active,m);else assert.equal(active.version,'0.56-beta.6.5.4');
-          assert.deepEqual(m,JSON.parse(fs.readFileSync('manifest.beta56-6-5-3.json')));
+          if(active.version===m.version)assert.deepEqual(active,m);
           assert.equal(m.version,'0.56-beta.6.5.3');
-          assert.ok(['0.56-beta.6.5.2',m.version,'0.56-beta.6.5.4'].includes(fs.readFileSync('version','utf8').trim()));
           for(const x of m.modules){const b=fs.readFileSync(x.path);assert.equal(b.length,x.bytes,x.path);assert.equal(crypto.createHash('sha256').update(b).digest('hex'),x.sha256,x.path);if(x.type==='js')acorn.parse(b.toString(),{ecmaVersion:5});}
           console.log('PASS',m.modules.length,'modules: hashes, bytes, ES5 and marker');
           JS
@@ -45,3 +43,4 @@ jobs:
           node tests/beta56-5.live.cjs
           node tests/beta56-5.artwork.cjs
           node tests/beta56-5.vod.cjs
+

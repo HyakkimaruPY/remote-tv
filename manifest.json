@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.28-beta.56.6.5.4",
+  "release": "2026.10.29-beta.56.6.5.5",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-6-5-1.html",
+      "path": "apps/player1/shell.beta56-6-5-5.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "1f52e563afa8de16efa5283b2050ddd6f7840230807b676e5f7030eacfb7a348",
-      "bytes": 5090
+      "sha256": "caacee35e61fd3fb581b847c747d65e691b9923728c4e7d43247a07050c3cd55",
+      "bytes": 5100
     },
     {
       "id": "style",
@@ -43,12 +43,12 @@
     },
     {
       "id": "feature-loader",
-      "path": "system/feature-loader-beta56-3.js",
+      "path": "system/feature-loader-beta56-6-5-5.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "fa72c37930e981715e591fb01e84a598d4a149b04a71e921a9881a93b978c5a8",
-      "bytes": 4373
+      "sha256": "459b79e1cda398a82631c15e86e74da6cd6faf22dddc9376e41b979f3e121ef5",
+      "bytes": 5775
     },
     {
       "id": "app",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-5-4.js",
+      "path": "system/readable/xtream-ui.beta56-6-5-5.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "205dc22bb846c8052c204e0b2f1d9bb6863382665c8b5b12465907858f0db663",
-      "bytes": 135266
+      "sha256": "b6410d29c43efe487bda2e2ae5ba28a3e87564424dacfae6e938f025ac4cc4e4",
+      "bytes": 142935
     },
     {
       "id": "live-log-overlay",
@@ -178,12 +178,12 @@
     },
     {
       "id": "graphos-skin",
-      "path": "system/injections/graphos-skin-beta56-6-2.js",
+      "path": "system/injections/graphos-skin-beta56-6-5-5.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "cc15a24cc2e311cb75b1a7537540d6de4f3ea370a3276cf54d1b914201838af3",
-      "bytes": 10837
+      "sha256": "68cb7dfd1c3b22b8c8b5a13cbb84d3cf9804b6bfdbf54855fac406d34c1dba51",
+      "bytes": 12975
     },
     {
       "id": "hooks",
@@ -241,12 +241,12 @@
     },
     {
       "id": "philco-library-manager",
-      "path": "philco/bibliotecas/manager.beta56-6-5-2.js",
+      "path": "philco/bibliotecas/manager.beta56-6-5-5.js",
       "type": "js",
       "phase": "post",
       "required": false,
-      "sha256": "11687e5080676f8a1aef1dfbe9d6463633f69d50f77dd43368d5b5eef525640d",
-      "bytes": 25757
+      "sha256": "d115a505ddd3aac69b3a2352c72cef50722766234822f6a3981301efd0b5ffdd",
+      "bytes": 25644
     },
     {
       "id": "philco-module-diagnostic",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.4"
+  "version": "0.56-beta.6.5.5"
 }

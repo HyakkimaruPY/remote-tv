@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/NicholasBly/youtube-webos",
+  "commit": "78a374a32774b92a2094e1cda8db4da0d83540d4",
+  "version": "0.8.4",
+  "license": "GPL-3.0-only",
+  "integration": "Vendored source fork under upstream/, compiled as ES5 and launched in an opaque sandbox frame by the existing Philco bridge",
+  "platform": "Philco PH32C10DSGWVA stock QtWebKit; no firmware modifications",
+  "disabled": ["LG Luna/power integrations", "webOS Cast", "OLED screensaver actions", "perf monitor", "emoji font downloads"],
+  "validation": "Build, ES5 parse and synthetic browser fixture only; real YouTube network/decoder playback on the television remains unverified"
+}

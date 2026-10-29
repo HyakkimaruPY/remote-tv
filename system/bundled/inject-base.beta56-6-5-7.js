@@ -8,4 +8,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
         windowRef.RemoteTV.injectionBase = '2026.09.17';
 }(this));
 
-}.call(this,this));
+}.call(window,window));

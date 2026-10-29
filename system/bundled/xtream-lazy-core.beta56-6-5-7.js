@@ -555,4 +555,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
     log('BOOT', 'Xtream core v0.31 \xB7 retry de HTTP 200 vazio \xB7 catálogo lazy por página');
 }(this));
 
-}.call(this,this));
+}.call(window,window));

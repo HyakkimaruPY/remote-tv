@@ -199,4 +199,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
     remoteTV.hlsjs = '0.56-beta';
 }(this, document));
 
-}.call(this,this));
+}.call(window,window));

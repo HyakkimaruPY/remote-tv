@@ -91,4 +91,4 @@ if(d.addEventListener){d.addEventListener('keydown',function(e){if(active)key(e)
 w.YouTube3Probe={version:'0.56-beta.6.5.6',quietUntil:function(){return closedAt?closedAt+400:0;},open:open,close:close,back:close,key:key,state:function(){return{active:active,stage:state,stages:rows.slice(0)};}};
 }(this,document));
 
-}.call(this,this));
+}.call(window,window));

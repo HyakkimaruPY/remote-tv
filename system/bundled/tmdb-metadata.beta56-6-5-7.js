@@ -334,4 +334,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
     X.log('BOOT', 'TMDB beta5 \xB7 fei-config tmdb-config \xB7 PT/EN \xB7 backdrop/logo/rating detail-only');
 }(this));
 
-}.call(this,this));
+}.call(window,window));

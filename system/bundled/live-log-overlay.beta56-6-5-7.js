@@ -161,4 +161,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
         xtreamApi.log('BOOT', 'Live log overlay v0.43 \xB7 fechamento explícito + XHR invalidado');
 }(this, document));
 
-}.call(this,this));
+}.call(window,window));

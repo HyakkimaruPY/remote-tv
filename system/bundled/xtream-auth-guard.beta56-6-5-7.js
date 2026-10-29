@@ -109,4 +109,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
     xtreamApi.log('BOOT', 'Auth guard v0.30 \xB7 revalida CONFIG/DNS \xB7 preserva sessão válida em falha transitória');
 }(this));
 
-}.call(this,this));
+}.call(window,window));

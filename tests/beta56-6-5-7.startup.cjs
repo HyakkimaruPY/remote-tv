@@ -14,7 +14,7 @@ async function run(mode,{stale=false,replay=false,cancel=false,expired=false}={}
  const done=()=>{if(this.aborted)return;this.status=status;this.readyState=4;this.responseText=body;if(this.onreadystatechange)this.onreadystatechange()};if(this.async===false)done();else w.setTimeout(done,delay);
  }abort(){this.aborted=true;}setRequestHeader(){}};
  w.RemoteTV.fetch=(u,cb)=>{const x=new w.XMLHttpRequest();x.open('GET',w.RemoteTV.bridgeURL(u));x.onreadystatechange=()=>{if(x.readyState===4)cb(x.status===200?null:'HTTP '+x.status,x.responseText)};x.send()};
- function apply(x){const code=read(x.path);w.RemoteTV.files[x.id]=code;if(x.type==='html')d.body.innerHTML=code;else if(x.type==='json')w.RemoteTV.data[x.id]=JSON.parse(code);else if(x.type==='js'){const s=d.createElement('script');s.text=code;d.head.appendChild(s);}else if(x.type==='css'){const s=d.createElement('style');s.textContent=code;d.head.appendChild(s);}}
+ function apply(x){const code=read(x.path);w.RemoteTV.files[x.id]=code;if(x.type==='html')d.body.innerHTML=code;else if(x.type==='json')w.RemoteTV.data[x.id]=JSON.parse(code);else if(x.type==='js'){if(mode==='foreign'){w.Function('code','eval(code);').call(w.RemoteTV,code);}else{const s=d.createElement('script');s.text=code;d.head.appendChild(s);}}else if(x.type==='css'){const s=d.createElement('style');s.textContent=code;d.head.appendChild(s);}}
  for(const x of m.modules)if(mode==='all'||['policy','shell','style','app'].includes(x.id))apply(x);
  assert.equal(w.RemoteTV.activeCoreBundle,'0.56-beta.6.5.7');assert.equal(legacy,0);assert.deepEqual(ready,['player1'],'ready must be emitted once after the whole core');const ui=w.RawM3U,core=w.XT10;
  if(stale){w.RawM3U={open(){legacy++},back(){return false},key(){return false}};d.getElementById('rawLaunch').onclick=()=>legacy++;}
@@ -29,4 +29,4 @@ async function run(mode,{stale=false,replay=false,cancel=false,expired=false}={}
  else{assert.equal(d.querySelector('.ch14').textContent,'Channel');assert.equal(requests.filter(u=>u.includes('action=get_live_categories')).length,1);assert.equal(requests.filter(u=>u.includes('action=get_live_streams')&&u.includes('category_id=1')).length,1);}
  w.close();console.log('PASS startup',mode,{stale,replay,cancel,expired},': no legacy, single authentication and correct final state');
 }
-(async()=>{await run('all');await run('minimum');await run('minimum',{stale:true});await run('minimum',{replay:true});await run('minimum',{cancel:true});await run('all',{expired:true});})().catch(e=>{console.error(e);process.exitCode=1});
+(async()=>{await run('all');await run('minimum');await run('foreign');await run('minimum',{stale:true});await run('minimum',{replay:true});await run('minimum',{cancel:true});await run('all',{expired:true});})().catch(e=>{console.error(e);process.exitCode=1});

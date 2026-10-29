@@ -10,8 +10,9 @@ O módulo app 6.5.2 usado até a 6.5.6 contém um fallback síncrono que avalia 
 
 ## Correção
 
-O app 6.5.7 incorpora o núcleo de runtime, entrada, transporte/autenticação, live/VOD, metadata, UI, estilos, atualização e adaptador YouTube numa única execução. Fontes correspondentes e gerador permanecem no repositório. O bundle ES5 minificado tem 206.606 bytes, abaixo de 256 KiB e do limite de 512 KiB do bootstrap. Não há novo endpoint, ação nativa, firmware, WebKit ou parser de playlist integral.
+O app 6.5.7 incorpora o núcleo de runtime, entrada, transporte/autenticação, live/VOD, metadata, UI, estilos, atualização e adaptador YouTube numa única execução. Fontes correspondentes e gerador permanecem no repositório. O bundle ES5 minificado tem 206.610 bytes, abaixo de 256 KiB e do limite de 512 KiB do bootstrap. Não há novo endpoint, ação nativa, firmware, WebKit ou parser de playlist integral.
 
+- O app e os recursos do núcleo fixam explicitamente o contexto global `window`, inclusive se o bootstrap os avaliar com outro `this`.
 - A aplicação não faz mais XHR/eval de `legacy.html`.
 - `ready(player1)` só ocorre após o núcleo estar completo. O bootstrap mantém sua regra de rollback se a inicialização falhar.
 - Os 49 IDs/fases do manifesto são mantidos. Os recursos independentes do núcleo permanecem disponíveis com guardas que evitam reinstalação após o app completo, preservando estado, foco e transações em andamento.
@@ -21,7 +22,7 @@ O app 6.5.7 incorpora o núcleo de runtime, entrada, transporte/autenticação, 
 
 ## Verificação executada
 
-`tests/beta56-6-5-7.startup.cjs`: seis cenários em jsdom, com scripts reais do candidato e transporte/conta fictícios:
+`tests/beta56-6-5-7.startup.cjs`: sete cenários em jsdom, com scripts reais do candidato e transporte/conta fictícios:
 
 1. Aplicação dos 49 módulos em ordem, sem legacy, ready único, uma configuração + uma autenticação, categoria/canal carregados.
 2. Bootstrap de compatibilidade executando apenas policy/shell/style/app, sem core previamente instalado: mesmo resultado.
@@ -29,6 +30,7 @@ O app 6.5.7 incorpora o núcleo de runtime, entrada, transporte/autenticação, 
 4. Recursos JS do manifesto reaplicados durante a autenticação: não reinicializam core/UI nem cancelam a transação.
 5. Voltar durante autenticação: transporte cancelado e nenhum canal/tela reaberto por callback tardio.
 6. Conta expirada: erro explícito, sem liberar catálogo.
+7. App avaliado por um bootstrap com `this=RemoteTV` em vez de `window`: o núcleo instala os aliases no objeto global correto e abre o catálogo.
 
 `tests/beta56-6-5-7.browser.cjs`: Chromium headless real, 1280×720, bundle compacto do candidato, inicialização só pelo app, alias/handler antigos, OK do teclado, reaplicação de recursos e carregamento de categoria/canal. Nenhum `legacy.html`, uma configuração e uma autenticação, sem erro JS. Rede e conta são simuladas; nenhum dado real do provedor foi enviado.
 

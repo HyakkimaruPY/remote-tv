@@ -291,4 +291,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
     xtreamApi.log('BOOT', 'AutoVOD beta4 \xB7 início otimista imediato \xB7 Range 0-1 somente em fallback');
 }(this));
 
-}.call(this,this));
+}.call(window,window));

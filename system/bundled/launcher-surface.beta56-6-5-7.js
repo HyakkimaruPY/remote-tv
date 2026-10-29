@@ -120,4 +120,4 @@ else boot();
 R.launcher651 = {refresh:schedule, searchReady:searchReady, showInfo:showInfo, hideInfo:hideInfo};
 }(this, document));
 
-}.call(this,this));
+}.call(window,window));

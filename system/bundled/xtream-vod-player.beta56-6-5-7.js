@@ -1875,4 +1875,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
     xtreamApi.log('BOOT', 'VOD player beta4 \xB7 próximo episódio persistente + término automático + reconexão conservadora');
 }(this, document));
 
-}.call(this,this));
+}.call(window,window));

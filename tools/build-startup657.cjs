@@ -18,11 +18,11 @@ for(const id of ids){let code=read(byId[id].path);
  out+='\n/* module '+id+' */\n'+begin+code+'\n'+end;
  if(id!=='app'){
   const marker=id==='runtime'?'__runtime657':id==='feature-loader'?'__features657':null;
-  const guarded='/* 6.5.7 standalone module; skip only after complete bundled startup. */\n(function(w){\nif(w.RemoteTV&&w.RemoteTV.activeCoreBundle===\'0.56-beta.6.5.7\')return;\n'+code+'\n'+(marker?'if(w.RemoteTV)w.RemoteTV.'+marker+'=true;\n':'')+'}.call(this,this));\n';
+  const guarded='/* 6.5.7 standalone module; skip only after complete bundled startup. */\n(function(w){\nif(w.RemoteTV&&w.RemoteTV.activeCoreBundle===\'0.56-beta.6.5.7\')return;\n'+code+'\n'+(marker?'if(w.RemoteTV)w.RemoteTV.'+marker+'=true;\n':'')+'}.call(window,window));\n';
   fs.writeFileSync('system/bundled/'+id+'.beta56-6-5-7.js',guarded);
  }
 }
-out+=read('system/startup-entry657.js')+'\nR.activeCoreBundle="0.56-beta.6.5.7";\nR.ready("player1");\n}.call(this,this,document));\n';
+out+=read('system/startup-entry657.js')+'\nR.activeCoreBundle="0.56-beta.6.5.7";\nR.ready("player1");\n}.call(window,window,document));\n';
 const packed=await minify(out,{ecma:5,compress:{passes:1},mangle:{safari10:true},format:{ascii_only:true,comments:false}});out=packed.code+'\n';
 if(Buffer.byteLength(out)>500000)throw Error('core bundle exceeds conservative 500000 byte budget');
 fs.writeFileSync('apps/player1/app.beta56-6-5-7.js',out);

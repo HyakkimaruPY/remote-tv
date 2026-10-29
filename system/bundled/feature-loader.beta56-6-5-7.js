@@ -162,4 +162,4 @@ if(w.RemoteTV&&w.RemoteTV.activeCoreBundle==='0.56-beta.6.5.7')return;
 
 
 if(w.RemoteTV)w.RemoteTV.__features657=true;
-}.call(this,this));
+}.call(window,window));

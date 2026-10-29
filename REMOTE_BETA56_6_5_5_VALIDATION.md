@@ -35,3 +35,9 @@ O teste de browser usa uma página sintética; **YouTube real e reprodução no 
 Preparar módulos/manifestos mantendo `version=0.56-beta.6.5.4`; conferir blobs e concorrência; ativar `version=0.56-beta.6.5.5` em commit separado. O workflow novo valida o candidato; os workflows 6.5.3/6.5.4 verificam seus manifestos arquivados sem exigir que a versão ativa permaneça antiga.
 
 Na TV: Atualizar, fechar/reabrir completamente o Player 1, confirmar 6.5.5 no Log. Ativar Configurações → Renderização e percorrer os seis contextos; conferir opacidade após reabrir. Testar filme/episódio e retomada. Abrir YouTube beta; se não iniciar ou reproduzir, usar Diagnóstico para registrar a última etapa. Não limpar favoritos, progresso ou dados do aplicativo.
+
+## Conferência remota
+
+Código publicado em `1353bb28204518948159f9b590f3785499fb7a51`; ajustes do runner e gates em `121b8a3eb66175b78381c6885be7d2bf0f71774a`. Os 89 blobs preparados conferiram com os hashes Git locais; os módulos inalterados mantêm seus SHA-256 originais.
+
+[GitHub Actions 6.5.5 aprovado, incluindo browser e fork compilado](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40909642376). [Gate geral Philco aprovado](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40909642257). A ativação usa `version=0.56-beta.6.5.5` em commit separado posterior a estas verificações. Não é confirmação de aplicação na TV nem de YouTube real.

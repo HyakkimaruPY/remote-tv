@@ -47,8 +47,8 @@
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "c523208ea88a67f06a9290f130363a5affe8e7b935ae06f36b9e903ff6ef9dce",
-      "bytes": 6509
+      "sha256": "4f8efa8b98aeeaf95b29320e1da5bc1b2e12f813807ffa5f415ffac145e7cf0a",
+      "bytes": 6618
     },
     {
       "id": "app",
@@ -443,8 +443,8 @@
       "type": "js",
       "phase": "post",
       "required": true,
-      "bytes": 10266,
-      "sha256": "bd5e599bc5dcf8a722097e9733ecc5a07485f92f88197847e160400a3ef3fa95"
+      "bytes": 10712,
+      "sha256": "e3fc36b9541f6cbb781a2743eb9375e3e15c3af2a6b90823865703aa7a6c323d"
     }
   ],
   "version": "0.56-beta.6.5.6"

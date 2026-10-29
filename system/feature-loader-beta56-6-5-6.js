@@ -90,7 +90,7 @@
     var youtube = new FeatureLoader({
         id: 'youtube3',
         path: 'apps/youtube-beta/player-beta56-6-5-6.js',
-        sha: 'bd5e599bc5dcf8a722097e9733ecc5a07485f92f88197847e160400a3ef3fa95',
+        sha: 'e3fc36b9541f6cbb781a2743eb9375e3e15c3af2a6b90823865703aa7a6c323d',
         key: 'remote-tv.feature.youtube.beta56.656',
         globalName: 'YouTube3Probe'
     });
@@ -143,6 +143,8 @@
     function youtubeOK656(e){var k=e.keyCode||e.which||0,n=documentRef.activeElement,at=new Date().getTime();
         if(!n||n.id!=='yt3'||(k!==13&&k!==41))return;
         if(e.preventDefault)e.preventDefault();if(e.stopImmediatePropagation)e.stopImmediatePropagation();else if(e.stopPropagation)e.stopPropagation();
+        var yt656=windowRef.YouTube3Probe;
+        if(yt656&&yt656.quietUntil&&at<yt656.quietUntil())return;
         if(at-lastMenuOK656<400)return;lastMenuOK656=at;openYouTube();
     }
     if(documentRef.addEventListener){documentRef.addEventListener('keydown',youtubeOK656,true);documentRef.addEventListener('irkeypress',youtubeOK656,true);}

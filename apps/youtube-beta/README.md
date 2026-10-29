@@ -21,3 +21,7 @@ node tools/build-youtube655.cjs
 O último comando recompõe o módulo lazy, atualiza seu hash e prepara os manifestos; **não altera `version`**. Conferir concorrência e integridade remota antes de ativar o marcador.
 
 Licenças: `upstream/LICENSE` e `THIRD_PARTY_NOTICES.txt`. A fonte correspondente, o adaptador e as instruções de build acompanham o bundle neste repositório.
+
+## Correção 6.5.6
+
+O adaptador de 10 KB agora é um módulo obrigatório do manifesto e abre a tela antes de buscar o userscript de aproximadamente 475 KB. O userscript é um arquivo separado, verificado por SHA-256 e com timeout de 30 s. OK/IR duplicados não fecham a tela no mesmo comando físico. Erros de download ou integridade permanecem visíveis com Voltar funcionando. O build desta correção usa `node tools/build-network656.cjs`; o script 655 acima é histórico e recompõe a release 655. Os limites de reprodução real/TLS/CORS descritos acima permanecem.

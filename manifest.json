@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.29-beta.56.6.5.5",
+  "release": "2026.10.29-beta.56.6.5.6",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -43,12 +43,12 @@
     },
     {
       "id": "feature-loader",
-      "path": "system/feature-loader-beta56-6-5-5.js",
+      "path": "system/feature-loader-beta56-6-5-6.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "459b79e1cda398a82631c15e86e74da6cd6faf22dddc9376e41b979f3e121ef5",
-      "bytes": 5775
+      "sha256": "c523208ea88a67f06a9290f130363a5affe8e7b935ae06f36b9e903ff6ef9dce",
+      "bytes": 6509
     },
     {
       "id": "app",
@@ -88,21 +88,21 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/readable/xtream-lazy-core.beta56-3.js",
+      "path": "system/readable/xtream-lazy-core.beta56-6-5-6.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "0d298441a06bc6e9043147f81fbdfae69510153c0c5a80d269ae9b5be9585e90",
-      "bytes": 21806
+      "sha256": "ffa971a6dcd27625269f6ac74b31aec880158e37b807fca181ab25bb01f90107",
+      "bytes": 23056
     },
     {
       "id": "xtream-auth-guard",
-      "path": "system/readable/xtream-auth-guard.beta56-3.js",
+      "path": "system/readable/xtream-auth-guard.beta56-6-5-6.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "03548d37e17b60e531429bf760f2eedca446b9a8e4d13371ace9b44f10ac6239",
-      "bytes": 3711
+      "sha256": "d6a028b6643837d0f8fbf0332bd4e05fc92f29c3eb4df96b6f39ed980149e00d",
+      "bytes": 3929
     },
     {
       "id": "xtream-stream-router",
@@ -436,7 +436,16 @@
       "required": false,
       "bytes": 1228,
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
+    },
+    {
+      "id": "youtube-beta-launcher",
+      "path": "apps/youtube-beta/player-beta56-6-5-6.js",
+      "type": "js",
+      "phase": "post",
+      "required": true,
+      "bytes": 10266,
+      "sha256": "bd5e599bc5dcf8a722097e9733ecc5a07485f92f88197847e160400a3ef3fa95"
     }
   ],
-  "version": "0.56-beta.6.5.5"
+  "version": "0.56-beta.6.5.6"
 }

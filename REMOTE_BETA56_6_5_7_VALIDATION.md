@@ -50,3 +50,7 @@ node tools/build-startup657.cjs
 ```
 
 O gerador usa as fontes referenciadas pelo manifesto arquivado 6.5.6, cria o app compacto e os recursos com guardas, recompõe o manifesto 6.5.7 e não altera `version`.
+
+## Conferência remota
+
+Código final em `8acf772c0c993d8c9567ba9de6abfea21ddfe9f0`; 30 arquivos novos/alterados conferidos no remoto pelos hashes Git. [Workflow 6.5.7 aprovado, incluindo inicialização com contexto externo e browser](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40919096290). [Gate geral Philco aprovado](https://github.com/HyakkimaruPY/remote-tv/actions/runs/40919096755). O marcador 6.5.7 é ativado em commit separado posterior a essas verificações. Validação física ainda depende da TV.

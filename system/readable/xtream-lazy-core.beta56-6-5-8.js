@@ -125,10 +125,13 @@
     function parseCredentials(u, t) {
         u = String(u || '').replace(/^\s+|\s+$/g, '');
         t = String(t || '');
-        var m = /^(https?):\/\/([^\/?#]+)/i.exec(u), scheme = 'http', h, user, pass, path, ui, dm, um, pm;
+        var m = /^(https?):\/\/([^\/?#]+)/i.exec(u), scheme = 'http', h, user, pass, path, ui, dm, um, pm, base = '';
         if (m) {
             scheme = m[1].toLowerCase();
             h = m[2];
+            var scriptPath = /^(?:https?):\/\/[^\/?#]+(\/[^?#]*?)\/(?:get|player_api|xmltv)\.php(?:[?#]|$)/i.exec(u);
+            var mediaPath = /^(?:https?):\/\/[^\/?#]+(\/[^?#]*?)\/(?:live|movie|series)\/[^\/?#]+\/[^\/?#]+(?:\/|$)/i.exec(u);
+            base = scriptPath ? scriptPath[1] : (mediaPath ? mediaPath[1] : '');
             ui = /^([^:@]+):([^@]+)@(.+)$/.exec(h);
             if (ui) {
                 user = decodeQueryValue(ui[1]);
@@ -156,13 +159,21 @@
         pm = /(?:^|[\r\n])\s*(?:PASSWORD|PASS)\s*=\s*["']?([^"'\r\n]+)["']?/i.exec(t);
         if (!h && dm) {
             var dms = String(dm[1] || '').replace(/^\s+|\s+$/g, '');
-            if (/^https:\/\//i.test(dms)) scheme = 'https';
-            h = dms.replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/^\s+|\s+$/g, '');
+            var dnsParts = /^(https?):\/\/([^\/?#]+)(\/[^?#]*)?/i.exec(dms);
+            var bareParts = /^([^\/?#]+)(\/[^?#]*)?/.exec(dms);
+            if (dnsParts) {
+                scheme = dnsParts[1].toLowerCase();
+                h = dnsParts[2];
+                base = dnsParts[3] || '';
+            } else if (bareParts) {
+                h = bareParts[1];
+                base = bareParts[2] || '';
+            }
         }
         user = user || um && String(um[1] || '').replace(/^\s+|\s+$/g, '');
         pass = pass || pm && String(pm[1] || '').replace(/^\s+|\s+$/g, '');
         return h && user && pass ? {
-            d: scheme + '://' + h,
+            d: scheme + '://' + h + String(base || '').replace(/\/+$/, ''),
             u: user,
             p: pass
         } : null;

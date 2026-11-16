@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.13",
+  "release": "2026.11.16-beta.56.6.5.14",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-6-5-8.html",
+      "path": "apps/player1/shell.beta56-6-5-14.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "6cfb0971a8881fd137874931f890dda4b249af29cc3e8f84b248c154a3370c92",
-      "bytes": 5063
+      "sha256": "3bfe7bd80b8639676880879b8ea30938cd12a0f279ae7ad441ffb59a2ebfd057",
+      "bytes": 5399
     },
     {
       "id": "style",
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.beta56-6-5-13.js",
+      "path": "apps/player1/app.beta56-6-5-14.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "31a0394fc8a3b224b03a09ec8bd4c9700c6b9836a15e08480a9729d2c1d9a7bf",
-      "bytes": 42827
+      "sha256": "04605cfbd121d7a36ead6c1feab43a065c40f4c1745d2fb1e0c9ed624280b1bb",
+      "bytes": 44485
     },
     {
       "id": "force-update",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-5-5.js",
+      "path": "system/readable/xtream-ui.beta56-6-5-14.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "b6410d29c43efe487bda2e2ae5ba28a3e87564424dacfae6e938f025ac4cc4e4",
-      "bytes": 142935
+      "sha256": "58665710390a00f48c6ca812e12ab205e8a1c5f3a1de2b2a486970f4f1cb822d",
+      "bytes": 142959
     },
     {
       "id": "live-log-overlay",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.13"
+  "version": "0.56-beta.6.5.14"
 }

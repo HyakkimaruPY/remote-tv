@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.17",
+  "release": "2026.11.16-beta.56.6.5.18",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.beta56-6-5-17.js",
+      "path": "apps/player1/app.beta56-6-5-18.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "cf7783ba3fb786a5756a1761010fe3effa86dc2b41f6c94a09b5542f20395b49",
-      "bytes": 47922
+      "sha256": "fbcd70b362c4c483361a3c233d4887ae6f7b2ce207c6e4912fe470d76ca1b3d3",
+      "bytes": 50137
     },
     {
       "id": "force-update",
@@ -160,12 +160,12 @@
     },
     {
       "id": "xtream-ui",
-      "path": "system/readable/xtream-ui.beta56-6-5-14.js",
+      "path": "system/readable/xtream-ui.beta56-6-5-18.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "58665710390a00f48c6ca812e12ab205e8a1c5f3a1de2b2a486970f4f1cb822d",
-      "bytes": 142959
+      "sha256": "45969ae0db0b4d02f69b06788961c632d484eb90cb21ce5728445f17a1f3693a",
+      "bytes": 143131
     },
     {
       "id": "live-log-overlay",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.17"
+  "version": "0.56-beta.6.5.18"
 }

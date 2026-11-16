@@ -1,7 +1,7 @@
 plugins { id 'com.android.application' }
 android {
     namespace 'dev.auratv.launcher'
-    compileSdk 35
+    compileSdk 36
     defaultConfig {
         applicationId 'dev.auratv.launcher'
         minSdk 23

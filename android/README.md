@@ -10,8 +10,8 @@ Projeto híbrido offline de IPTV, compartilhando backend Java nativo (SQLite, Me
 
 ## Compilar
 
-1. Abra a pasta `android/` no Android Studio com **JDK 17**, SDK Android 35, internet para resolver dependências Gradle. O projeto usa AGP 8.7.3 e Gradle 8.9.
-2. O arquivo `gradle/wrapper/gradle-wrapper.properties` está preparado; o **`gradle-wrapper.jar` não foi gerado** neste ambiente. No Android Studio, escolha Gradle local instalado ou execute `gradle wrapper --gradle-version 8.9` para criar o wrapper; então `./gradlew :app:assembleDebug`.
+1. Abra a pasta `android/` no Android Studio com **JDK 17**, SDK Android 36, internet para resolver dependências Gradle. O projeto usa AGP 8.11.1 e Gradle 8.13 (JDK 17).
+2. O arquivo `gradle/wrapper/gradle-wrapper.properties` está preparado; o **`gradle-wrapper.jar` não foi gerado** neste ambiente. No Android Studio, escolha Gradle local instalado ou execute `gradle wrapper --gradle-version 8.13` para criar o wrapper; então `./gradlew :app:assembleDebug`.
 3. Instale `app/build/outputs/apk/debug/app-debug.apk` por ADB ou pelo gerenciador de pacotes. **É um aplicativo (launcher de conteúdo), não substitui a tela HOME do sistema.**
 4. Requer Android 6.0/API 23 ou superior e implementação do MediaCodec/Android WebView compatível. TVs sem Android não podem instalar o APK.
 

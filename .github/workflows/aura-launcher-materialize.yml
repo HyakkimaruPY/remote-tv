@@ -21,7 +21,7 @@ jobs:
       - name: Verify source archive and unpack
         run: |
           echo "38e45deaa40485bc20948c5b16abeb16638210db3f203e08c4f2a5b36c178698  android/launcher-source.tar.xz" | sha256sum -c -
-          tar -xJf android/launcher-source.tar.xz
+          if [ ! -f android/app/src/main/java/dev/auratv/launcher/MainActivity.java ]; then tar -xJf android/launcher-source.tar.xz; fi
           python3 -m unittest discover -s android/tests -v
           node --check android/app/src/main/assets/ui/phone/app.js
           node --check android/app/src/main/assets/ui/tv/app.js
@@ -44,10 +44,10 @@ jobs:
           SDKMANAGER="$SDK/cmdline-tools/latest/bin/sdkmanager"
           if [ ! -x "$SDKMANAGER" ]; then SDKMANAGER="$SDK/cmdline-tools/16.0/bin/sdkmanager"; fi
           yes | "$SDKMANAGER" --licenses >/dev/null || true
-          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+          "$SDKMANAGER" "platforms;android-36" "build-tools;35.0.0"
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.9'
+          gradle-version: '8.13'
       - name: Build Android APK
         run: gradle -p android :app:assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4

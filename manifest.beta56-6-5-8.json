@@ -92,8 +92,8 @@
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "d5ad2e29a8bc9793e65969713bba4d1ce77c73020415c800cb29bfccbb9bc081",
-      "bytes": 21996
+      "sha256": "3d132569a782c515a3c6672319d9986d4d1ea39119eb9623c7e0aa3a9af1e6a8",
+      "bytes": 22640
     },
     {
       "id": "xtream-auth-guard",

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.9",
+  "release": "2026.11.16-beta.56.6.5.10",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -88,21 +88,21 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/readable/xtream-lazy-core.beta56-6-5-9.js",
+      "path": "system/readable/xtream-lazy-core.beta56-6-5-10.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "5310860310face1b4478443612b2757e660679eb6e3a87158ae26afdabd79681",
-      "bytes": 24224
+      "sha256": "9f7d47f3d3e1b9c4bacf08f0438aac9b94a1d044aad0b20eb1900fb20d039d14",
+      "bytes": 25042
     },
     {
       "id": "xtream-auth-guard",
-      "path": "system/readable/xtream-auth-guard.beta56-6-5-9.js",
+      "path": "system/readable/xtream-auth-guard.beta56-6-5-10.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "add80f56f299abf4eab6ed99f3a67df6567ead88d4aaeff5110101111fb3f20a",
-      "bytes": 3757
+      "sha256": "5c66cb5f0948c5592286605c4efe7d7bef975cf2faaefc64d86c2842634b30e0",
+      "bytes": 4076
     },
     {
       "id": "xtream-stream-router",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.9"
+  "version": "0.56-beta.6.5.10"
 }

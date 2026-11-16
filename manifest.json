@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.8",
+  "release": "2026.11.16-beta.56.6.5.9",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -79,39 +79,39 @@
     },
     {
       "id": "xtream-api-first",
-      "path": "system/readable/xtream-api-first.beta56-3.js",
+      "path": "system/readable/xtream-api-first.beta56-6-5-9.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "c995a58d78b968d1e024eb66c8d8bd579a54ffa4a7215256352f9e759a3e572b",
-      "bytes": 9817
+      "sha256": "13c501030a680276369ea64d009b9651b3601a98d17a494fe6ce8d126f257757",
+      "bytes": 1099
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/readable/xtream-lazy-core.beta56-6-5-8.js",
+      "path": "system/readable/xtream-lazy-core.beta56-6-5-9.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "3d132569a782c515a3c6672319d9986d4d1ea39119eb9623c7e0aa3a9af1e6a8",
-      "bytes": 22640
+      "sha256": "5310860310face1b4478443612b2757e660679eb6e3a87158ae26afdabd79681",
+      "bytes": 24224
     },
     {
       "id": "xtream-auth-guard",
-      "path": "system/readable/xtream-auth-guard.beta56-3.js",
+      "path": "system/readable/xtream-auth-guard.beta56-6-5-9.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "03548d37e17b60e531429bf760f2eedca446b9a8e4d13371ace9b44f10ac6239",
-      "bytes": 3711
+      "sha256": "add80f56f299abf4eab6ed99f3a67df6567ead88d4aaeff5110101111fb3f20a",
+      "bytes": 3757
     },
     {
       "id": "xtream-stream-router",
-      "path": "system/readable/xtream-stream-router.beta56-6-5-2.js",
+      "path": "system/readable/xtream-stream-router.beta56-6-5-9.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "f9c875c61fc5c34671ac5ebfb08b9508ae518c6437a8a442d77687ad28441af4",
-      "bytes": 2231
+      "sha256": "255e943f9db609e20c03391b6a45112917da65eb89feecc9126b590a7e01b41b",
+      "bytes": 2770
     },
     {
       "id": "autovod",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.8"
+  "version": "0.56-beta.6.5.9"
 }

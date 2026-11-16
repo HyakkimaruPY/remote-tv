@@ -21,7 +21,7 @@ if VERSION == '1.1.0':
     manifest={'schema':1,'version':VERSION,'base':'LG IPK 1.0.3 (exact player payload)',
               'path':'releases/'+VERSION+'/player.html','bytes':len(b),
               'sha256':hashlib.sha256(b).hexdigest()}
-    (ROOT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\\n')
+    (ROOT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     # In deployment the version marker must be activated only after tests and release publication.
     print(json.dumps(manifest))
     raise SystemExit(0)

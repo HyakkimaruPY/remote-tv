@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.10",
+  "release": "2026.11.16-beta.56.6.5.11",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -79,21 +79,21 @@
     },
     {
       "id": "xtream-api-first",
-      "path": "system/readable/xtream-api-first.beta56-6-5-9.js",
+      "path": "system/readable/xtream-api-first.beta56-6-5-11.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "13c501030a680276369ea64d009b9651b3601a98d17a494fe6ce8d126f257757",
-      "bytes": 1099
+      "sha256": "8337b497b266e221a9312fc45002cb84cde2d3d5c0df7a2c44ebaf259cc4854b",
+      "bytes": 491
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/readable/xtream-lazy-core.beta56-6-5-10.js",
+      "path": "system/readable/xtream-lazy-core.beta56-6-5-11.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "9f7d47f3d3e1b9c4bacf08f0438aac9b94a1d044aad0b20eb1900fb20d039d14",
-      "bytes": 25042
+      "sha256": "56c49b3d76f563c3a074d2c714aef9e2c7f661d548e95843e10d6ce5724901b4",
+      "bytes": 26739
     },
     {
       "id": "xtream-auth-guard",
@@ -106,12 +106,12 @@
     },
     {
       "id": "xtream-stream-router",
-      "path": "system/readable/xtream-stream-router.beta56-6-5-9.js",
+      "path": "system/readable/xtream-stream-router.beta56-6-5-11.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "255e943f9db609e20c03391b6a45112917da65eb89feecc9126b590a7e01b41b",
-      "bytes": 2770
+      "sha256": "5f130cccde5df90f9048d8fec45ccb3a9e818479fc05d89d76117b3910c854ce",
+      "bytes": 2897
     },
     {
       "id": "autovod",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.10"
+  "version": "0.56-beta.6.5.11"
 }

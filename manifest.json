@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.15",
+  "release": "2026.11.16-beta.56.6.5.16",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.beta56-6-5-14.js",
+      "path": "apps/player1/app.beta56-6-5-16.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "04605cfbd121d7a36ead6c1feab43a065c40f4c1745d2fb1e0c9ed624280b1bb",
-      "bytes": 44485
+      "sha256": "c20417ce40681e4bcbeb9cc95810b2d5de1929cfc3f48cc9eed159523dc8cfcc",
+      "bytes": 47804
     },
     {
       "id": "force-update",
@@ -106,12 +106,12 @@
     },
     {
       "id": "xtream-stream-router",
-      "path": "system/readable/xtream-stream-router.beta56-6-5-11.js",
+      "path": "system/readable/xtream-stream-router.beta56-6-5-16.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "5f130cccde5df90f9048d8fec45ccb3a9e818479fc05d89d76117b3910c854ce",
-      "bytes": 2897
+      "sha256": "f2e18ef13fbec602514598959b3bad3e8fa740fc0db3a242a0fe7a05106d331c",
+      "bytes": 3127
     },
     {
       "id": "autovod",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.15"
+  "version": "0.56-beta.6.5.16"
 }

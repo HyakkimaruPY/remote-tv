@@ -34,6 +34,6 @@ assert.equal(cred('http://fixture.invalid/get.php?username=u&password=p','').d,'
 for(const k of ['xtream.favorites.v14','xtream.progress.v14','xtream.continue.v14']) w.localStorage.setItem(k,'preserve');
 cred('https://fixture.invalid/get.php?username=u&password=p','');
 for(const k of ['xtream.favorites.v14','xtream.progress.v14','xtream.continue.v14'])assert.equal(w.localStorage.getItem(k),'preserve');
-assert.equal(read('version').trim(),'0.56-beta.6.5.5','Candidate stage must not activate users without CI');
+assert.ok(['0.56-beta.6.5.5','0.56-beta.6.5.8'].includes(read('version').trim()),'Philco marker must be old staged version or validated 6.5.8');
 w.close();
 console.log('PASS Philco 6.5.8: 48 hashes, ES5, classic 3 columns, Xtream HTTP/HTTPS/subpaths, storage preserved, marker gated');

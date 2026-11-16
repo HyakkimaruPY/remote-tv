@@ -3,7 +3,7 @@
 from pathlib import Path
 import json, hashlib, re, argparse
 ROOT=Path(__file__).resolve().parent
-VERSION='1.0.2'
+VERSION='1.1.0'
 parser=argparse.ArgumentParser()
 parser.add_argument('--update-embedded', action='store_true', help='Explicitly regenerate the packaged fallback; remote publication does not require a new IPK.')
 args=parser.parse_args()

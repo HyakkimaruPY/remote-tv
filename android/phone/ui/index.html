@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' http: https: data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta name="theme-color" content="#000000"><title>Aura Launcher</title><link rel="stylesheet" href="/app/style.css"></head>
+<body>
+<div id="shell">
+<header class="bar"><div class="brand"><span class="mark">A</span><span><strong>Aura</strong><small id="subtitle">Sua biblioteca</small></span></div><button id="profileBtn" class="iconbtn" aria-label="Perfis" title="Gerenciar listas">☻</button></header>
+<section id="login" class="login" hidden><div class="login-card"><span class="eyebrow">BEM-VINDO</span><h1>Conecte sua primeira lista</h1><p>Seu conteúdo é carregado diretamente do provedor. As credenciais ficam protegidas neste dispositivo.</p>
+<form id="profileForm"><label>Nome da lista<input id="profileName" placeholder="Minha lista" maxlength="65" required></label><label>Link M3U ou servidor Xtream<input id="profileUrl" inputmode="url" placeholder="https://servidor/get.php?username=…" required></label>
+<div class="twocol"><label>Usuário (opcional)<input id="profileUser" autocomplete="username" placeholder="Usuário"></label><label>Senha (opcional)<input id="profilePass" type="password" autocomplete="current-password" placeholder="Senha"></label></div><button class="primary" type="submit">Adicionar lista</button></form></div></section>
+<main id="main" hidden><div class="hero"><div><span class="eyebrow" id="listLabel">BIBLIOTECA</span><h1 id="greeting">O que vamos assistir?</h1><p id="status">Escolha uma categoria.</p></div></div>
+<nav id="tabs" aria-label="Conteúdo"><button data-type="live" class="tab active">Ao vivo</button><button data-type="vod" class="tab">Filmes</button><button data-type="series" class="tab">Séries</button></nav>
+<div class="section-title"><h2 id="categoryTitle">Categorias</h2><span id="count"></span></div><div id="categories" class="categories" role="group" aria-label="Categorias"></div>
+<div class="section-title"><h2 id="contentTitle">Conteúdos</h2></div><div id="grid" class="grid" aria-live="polite"></div>
+<div id="recentSection" hidden><div class="section-title"><h2>Continuar assistindo</h2></div><div id="recent" class="recent"></div></div>
+</main>
+<div id="panel" class="overlay" hidden><section class="drawer" role="dialog" aria-modal="true" aria-labelledby="panelTitle"><div class="drawer-head"><h2 id="panelTitle">Suas listas</h2><button id="closePanel" class="subtle">Fechar</button></div><p class="muted">Selecione, remova ou adicione uma lista.</p><div id="profileList"></div><button class="primary" id="addAnother">+ Adicionar outra lista</button><hr><h3>Atualizações</h3><div id="revision" class="muted">Versão base</div><div class="twocol"><button id="checkUpdate">Verificar</button><button id="rollback">Regredir versão</button></div></section></div>
+<div id="detail" class="overlay" hidden><section class="drawer detail-panel" role="dialog" aria-modal="true"><div class="drawer-head"><h2 id="detailTitle">Episódios</h2><button id="closeDetail" class="subtle">Fechar</button></div><div id="episodes" class="episode-list"></div></section></div>
+<div id="toast" role="status" aria-live="polite"></div>
+</div><script src="/app/app.js" defer></script></body></html>

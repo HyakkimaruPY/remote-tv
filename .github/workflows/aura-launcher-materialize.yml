@@ -1,13 +1,17 @@
-name: Aura Launcher Android source and APK
+name: Aura Launcher Android APK
 on:
   push:
     branches: [main]
     paths:
-      - 'android/launcher-source.tar.xz'
+      - 'android/app/**'
+      - 'android/build.gradle'
+      - 'android/settings.gradle'
+      - 'android/gradle/**'
+      - 'android/tests/**'
       - '.github/workflows/aura-launcher-materialize.yml'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: aura-launcher-android
   cancel-in-progress: false
@@ -18,20 +22,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Verify source archive and unpack
+      - name: Validate signed update manifests and offline assets
         run: |
-          echo "38e45deaa40485bc20948c5b16abeb16638210db3f203e08c4f2a5b36c178698  android/launcher-source.tar.xz" | sha256sum -c -
-          if [ ! -f android/app/src/main/java/dev/auratv/launcher/MainActivity.java ]; then tar -xJf android/launcher-source.tar.xz; fi
           python3 -m unittest discover -s android/tests -v
           node --check android/app/src/main/assets/ui/phone/app.js
           node --check android/app/src/main/assets/ui/tv/app.js
-      - name: Publish source files without modifying Philco or LG
-        run: |
-          git add android
-          if ! git diff --cached --quiet; then
-            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "Materialize Aura Launcher 0.1 source [skip ci]"
-            git push origin HEAD:main
-          fi
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.14",
+  "release": "2026.11.16-beta.56.6.5.15",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -61,12 +61,12 @@
     },
     {
       "id": "force-update",
-      "path": "system/readable/force-update.beta56-6-1.js",
+      "path": "system/readable/force-update.beta56-6-5-15.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "48ccce5839505e2082a15ac980a844c64d9a0234f40a6830b245396132ccbfe9",
-      "bytes": 4370
+      "sha256": "eb3b074b4bcfa989fd8fd1229fe7253308fd0cb08815afb38cd5e37d6b7e74d0",
+      "bytes": 6166
     },
     {
       "id": "inject-base",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.14"
+  "version": "0.56-beta.6.5.15"
 }

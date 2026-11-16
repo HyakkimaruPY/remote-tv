@@ -5,7 +5,7 @@ Projeto híbrido offline de IPTV, compartilhando backend Java nativo (SQLite, Me
 ## Estado de entrega
 
 - **Implementado na fonte:** WebView local com `WebViewAssetLoader`, detecção por `FEATURE_LEANBACK`/`UI_MODE_TYPE_TELEVISION`, layout touch/DPAD, formulário de listas, múltiplos perfis/expiração, SQLite criptografado via Android Keystore, Xtream com categorias sob demanda, lista M3U por URL, Media3 ExoPlayer, continuidade VOD, atualização separada `phone`/`tv` com assinatura RSA/SHA-256 e recuperação da versão anterior.
-- **Validado no ambiente de desenvolvimento:** sintaxe JS, XML, SHA-256 dos pacotes, assinatura RSA, presença/consistência dos assets; **não compilado em APK** por ausência do SDK Android/Gradle no ambiente e **não testado em hardware**.
+- **Validado no ambiente de desenvolvimento:** sintaxe JS, XML, SHA-256 dos pacotes, assinatura RSA, presença/consistência dos assets; **compilado em APK de debug no GitHub Actions (JDK 17, API 36, AGP 8.11.1) e verificado estruturalmente**; **não testado em hardware**.
 - **Não incluído ainda:** DRM, EPG, gravação, perfis avançados/pin, pesquisa global, renovação de credenciais no mesmo perfil (na v0.1 adicione outra lista), substituição do launcher HOME do sistema, mecanismos proprietários de aparelhos LG/Philco, aceleração específica de decoders, migração automática de IndexedDB legado. São etapas posteriores.
 
 ## Compilar
@@ -68,3 +68,7 @@ Publique `releases/2/{index.html,style.css,app.js}`, depois `manifest.json` e **
 - Atualização real v2: publicar release de teste, desligar rede durante staging, reiniciar, verificar fallback, rollback e atualização v3.
 
 Use listas e serviços que você tem autorização para acessar. Este app não fornece canais ou conteúdo.
+
+## Build reproduzível no GitHub
+
+O workflow `.github/workflows/aura-launcher-materialize.yml` valida as assinaturas e a consistência dos bundles, compila `:app:assembleDebug` e publica o APK de debug nos artefatos do GitHub Actions. Todos os fontes estão em arquivos individuais em `android/`; nenhum pacote temporário precisa ser extraído.

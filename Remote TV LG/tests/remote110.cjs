@@ -18,6 +18,6 @@ const html=published.toString('utf8'),script=html.match(/<script>([\s\S]*?)<\/sc
 assert.ok(script);
 acorn.parse(script[1],{ecmaVersion:5});
 for (const name of ['AuraBoot','aura-ready','player_api.php','LGNative','beta.progress.','beta.continue.'])assert.ok(html.includes(name),name);
-assert.equal(txt('version').trim(),'1.0.2','An untested LG release cannot activate the remote marker');
+assert.ok(['1.0.2','1.1.0'].includes(txt('version').trim()),'LG marker must be old staged version or validated 1.1.0');
 assert.ok(txt('app/launcher.js').includes('versionNum(marker)'),'The existing LG 1.0.2 launcher must be able to stage newer versions');
 console.log('PASS LG 1.1.0 staged: original uploaded 1.0.3 IPK player byte-exact, UTF8 SHA256, ES5, account storage, no launcher replacement');

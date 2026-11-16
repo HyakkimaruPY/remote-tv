@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.16",
+  "release": "2026.11.16-beta.56.6.5.17",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -52,12 +52,12 @@
     },
     {
       "id": "app",
-      "path": "apps/player1/app.beta56-6-5-16.js",
+      "path": "apps/player1/app.beta56-6-5-17.js",
       "type": "js",
       "phase": "app",
       "required": true,
-      "sha256": "c20417ce40681e4bcbeb9cc95810b2d5de1929cfc3f48cc9eed159523dc8cfcc",
-      "bytes": 47804
+      "sha256": "cf7783ba3fb786a5756a1761010fe3effa86dc2b41f6c94a09b5542f20395b49",
+      "bytes": 47922
     },
     {
       "id": "force-update",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.16"
+  "version": "0.56-beta.6.5.17"
 }

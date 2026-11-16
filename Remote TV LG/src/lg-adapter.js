@@ -148,7 +148,6 @@
     resumeAt = null,
     saveAllowed = true,
     pendingSeek = null,
-    seekVerification = null,
     fit = 0;
   function progress() {
     return A.load("beta.progress." + A.account, {});
@@ -235,7 +234,6 @@
     clearTimeout(hideTimer);
     resumeAt = null;
     pendingSeek = null;
-    seekVerification = null;
     v.pause();
     v.removeAttribute("src");
     v.load();
@@ -298,7 +296,6 @@
     resumeAt = Number(opts.resumeAt) || null;
     saveAllowed = !resumeAt;
     pendingSeek = null;
-    seekVerification = null;
     saveTime = 0;
     fit = 0;
     v.style.objectFit = "contain";
@@ -359,20 +356,13 @@
   }
   function commitSeek() {
     if (pendingSeek === null) return;
-    var target = pendingSeek;
-    pendingSeek = null;
     resumeAt = null;
-    seekVerification = target;
-    saveAllowed = false;
+    saveAllowed = true;
     try {
-      v.currentTime = target;
-    } catch (e) {
-      seekVerification = null;
-      A.$("pstatus").textContent = "Busca recusada; o progresso salvo foi preservado.";
-      show();
-      return;
-    }
-    A.$("pstatus").textContent = "Verificando posição " + clock(target) + "…";
+      v.currentTime = pendingSeek;
+    } catch (e) {}
+    pendingSeek = null;
+    A.$("pstatus").textContent = "";
     show();
   }
   function cancelSeek() {
@@ -418,17 +408,9 @@
     }
     var t = Math.max(0, Math.min(v.duration - 0.5, v.currentTime + delta));
     pendingSeek = null;
-    resumeAt = null;
-    seekVerification = t;
-    saveAllowed = false;
     try {
       v.currentTime = t;
-    } catch (e) {
-      seekVerification = null;
-      A.$("pstatus").textContent = "Busca recusada; o progresso salvo foi preservado.";
-      show();
-      return;
-    }
+    } catch (e) {}
     A.$("pstatus").textContent =
       (delta > 0 ? "+" : "\u2212") +
       Math.abs(delta) +
@@ -534,20 +516,10 @@
   }
   v.addEventListener("loadedmetadata", resume, false);
   v.addEventListener("canplay", resume, false);
-  function confirmSeek() {
-    if (!on || seekVerification === null) return;
-    if (isFinite(v.currentTime) && Math.abs(v.currentTime - seekVerification) < 3) {
-      seekVerification = null;
-      saveAllowed = true;
-      A.$("pstatus").textContent = "";
-    }
-  }
-  v.addEventListener("seeked", confirmSeek, false);
   v.addEventListener(
     "timeupdate",
     function () {
       if (!on) return;
-      confirmSeek();
       A.$("clock").textContent =
         clock(v.currentTime) +
         " / " +

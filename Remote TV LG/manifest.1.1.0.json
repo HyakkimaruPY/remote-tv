@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "version": "1.1.0",
+  "base": "LG IPK 1.0.3 (exact player payload)",
+  "path": "releases/1.1.0/player.html",
+  "bytes": 131345,
+  "sha256": "c030ded142aa78dabf90040eb4b3a04475985f65e671a4e1fa946ff8482c263f"
+}

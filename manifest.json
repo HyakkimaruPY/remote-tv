@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.10.29-beta.56.6.5.5",
+  "release": "2026.11.16-beta.56.6.5.8",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -25,12 +25,12 @@
     },
     {
       "id": "shell",
-      "path": "apps/player1/shell.beta56-6-5-5.html",
+      "path": "apps/player1/shell.beta56-6-5-8.html",
       "type": "html",
       "phase": "shell",
       "required": true,
-      "sha256": "caacee35e61fd3fb581b847c747d65e691b9923728c4e7d43247a07050c3cd55",
-      "bytes": 5100
+      "sha256": "6cfb0971a8881fd137874931f890dda4b249af29cc3e8f84b248c154a3370c92",
+      "bytes": 5063
     },
     {
       "id": "style",
@@ -88,12 +88,12 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/readable/xtream-lazy-core.beta56-3.js",
+      "path": "system/readable/xtream-lazy-core.beta56-6-5-8.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "0d298441a06bc6e9043147f81fbdfae69510153c0c5a80d269ae9b5be9585e90",
-      "bytes": 21806
+      "sha256": "3d132569a782c515a3c6672319d9986d4d1ea39119eb9623c7e0aa3a9af1e6a8",
+      "bytes": 22640
     },
     {
       "id": "xtream-auth-guard",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.5"
+  "version": "0.56-beta.6.5.8"
 }

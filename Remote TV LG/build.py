@@ -3,11 +3,28 @@
 from pathlib import Path
 import json, hashlib, re, argparse
 ROOT=Path(__file__).resolve().parent
-VERSION='1.0.2'
+VERSION='1.1.0'
 parser=argparse.ArgumentParser()
 parser.add_argument('--update-embedded', action='store_true', help='Explicitly regenerate the packaged fallback; remote publication does not require a new IPK.')
 args=parser.parse_args()
 src=ROOT/'src'
+# LG 1.1.0 is an exact remote port of the user's existing 1.0.3 IPK.
+# Preserve the uploaded playback engine; do not rebuild it from legacy beta.5 sources.
+if VERSION == '1.1.0':
+    if args.update_embedded:
+        raise SystemExit('Remote-only release: do not replace the packaged LG fallback or launcher.')
+    html=(src/'lg-1.0.3.original.html').read_text()
+    release=ROOT/'releases'/VERSION
+    release.mkdir(parents=True,exist_ok=True)
+    (release/'player.html').write_text(html)
+    b=html.encode('utf-8')
+    manifest={'schema':1,'version':VERSION,'base':'LG IPK 1.0.3 (exact player payload)',
+              'path':'releases/'+VERSION+'/player.html','bytes':len(b),
+              'sha256':hashlib.sha256(b).hexdigest()}
+    (ROOT/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    # In deployment the version marker must be activated only after tests and release publication.
+    print(json.dumps(manifest))
+    raise SystemExit(0)
 def replace_function(code,name,replacement):
     start=code.index('    function '+name+'(')
     end=code.index('\n    function ',start+10)

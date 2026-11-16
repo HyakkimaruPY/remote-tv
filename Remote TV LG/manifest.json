@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "version": "1.0.2",
-  "base": "remote-tv 0.56-beta.5",
-  "path": "releases/1.0.2/player.html",
-  "bytes": 210786,
-  "sha256": "2ba545364cacecee17516aa94af07cf6329fc67061d7b5b13d6607049df8efe7"
+  "version": "1.1.0",
+  "base": "LG IPK 1.0.3 (exact player payload)",
+  "path": "releases/1.1.0/player.html",
+  "bytes": 131345,
+  "sha256": "c030ded142aa78dabf90040eb4b3a04475985f65e671a4e1fa946ff8482c263f"
 }

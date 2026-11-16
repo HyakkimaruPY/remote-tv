@@ -1,0 +1,43 @@
+name: Validate LG 1.1.0 exact IPK and Philco parity 6.5.8
+on:
+  push:
+    branches:
+      - feature/paridade-lg-philco-20261116
+    paths:
+      - 'Remote TV LG/**'
+      - 'apps/player1/shell.beta56-6-5-8.html'
+      - 'system/readable/xtream-lazy-core.beta56-6-5-8.js'
+      - 'manifest.json'
+      - 'manifest.beta56-6-5-8.json'
+      - 'tests/philco-lg-parity-658.cjs'
+      - '.github/workflows/lg-philco-parity-20261116.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test-only DOM and ES5 parser
+        run: npm install --no-save --no-package-lock --ignore-scripts jsdom@24 acorn@8
+      - name: Validate Philco launcher geometry, parser and manifest integrity
+        run: node tests/philco-lg-parity-658.cjs
+      - name: Validate received LG IPK player exact identity
+        run: node "Remote TV LG/tests/remote110.cjs"
+      - name: Validate prior LG functional core and playlist compatibility
+        run: node "Remote TV LG/tests/core.cjs"
+      - name: Reproduce LG release without touching packaged launcher
+        run: |
+          python3 "Remote TV LG/build.py"
+          git diff --exit-code -- "Remote TV LG/manifest.json" "Remote TV LG/releases/1.1.0/player.html"
+      - name: Validate Philco VOD resume against retained stable UI
+        env:
+          RTV_RESUME_UI: system/readable/xtream-ui.beta56-6-5-5.js
+        run: node tests/beta56-6-5-4.resume.cjs

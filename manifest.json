@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release": "2026.11.16-beta.56.6.5.11",
+  "release": "2026.11.16-beta.56.6.5.12",
   "bootstrap_min": 4,
   "app": "player1",
   "ready_timeout_ms": 2200,
@@ -88,12 +88,12 @@
     },
     {
       "id": "xtream-lazy-core",
-      "path": "system/readable/xtream-lazy-core.beta56-6-5-11.js",
+      "path": "system/readable/xtream-lazy-core.beta56-6-5-12.js",
       "type": "js",
       "phase": "post",
       "required": true,
-      "sha256": "56c49b3d76f563c3a074d2c714aef9e2c7f661d548e95843e10d6ce5724901b4",
-      "bytes": 26739
+      "sha256": "f171eba8811d772552d7cf57112daf7e14d57bf79729629becc174fdbb2cc14f",
+      "bytes": 27756
     },
     {
       "id": "xtream-auth-guard",
@@ -438,5 +438,5 @@
       "sha256": "d061d363e35f37f29a8afa9a62c33d988d2320c689fa3e08882f0a9e604d5d76"
     }
   ],
-  "version": "0.56-beta.6.5.11"
+  "version": "0.56-beta.6.5.12"
 }

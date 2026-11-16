@@ -92,11 +92,14 @@ public final class MainActivity extends Activity {
         final long id=payload.getLong("profile");String type=payload.optString("type","live");
         String media=payload.getString("id"),ext=payload.optString("ext","m3u8");
         String url=client.stream(id,type,media,ext);
-        playProfile=id;live="live".equals(type);playKey=type+":"+media;playTitle=payload.optString("title","Reproduzindo");
-        long resume=live?0:db.resume(id,playKey);
+        // Persistir a posição do player anterior antes de alterar a identidade atual.
+        final boolean nextIsLive="live".equals(type);
+        final String nextKey=type+":"+media;
+        final String nextTitle=payload.optString("title","Reproduzindo");
+        long resume=nextIsLive?0:db.resume(id,nextKey);
         main.post(()->{
             closePlayer();
-            playProfile=id;MainActivity.this.live="live".equals(type);playKey=type+":"+media;playTitle=payload.optString("title","Reproduzindo");
+            playProfile=id;MainActivity.this.live=nextIsLive;playKey=nextKey;playTitle=nextTitle;
             player=new ExoPlayer.Builder(MainActivity.this).build();
             playerView.setPlayer(player);playerView.setVisibility(View.VISIBLE);
             MediaItem.Builder item=new MediaItem.Builder().setUri(url);

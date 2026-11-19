@@ -50,9 +50,8 @@ class TestRelease(unittest.TestCase):
     def test_update_signing_keys_are_separate(self):
         # Legacy revision-1 manifests remain valid for audit only.
         self.assertNotEqual(LEGACY_KEY.read_bytes(), V12_KEY.read_bytes())
-        # Source still contains the old v0.1 native baseline. Never infer its
-        # public key is compatible with the installed APK 1.2.
-        self.assertEqual(NATIVE_KEY.read_bytes(), LEGACY_KEY.read_bytes())
+        # Bundled native 1.2 must match the installed app's public update key.
+        self.assertEqual(NATIVE_KEY.read_bytes(), V12_KEY.read_bytes())
 
 
 if __name__ == '__main__':

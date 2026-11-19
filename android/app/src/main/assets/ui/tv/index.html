@@ -1,20 +1,69 @@
-<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' http: https: data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
-<meta name="theme-color" content="#000000"><title>Aura Launcher</title><link rel="stylesheet" href="/app/style.css"></head>
-<body>
-<div id="shell">
-<header class="bar"><div class="brand"><span class="mark">A</span><span><strong>Aura</strong><small id="subtitle">Sua biblioteca</small></span></div><button id="profileBtn" class="iconbtn" aria-label="Perfis" title="Gerenciar listas">☻</button></header>
-<section id="login" class="login" hidden><div class="login-card"><span class="eyebrow">BEM-VINDO</span><h1>Conecte sua primeira lista</h1><p>Seu conteúdo é carregado diretamente do provedor. As credenciais ficam protegidas neste dispositivo.</p>
-<form id="profileForm"><label>Nome da lista<input id="profileName" placeholder="Minha lista" maxlength="65" required></label><label>Link M3U ou servidor Xtream<input id="profileUrl" inputmode="url" placeholder="https://servidor/get.php?username=…" required></label>
-<div class="twocol"><label>Usuário (opcional)<input id="profileUser" autocomplete="username" placeholder="Usuário"></label><label>Senha (opcional)<input id="profilePass" type="password" autocomplete="current-password" placeholder="Senha"></label></div><button class="primary" type="submit">Adicionar lista</button></form></div></section>
-<main id="main" hidden><div class="hero"><div><span class="eyebrow" id="listLabel">BIBLIOTECA</span><h1 id="greeting">O que vamos assistir?</h1><p id="status">Escolha uma categoria.</p></div></div>
-<nav id="tabs" aria-label="Conteúdo"><button data-type="live" class="tab active">Ao vivo</button><button data-type="vod" class="tab">Filmes</button><button data-type="series" class="tab">Séries</button></nav>
-<div class="section-title"><h2 id="categoryTitle">Categorias</h2><span id="count"></span></div><div id="categories" class="categories" role="group" aria-label="Categorias"></div>
-<div class="section-title"><h2 id="contentTitle">Conteúdos</h2></div><div id="grid" class="grid" aria-live="polite"></div>
-<div id="recentSection" hidden><div class="section-title"><h2>Continuar assistindo</h2></div><div id="recent" class="recent"></div></div>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src https: http: data:; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#090a0b"><title>Aura Remote</title><link rel="stylesheet" href="/app/style.css"></head>
+<body data-theme="graphene">
+<svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0"><defs>
+<symbol id="i-aura" viewBox="0 0 32 32"><path d="M16 4 5.5 27h5l2.2-5h6.6l2.2 5h5L16 4Zm0 9.6 2.3 5.4h-4.6L16 13.6Z" fill="currentColor"/></symbol>
+<symbol id="i-live" viewBox="0 0 24 24"><rect x="3" y="6.5" width="18" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m8 2.8 4 3.7 4-3.7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-film" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 4v16M16 4v16M3.5 9h4.5M3.5 15h4.5M16 9h4.5M16 15h4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+<symbol id="i-series" viewBox="0 0 24 24"><rect x="3.5" y="8.5" width="17" height="11.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 4.5h10M9.5 1.8h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.6 2.5 5.2 5.7.8-4.1 4 1 5.7L12 16.6l-5.1 2.7 1-5.7-4.1-4 5.7-.8L12 3.6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4.2h-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h10" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7.5 4.8v14.4L19.2 12 7.5 4.8Z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.8 2.8 19.5h18.4L12 3.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4.4M12 17v.1" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+</defs></svg>
+<div class="app" id="app">
+<header class="top"><div class="brand"><div class="logo"><svg class="ic" aria-hidden="true"><use href="#i-aura"/></svg></div><div class="brand-text"><strong>Aura</strong><small id="profileTitle">Sua biblioteca</small></div></div>
+<div class="top-actions"><button id="updateButton" class="icon" aria-label="Buscar atualização da interface" title="Buscar atualização"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg></button><button id="accountButton" class="icon" aria-label="Listas e ajustes" title="Listas e ajustes"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg></button></div></header>
+
+<section id="login" class="login" hidden><div class="form-panel"><div class="eyebrow">IPTV • PRIVADO</div><h1>Adicione sua lista</h1>
+<p class="lead">Use o link completo da lista ou servidor, usuário e senha. O acesso é validado antes de salvar.</p>
+<div class="segmented" id="modes" role="tablist" aria-label="Forma de conexão"><button type="button" data-mode="link" class="active" role="tab" aria-selected="true">Link da lista</button><button type="button" data-mode="server" role="tab" aria-selected="false">Servidor + login</button></div>
+<form id="loginForm" novalidate>
+<label>Nome da lista<input id="label" maxlength="65" placeholder="Minha lista" autocomplete="off" enterkeyhint="next"></label>
+<label><span id="hostLabel">Link Xtream ou M3U</span><input id="host" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" placeholder="http://servidor:8080/get.php?username=…&amp;password=…" enterkeyhint="go"></label>
+<div class="twocol" id="credentials" hidden><label>Usuário<input id="username" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+<label>Senha<span class="pw"><input id="password" type="password" autocomplete="current-password" autocapitalize="off"><button type="button" id="togglePassword" class="icon mini" aria-label="Mostrar ou ocultar senha" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></button></span></label></div>
+<div id="loginStatus" class="status" role="status" aria-live="polite" hidden></div>
+<button class="primary" id="saveProfile" type="submit">Conectar lista</button>
+<button type="button" class="ghost" id="cancelLogin" hidden>Voltar às minhas listas</button>
+</form></div></section>
+
+<main id="library" hidden>
+<nav id="tabs" aria-label="Seções">
+<button type="button" data-tab="live" class="active"><svg class="ic" aria-hidden="true"><use href="#i-live"/></svg><span>Ao vivo</span></button>
+<button type="button" data-tab="vod"><svg class="ic" aria-hidden="true"><use href="#i-film"/></svg><span>Filmes</span></button>
+<button type="button" data-tab="series"><svg class="ic" aria-hidden="true"><use href="#i-series"/></svg><span>Séries</span></button>
+<button type="button" data-tab="favorites"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span>Favoritos</span></button>
+<button type="button" data-tab="recent"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span>Continuar</span></button>
+</nav>
+<div class="hero"><div class="eyebrow" id="heroLabel">BIBLIOTECA</div><h1 id="heading">Ao vivo</h1><p id="subheading"></p></div>
+<div class="content"><aside class="sidebar"><div class="section-caption">CATEGORIAS</div><input id="catFilter" type="search" placeholder="Filtrar categorias" autocomplete="off" hidden><div id="categories" class="categories"></div></aside>
+<section class="content-main"><div class="section-head"><h2 id="categoryName"></h2><span id="total"></span></div>
+<div id="state" class="state" hidden></div><div id="grid" class="grid"></div>
+<div id="pager" class="pager" hidden><button id="previous" type="button">Anterior</button><span id="pageLabel"></span><button id="next" type="button">Próxima</button></div></section></div>
+<p class="hint" id="hint">OK abrir · MENU favoritar · VOLTAR sair</p>
 </main>
-<div id="panel" class="overlay" hidden><section class="drawer" role="dialog" aria-modal="true" aria-labelledby="panelTitle"><div class="drawer-head"><h2 id="panelTitle">Suas listas</h2><button id="closePanel" class="subtle">Fechar</button></div><p class="muted">Selecione, remova ou adicione uma lista.</p><div id="profileList"></div><button class="primary" id="addAnother">+ Adicionar outra lista</button><hr><h3>Atualizações</h3><div id="revision" class="muted">Versão base</div><div class="twocol"><button id="checkUpdate">Verificar</button><button id="rollback">Regredir versão</button></div></section></div>
-<div id="detail" class="overlay" hidden><section class="drawer detail-panel" role="dialog" aria-modal="true"><div class="drawer-head"><h2 id="detailTitle">Episódios</h2><button id="closeDetail" class="subtle">Fechar</button></div><div id="episodes" class="episode-list"></div></section></div>
-<div id="toast" role="status" aria-live="polite"></div>
+
+<div class="shade" id="shade" hidden></div>
+<section id="accounts" class="sheet" role="dialog" aria-modal="true" aria-label="Listas e ajustes" hidden>
+<div class="sheet-header"><h2>Listas e ajustes</h2><button id="closeAccounts" class="icon" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+<div class="section-caption">SUAS LISTAS</div><div id="profileList"></div>
+<button id="newProfile" type="button" class="primary">Adicionar nova lista</button>
+<div class="section-caption spaced">INTERFACE</div>
+<div class="settings-card"><div><strong id="versionText">Interface</strong><small id="layoutText"></small></div>
+<div class="settings-actions"><button id="checkUpdate" type="button">Buscar atualização</button><button id="rollback" type="button">Voltar versão anterior</button></div></div>
+</section>
+<section id="details" class="sheet detail" role="dialog" aria-modal="true" aria-label="Detalhes do conteúdo" hidden>
+<div class="sheet-header"><h2 id="detailName">Detalhes</h2><button id="closeDetails" class="icon" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+<div class="detail-body"><div class="detail-poster" id="detailPoster"></div><div class="detail-info"><p id="description"></p>
+<div class="detail-actions"><button id="watch" type="button" class="primary"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg><span id="watchLabel">Reproduzir</span></button><button id="favoriteButton" type="button" class="icon" aria-label="Adicionar aos favoritos" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg></button></div></div></div>
+<div id="seasons" class="seasons" hidden></div><h3 id="episodesHeading" hidden>Episódios</h3><div id="episodes" class="episodes"></div>
+</section>
+<div id="updating" class="updating" role="alert" hidden><div class="updating-card"><div class="spinner"></div><strong>Atualizando módulos</strong><small id="updatingText">Carregando a nova interface…</small></div></div>
+<div class="notice" id="notice" role="status" aria-live="polite"></div>
 </div><script src="/app/app.js" defer></script></body></html>

@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+# Lightweight Gradle bootstrap when the standard wrapper JAR is not bundled.
+set -eu
+HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+if command -v gradle >/dev/null 2>&1; then exec gradle "$@"; fi
+CACHE="${GRADLE_USER_HOME:-$HOME/.gradle}/aura-gradle-8.13"
+if [ ! -x "$CACHE/gradle-8.13/bin/gradle" ]; then
+  mkdir -p "$CACHE"
+  URL="https://services.gradle.org/distributions/gradle-8.13-bin.zip"
+  if command -v curl >/dev/null 2>&1; then curl -fL --retry 2 "$URL" -o "$CACHE/gradle.zip";
+  elif command -v wget >/dev/null 2>&1; then wget -O "$CACHE/gradle.zip" "$URL";
+  else echo 'Instale Gradle 8.13 ou use Android Studio' >&2; exit 1; fi
+  (cd "$CACHE" && unzip -oq gradle.zip && rm gradle.zip)
+fi
+exec "$CACHE/gradle-8.13/bin/gradle" -p "$HERE" "$@"

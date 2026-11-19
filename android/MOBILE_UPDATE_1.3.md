@@ -21,6 +21,6 @@ O ZIP `AuraRemote_AndroidTV_1.2_COMPILAR.zip` **tem chave pública de atualizaç
 ## Player e base Android
 A alteração Java que força `PlayerView` e o shutter para preto foi feita na fonte, mas **exige recompilar/instalar um APK**. OTA HTML/CSS/JS não consegue modificar superfícies nativas Media3/SurfaceView.
 
-ATENÇÃO: o diretório `android/app/` no GitHub é uma antiga base nativa v0.1. Ele **ainda precisa ser sincronizado com a fonte nativa do ZIP 1.2 antes de compilar um novo APK**. Não instale um APK compilado diretamente de `main` sem antes esta sincronização. Isso não afeta a atualização de UI remota do APK 1.2.
+O diretório `android/app/` foi sincronizado com os arquivos nativos da versão 1.2 enviada pelo usuário. A chave pública embutida no projeto foi alinhada ao ZIP 1.2; a chave antiga permanece arquivada exclusivamente para conferir releases históricos. A correção do player ainda exige recompilar e reinstalar o APK. Nenhuma compilação em aparelho foi confirmada.
 
 Limitação dos metadados nativos: o backend atual não fornece backdrop próprio, avaliação ou recomendações globais; a interface usa poster desfocado como fallback e oferece sugestões de títulos carregados na categoria.

@@ -1,7 +1,7 @@
 package dev.auratv.launcher;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,94 +12,97 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
-import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
+/** Provider secrets never enter HTML, WebView storage or logs. */
 final class AppDb extends SQLiteOpenHelper {
-    private final Vault vault = new Vault();
-    AppDb(Context context) { super(context, "aura_launcher.db", null, 1); }
-
-    @Override public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE profiles(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, kind TEXT NOT NULL, host TEXT NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL, expires INTEGER NOT NULL DEFAULT 0, checked INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'unknown')");
-        db.execSQL("CREATE TABLE progress(profile_id INTEGER NOT NULL, media_key TEXT NOT NULL, title TEXT NOT NULL, position_ms INTEGER NOT NULL, duration_ms INTEGER NOT NULL, updated_at INTEGER NOT NULL, PRIMARY KEY(profile_id,media_key))");
-        db.execSQL("CREATE INDEX progress_latest ON progress(updated_at DESC)");
+    private final SharedPreferences pref;
+    private final SecretKey key;
+    AppDb(Context c) throws Exception {
+        super(c,"aura_launcher.db",null,2);
+        pref=c.getSharedPreferences("aura_app",Context.MODE_PRIVATE);
+        KeyStore ks=KeyStore.getInstance("AndroidKeyStore");ks.load(null);
+        if(!ks.containsAlias("aura_profile_v1")) {
+            KeyGenerator gen=KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES,"AndroidKeyStore");
+            gen.init(new KeyGenParameterSpec.Builder("aura_profile_v1",KeyProperties.PURPOSE_ENCRYPT|KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE).build());
+            gen.generateKey();
+        }
+        key=(SecretKey)ks.getKey("aura_profile_v1",null);
     }
-    @Override public void onUpgrade(SQLiteDatabase db, int oldV, int newV) { /* adotar migrations incrementais */ }
-
-    synchronized long save(String name, String kind, String host, String username, String password) throws Exception {
-        ContentValues v = new ContentValues();
-        v.put("name", name.trim()); v.put("kind", kind);
-        v.put("host", vault.encrypt(host)); v.put("username", vault.encrypt(username)); v.put("password", vault.encrypt(password));
-        return getWritableDatabase().insertOrThrow("profiles", null, v);
+    @Override public void onCreate(SQLiteDatabase d){
+        d.execSQL("CREATE TABLE profiles(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, kind TEXT NOT NULL, host TEXT NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL, expires INTEGER NOT NULL DEFAULT 0, checked INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'unknown')");
+        d.execSQL("CREATE TABLE progress(profile_id INTEGER NOT NULL, media_key TEXT NOT NULL, title TEXT NOT NULL, position_ms INTEGER NOT NULL, duration_ms INTEGER NOT NULL, updated_at INTEGER NOT NULL, PRIMARY KEY(profile_id,media_key))");
+        d.execSQL("CREATE INDEX progress_latest ON progress(updated_at DESC)");
+        createFavorites(d);
+    }
+    private void createFavorites(SQLiteDatabase d){d.execSQL("CREATE TABLE IF NOT EXISTS favorites(account INTEGER, item TEXT, title TEXT, poster TEXT, type TEXT, media TEXT, ext TEXT, PRIMARY KEY(account,item))");}
+    @Override public void onUpgrade(SQLiteDatabase d,int old,int newest){if(old<2)createFavorites(d); /* NEVER drop accounts or progress */}
+    private String protect(String raw) throws Exception {
+        Cipher c=Cipher.getInstance("AES/GCM/NoPadding");c.init(Cipher.ENCRYPT_MODE,key);
+        byte[] iv=c.getIV(),cipher=c.doFinal(raw.getBytes(StandardCharsets.UTF_8)),combined=new byte[iv.length+cipher.length];
+        System.arraycopy(iv,0,combined,0,iv.length);System.arraycopy(cipher,0,combined,iv.length,cipher.length);
+        return Base64.encodeToString(combined,Base64.NO_WRAP);
+    }
+    private String reveal(String encoded) throws Exception {
+        byte[] combined=Base64.decode(encoded,Base64.NO_WRAP);if(combined.length<29)throw new SecurityException("Credencial danificada");
+        Cipher c=Cipher.getInstance("AES/GCM/NoPadding");c.init(Cipher.DECRYPT_MODE,key,new GCMParameterSpec(128,combined,0,12));
+        return new String(c.doFinal(combined,12,combined.length-12),StandardCharsets.UTF_8);
+    }
+    synchronized long add(String label,JSONObject p) throws Exception {
+        android.content.ContentValues v=new android.content.ContentValues();
+        v.put("name",label);v.put("kind",p.getString("kind"));v.put("host",protect(p.getString("host")));
+        v.put("username",protect(p.optString("username","")));v.put("password",protect(p.optString("password","")));
+        long id=getWritableDatabase().insertOrThrow("profiles",null,v);selected(id);return id;
     }
     synchronized JSONObject get(long id) throws Exception {
-        try (Cursor c=getReadableDatabase().query("profiles",null,"id=?",new String[]{String.valueOf(id)},null,null,null)) {
-            if (!c.moveToFirst()) return null;
-            return new JSONObject().put("id",id).put("name",c.getString(c.getColumnIndexOrThrow("name")))
-                .put("kind",c.getString(c.getColumnIndexOrThrow("kind")))
-                .put("host",vault.decrypt(c.getString(c.getColumnIndexOrThrow("host"))))
-                .put("username",vault.decrypt(c.getString(c.getColumnIndexOrThrow("username"))))
-                .put("password",vault.decrypt(c.getString(c.getColumnIndexOrThrow("password"))))
-                .put("expires",c.getLong(c.getColumnIndexOrThrow("expires")));
+        try(Cursor c=getReadableDatabase().rawQuery("SELECT id,name,kind,host,username,password,expires,status FROM profiles WHERE id=?",new String[]{String.valueOf(id)})){
+            if(!c.moveToFirst())throw new IllegalArgumentException("Lista não encontrada");
+            return new JSONObject().put("id",c.getLong(0)).put("label",c.getString(1)).put("kind",c.getString(2))
+                .put("host",reveal(c.getString(3))).put("username",reveal(c.getString(4)))
+                .put("password",reveal(c.getString(5))).put("expires",c.getLong(6)).put("status",c.getString(7));
         }
     }
     synchronized JSONArray profiles() throws Exception {
-        JSONArray a=new JSONArray();
-        try (Cursor c=getReadableDatabase().rawQuery("SELECT id,name,kind,expires,checked,status FROM profiles ORDER BY id",null)) {
-            while(c.moveToNext()) a.put(new JSONObject().put("id",c.getLong(0)).put("name",c.getString(1))
-                .put("kind",c.getString(2)).put("expires",c.getLong(3))
-                .put("checked",c.getLong(4)).put("status",c.getString(5)));
-        }
-        return a;
+        JSONArray arr=new JSONArray();
+        try(Cursor c=getReadableDatabase().rawQuery("SELECT id,name,kind,expires,status FROM profiles ORDER BY id DESC",null)){
+            while(c.moveToNext())arr.put(new JSONObject().put("id",c.getLong(0)).put("label",c.getString(1))
+                .put("kind",c.getString(2)).put("expires",c.getLong(3)).put("status",c.getString(4)));
+        }return arr;
     }
-    synchronized void accountStatus(long id, long expiry, String status) {
-        ContentValues v=new ContentValues();v.put("expires",expiry);v.put("checked",System.currentTimeMillis());v.put("status",status);
-        getWritableDatabase().update("profiles",v,"id=?",new String[]{String.valueOf(id)});
-    }
-    synchronized void delete(long id) {
-        getWritableDatabase().delete("profiles","id=?",new String[]{String.valueOf(id)});
-        getWritableDatabase().delete("progress","profile_id=?",new String[]{String.valueOf(id)});
-    }
-    synchronized void progress(long profileId,String key,String title,long pos,long duration) {
-        if (profileId<=0 || key.isEmpty() || pos<5000) return;
-        ContentValues v=new ContentValues();v.put("profile_id",profileId);v.put("media_key",key);v.put("title",title);
-        v.put("position_ms",Math.max(0,pos));v.put("duration_ms",Math.max(0,duration));v.put("updated_at",System.currentTimeMillis());
+    synchronized long selected(){return pref.getLong("selected",0);}
+    synchronized void selected(long id){pref.edit().putLong("selected",id).apply();}
+    synchronized void status(long id,long expires,String s){android.content.ContentValues v=new android.content.ContentValues();v.put("expires",expires);v.put("status",s);getWritableDatabase().update("profiles",v,"id=?",new String[]{""+id});}
+    synchronized void delete(long id){getWritableDatabase().delete("profiles","id=?",new String[]{""+id});getWritableDatabase().delete("progress","profile_id=?",new String[]{""+id});getWritableDatabase().delete("favorites","account=?",new String[]{""+id});if(selected()==id)selected(0);}
+    synchronized void progress(long account,String item,String title,long pos,long duration){
+        if(account<=0||pos<1000)return;android.content.ContentValues v=new android.content.ContentValues();
+        v.put("profile_id",account);v.put("media_key",item);v.put("title",title);v.put("position_ms",pos);v.put("duration_ms",duration);v.put("updated_at",System.currentTimeMillis());
         getWritableDatabase().insertWithOnConflict("progress",null,v,SQLiteDatabase.CONFLICT_REPLACE);
     }
-    synchronized long resume(long profileId,String key) {
-        try(Cursor c=getReadableDatabase().rawQuery("SELECT position_ms,duration_ms FROM progress WHERE profile_id=? AND media_key=?",new String[]{""+profileId,key})) {
-            if(!c.moveToFirst())return 0;long pos=c.getLong(0),dur=c.getLong(1);
-            return dur>0&&pos>dur-12000?0:pos;
-        }
+    synchronized long resume(long account,String item){
+        try(Cursor c=getReadableDatabase().rawQuery("SELECT position_ms,duration_ms FROM progress WHERE profile_id=? AND media_key=?",new String[]{""+account,item})){
+            if(c.moveToFirst()){long pos=c.getLong(0),dur=c.getLong(1);return dur>0&&pos>dur-20000?0:pos;}
+        }return 0;
     }
-    synchronized JSONArray recent(long profileId) throws Exception {
-        JSONArray a=new JSONArray();
-        try(Cursor c=getReadableDatabase().rawQuery("SELECT media_key,title,position_ms,duration_ms FROM progress WHERE profile_id=? AND position_ms>=5000 ORDER BY updated_at DESC LIMIT 30",new String[]{""+profileId})) {
+    synchronized JSONArray recent(long id) throws Exception {
+        JSONArray a=new JSONArray();try(Cursor c=getReadableDatabase().rawQuery("SELECT media_key,title,position_ms,duration_ms FROM progress WHERE profile_id=? ORDER BY updated_at DESC LIMIT 30",new String[]{""+id})){
             while(c.moveToNext())a.put(new JSONObject().put("key",c.getString(0)).put("title",c.getString(1)).put("position",c.getLong(2)).put("duration",c.getLong(3)));
-        } return a;
+        }return a;
     }
-    static class Vault {
-        private SecretKey secret() throws Exception {
-            KeyStore k=KeyStore.getInstance("AndroidKeyStore");k.load(null);
-            if(k.containsAlias("aura_profile_v1"))return (SecretKey)k.getKey("aura_profile_v1",null);
-            KeyGenerator g=KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES,"AndroidKeyStore");
-            g.init(new KeyGenParameterSpec.Builder("aura_profile_v1",KeyProperties.PURPOSE_ENCRYPT|KeyProperties.PURPOSE_DECRYPT)
-                .setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE).build());
-            return g.generateKey();
+    synchronized boolean favorite(long id,JSONObject item) throws Exception {
+        String key=item.getString("type")+":"+item.getString("id");
+        try(Cursor c=getReadableDatabase().rawQuery("SELECT 1 FROM favorites WHERE account=? AND item=?",new String[]{""+id,key})){
+            if(c.moveToFirst()){getWritableDatabase().delete("favorites","account=? AND item=?",new String[]{""+id,key});return false;}
         }
-        synchronized String encrypt(String s) throws Exception {
-            Cipher c=Cipher.getInstance("AES/GCM/NoPadding");c.init(Cipher.ENCRYPT_MODE,secret());
-            byte[] iv=c.getIV(),enc=c.doFinal(s.getBytes(StandardCharsets.UTF_8));
-            byte[] out=new byte[iv.length+enc.length];System.arraycopy(iv,0,out,0,iv.length);System.arraycopy(enc,0,out,iv.length,enc.length);
-            return Base64.encodeToString(out,Base64.NO_WRAP);
-        }
-        synchronized String decrypt(String s) throws Exception {
-            byte[] all=Base64.decode(s,Base64.DEFAULT);if(all.length<29)throw new IllegalArgumentException("Credencial corrompida");
-            Cipher c=Cipher.getInstance("AES/GCM/NoPadding");c.init(Cipher.DECRYPT_MODE,secret(),new GCMParameterSpec(128,all,0,12));
-            return new String(c.doFinal(all,12,all.length-12),StandardCharsets.UTF_8);
-        }
+        android.content.ContentValues v=new android.content.ContentValues();v.put("account",id);v.put("item",key);v.put("title",item.optString("title"));v.put("poster",item.optString("poster"));v.put("type",item.optString("type"));v.put("media",item.optString("id"));v.put("ext",item.optString("ext"));
+        getWritableDatabase().insertWithOnConflict("favorites",null,v,SQLiteDatabase.CONFLICT_REPLACE);return true;
+    }
+    synchronized JSONArray favorites(long id) throws Exception {
+        JSONArray a=new JSONArray();try(Cursor c=getReadableDatabase().rawQuery("SELECT media,title,poster,type,ext FROM favorites WHERE account=? ORDER BY rowid DESC",new String[]{""+id})){
+            while(c.moveToNext())a.put(new JSONObject().put("id",c.getString(0)).put("title",c.getString(1)).put("poster",c.getString(2)).put("type",c.getString(3)).put("ext",c.getString(4)));
+        }return a;
     }
 }

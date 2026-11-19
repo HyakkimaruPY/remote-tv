@@ -70,7 +70,7 @@ public final class MainActivity extends Activity {
         });
         web.addJavascriptInterface(new Bridge(),"Native");
         root.addView(web,new FrameLayout.LayoutParams(-1,-1));
-        playerView=new PlayerView(this);playerView.setVisibility(View.GONE);playerView.setUseController(true);
+        playerView=new PlayerView(this);playerView.setBackgroundColor(Color.BLACK);playerView.setShutterBackgroundColor(Color.BLACK);playerView.setVisibility(View.GONE);playerView.setUseController(true);
         playerView.setControllerShowTimeoutMs(4500);
         root.addView(playerView,new FrameLayout.LayoutParams(-1,-1));
         web.loadUrl(ORIGIN+"/app/index.html");

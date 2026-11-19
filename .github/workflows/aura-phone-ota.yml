@@ -1,0 +1,80 @@
+name: Publish signed Aura Remote mobile UI
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: "Phone UI revision (minimum 3, must be greater than live version)"
+        required: true
+        default: "3"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aura-remote-phone-signed-ota
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Validate revision and signing secret
+        shell: bash
+        env:
+          OTA_KEY: ${{ secrets.AURA_PHONE_UPDATE_PRIVATE_KEY_PEM }}
+          TARGET_REV: ${{ inputs.revision }}
+        run: |
+          set -euo pipefail
+          if ! [[ "$TARGET_REV" =~ ^[0-9]+$ ]]; then echo "Invalid revision"; exit 1; fi
+          live="$(tr -d '\n\r ' < android/phone/version)"
+          if [ "$TARGET_REV" -lt 3 ] || [ "$TARGET_REV" -le "$live" ]; then
+            echo "Revision must be >=3 and higher than current ($live)"
+            exit 1
+          fi
+          if [ -z "$OTA_KEY" ]; then
+            echo "Missing AURA_PHONE_UPDATE_PRIVATE_KEY_PEM repository secret"
+            exit 1
+          fi
+          printf '%s\n' "$OTA_KEY" > "$RUNNER_TEMP/aura_ota.pem"
+          chmod 600 "$RUNNER_TEMP/aura_ota.pem"
+          openssl pkey -in "$RUNNER_TEMP/aura_ota.pem" -pubout -outform DER -out "$RUNNER_TEMP/derived_pub.der"
+          if ! cmp -s "$RUNNER_TEMP/derived_pub.der" android/keys/update_pub_v1_2.der; then
+            echo "Signing key does NOT match the public key embedded in installed APK 1.2"
+            exit 1
+          fi
+
+      - name: Package, sign and validate
+        shell: bash
+        env:
+          TARGET_REV: ${{ inputs.revision }}
+        run: |
+          set -euo pipefail
+          node --check android/phone/ui/app.js
+          python3 android/tools/publish_release.py --channel phone --revision "$TARGET_REV" --key "$RUNNER_TEMP/aura_ota.pem"
+          python3 -m unittest discover -s android/tests -v
+          test -s "android/phone/releases/$TARGET_REV/index.html"
+          test -s "android/phone/releases/$TARGET_REV/style.css"
+          test -s "android/phone/releases/$TARGET_REV/app.js"
+
+      - name: Commit and push signed payload before version marker
+        shell: bash
+        env:
+          TARGET_REV: ${{ inputs.revision }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "android/phone/releases/$TARGET_REV" android/phone/manifest.json
+          git commit -m "release(phone): signed mobile bundle $TARGET_REV"
+          git push origin HEAD:main
+          git add android/phone/version
+          git commit -m "release(phone): activate OTA revision $TARGET_REV"
+          git push origin HEAD:main
+          rm -f "$RUNNER_TEMP/aura_ota.pem"
